@@ -15,6 +15,7 @@
             let texto1=window.document.getElementById("texto1").value
             texto1=texto1.toUpperCase()
             window.document.getElementById("texto1").value=texto1
+            copiarTexto()
         }
 
         function minusculas() {
@@ -37,7 +38,7 @@
             textoCopiado.select();
             textoCopiado.setSelectionRange(0, 99999)
             document.execCommand("copy");
-            alert("O texto é: " + textoCopiado.value);
+            //alert("O texto é: " + textoCopiado.value);
     }
     </script>
 </head>
