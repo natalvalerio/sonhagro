@@ -22,10 +22,10 @@
             texto1=texto1.toLowerCase()
             window.document.getElementById("texto1").value=texto1
         }
-        
+
         function PrimeiraMai() {
             let texto1=window.document.getElementById("texto1").value
-            texto1=texto1.toUpperCase()
+            texto1=texto1.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase());
             window.document.getElementById("texto1").value=texto1
         }
     </script>
