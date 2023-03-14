@@ -12,10 +12,13 @@
     </style>
     <script>
         function MAI() {
+            var texto1=window.document.getElementById("texto1").value
             var texto2=window.document.getElementById("texto2").value
+            texto1=texto1.toUpperCase()
             texto2=texto2.toUpperCase()
+            window.document.getElementById("texto1").value=texto1
             window.document.getElementById("texto2").value=texto2
-            console.log(texto2)
+            console.log(texto1)
         }
     </script>
 </head>
