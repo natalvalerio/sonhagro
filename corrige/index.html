@@ -19,6 +19,12 @@
             window.document.getElementById("texto1").value=texto1
             window.document.getElementById("texto2").value=texto2
         }
+
+        function min() {
+            var texto2=window.document.getElementById("texto2").value
+            texto2=texto2.toUpperCase()
+            window.document.getElementById("texto2").value=texto2
+        }
     </script>
 </head>
 <body>
@@ -30,7 +36,7 @@
 
     <input type="button" value="MAIÚSCULAS" onclick="MAI()"><br/><br/>
 
-    <input type="button" value="minúsculas"><br/><br/>
-    
+    <input type="button" value="minúsculas" onclick="min()"><br/><br/>
+
 </body>
 </html>
