@@ -12,11 +12,8 @@
     </style>
     <script>
         function MAI() {
-            var texto1=window.document.getElementById("texto1").value
             var texto2=window.document.getElementById("texto2").value
-            texto1=texto1.toUpperCase()
             texto2=texto2.toUpperCase()
-            window.document.getElementById("texto1").value=texto1
             window.document.getElementById("texto2").value=texto2
         }
 
@@ -29,8 +26,9 @@
 </head>
 <body>
     <h1>DIGITE SEU TEXTO</h1>
-    <textarea id="texto1" name="texto1" rows="10" cols="40">
-    </textarea><br/><br/>
+
+    <!--textarea id="texto1" name="texto1" rows="10" cols="40">
+    </textarea--><br/><br/>
 
     <input type="text" id="texto2" name="texto2" size="40" width="10" height="10"><br/><br/>
 
@@ -41,6 +39,17 @@
 </body>
 <!--
 altera
+
+        function MAI() {
+            var texto1=window.document.getElementById("texto1").value
+            var texto2=window.document.getElementById("texto2").value
+            texto1=texto1.toUpperCase()
+            texto2=texto2.toUpperCase()
+            window.document.getElementById("texto1").value=texto1
+            window.document.getElementById("texto2").value=texto2
+        }
+
+
 
 -->
 </html>
