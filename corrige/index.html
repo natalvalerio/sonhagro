@@ -48,9 +48,16 @@
             copiarTexto()
         }
 
-        function RemNum() {
+        function SoNum() {
             let texto1=window.document.getElementById("texto1").value
             texto1=texto1.replace(/[^0-9]/g,'');
+            window.document.getElementById("texto1").value=texto1
+            copiarTexto()
+        }
+
+        function RemNum() {
+            let texto1=window.document.getElementById("texto1").value
+            texto1=texto1.replace(/[^a-z]/g,'');
             window.document.getElementById("texto1").value=texto1
             copiarTexto()
         }
@@ -78,6 +85,8 @@
     <input type="button" value="minúsculas" onclick="minusculas()"><br/><br/>
 
     <input type="button" value="Primeiras Maiúsculas" onclick="PrimeiraMai()"><br/><br/>
+
+    <input type="button" value="Apenas Números" onclick="SoNum()"><br/><br/>
 
     <input type="button" value="Remover Números" onclick="RemNum()"><br/><br/>
 
