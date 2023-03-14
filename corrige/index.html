@@ -12,14 +12,19 @@
     </style>
     <script>
         function MAI() {
-            let texto2=window.document.getElementById("texto1").value
-            texto2=texto2.toUpperCase()
+            let texto1=window.document.getElementById("texto1").value
+            texto1=texto1.toUpperCase()
             window.document.getElementById("texto1").value=texto2
         }
 
         function minusculas() {
-            let texto2=window.document.getElementById("texto1").value
-            texto2=texto2.toLowerCase()
+            let texto1=window.document.getElementById("texto1").value
+            texto1=texto1.toLowerCase()
+            window.document.getElementById("texto1").value=texto2
+        }
+        function PrimeiraMai() {
+            let texto1=window.document.getElementById("texto1").value
+            texto1=texto1.toUpperCase()
             window.document.getElementById("texto1").value=texto2
         }
     </script>
@@ -29,11 +34,13 @@
 
     <textarea id="texto1" name="texto1" rows="10" cols="40" placeholder="Cole ou digite seu texto..."></textarea><br/><br/>
 
-    <input type="text" id="texto2" name="texto2" size="40" width="10" height="10" placeholder="Cole ou digite seu texto..."><br/><br/>
+    <!--input type="text" id="texto2" name="texto2" size="40" width="10" height="10" placeholder="Cole ou digite seu texto..."><br/><br/-->
 
     <input type="button" value="MAIÚSCULAS" onclick="MAI()"><br/><br/>
 
     <input type="button" value="minúsculas" onclick="minusculas()"><br/><br/>
+
+    <input type="button" value="Primeiras \rMaiúsculas" onclick="PrimeiraMai()"><br/><br/>
 
 </body>
 <!--
