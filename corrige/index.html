@@ -41,7 +41,29 @@
             //alert("O texto é: " + textoCopiado.value);
         }
 
+        function RemCarEsp() {
+            let texto1=window.document.getElementById("texto1").value
+            texto1=texto1.replace(/[^a-zA-Z0-9]/g, "");
+            window.document.getElementById("texto1").value=texto1
+            copiarTexto()
+        }
+
+        function RemNum() {
+            let texto1=window.document.getElementById("texto1").value
+            texto1=texto1.replace(/[^0-9]/g,'');
+            window.document.getElementById("texto1").value=texto1
+            copiarTexto()
+        }
+
+        function RemEsp() {
+            let texto1=window.document.getElementById("texto1").value
+            texto1=texto1.replace(/ /g, "");
+            window.document.getElementById("texto1").value=texto1
+            copiarTexto()
+        }
+
         
+
     </script>
 </head>
 <body>
@@ -59,7 +81,7 @@
 
     <input type="button" value="Remover Números" onclick="RemNum()"><br/><br/>
 
-    <input type="button" value="Remover Símbolos" onclick="RemSim()"><br/><br/>
+    <input type="button" value="Remover Caracteres Especiais" onclick="RemCarEsp()"><br/><br/>
 
     <input type="button" value="Remover Espaços" onclick="RemEsp()"><br/><br/>
 
