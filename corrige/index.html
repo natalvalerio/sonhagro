@@ -39,7 +39,9 @@
             textoCopiado.setSelectionRange(0, 99999)
             document.execCommand("copy");
             //alert("O texto é: " + textoCopiado.value);
-    }
+        }
+
+        
     </script>
 </head>
 <body>
@@ -54,6 +56,12 @@
     <input type="button" value="minúsculas" onclick="minusculas()"><br/><br/>
 
     <input type="button" value="Primeiras Maiúsculas" onclick="PrimeiraMai()"><br/><br/>
+
+    <input type="button" value="Remover Números" onclick="RemNum()"><br/><br/>
+
+    <input type="button" value="Remover Símbolos" onclick="RemSim()"><br/><br/>
+
+    <input type="button" value="Remover Espaços" onclick="RemEsp()"><br/><br/>
 
     <input type="button" value="Copiar Texto" onclick="copiarTexto()"><br/><br/>
 </body>
