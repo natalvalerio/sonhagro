@@ -57,7 +57,7 @@
 
         function RemNum() {
             let texto1=window.document.getElementById("texto1").value
-            texto1=texto1.replace(/[^a-z]/g,'');
+            texto1=texto1.replace(/[^a-zA-Z]/g,'');
             window.document.getElementById("texto1").value=texto1
             copiarTexto()
         }
