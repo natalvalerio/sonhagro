@@ -43,7 +43,7 @@
         var cep = valor.replace(/\D/g, '');
 
         //Verifica se campo cep possui valor informado.
-        if (cep != "") {
+        if (cep != "" && cep.length = 8) {
 
             //Expressão regular para validar o CEP.
             var validacep = /^[0-9]{8}$/;
@@ -94,7 +94,7 @@
         <input name="cep" type="text" id="cep" value="" size="10" maxlength="9" onblur="pesquisacep(this.value);" />
         </td></tr>
         <tr><td>Rua:</td><td>
-        <input name="rua" type="text" id="rua" size="60" />
+        <input name="rua" type="text" id="rua" size="40" />
         </td></tr>
         <tr><td>Bairro:</td><td>
         <input name="bairro" type="text" id="bairro" size="40" />
