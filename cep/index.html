@@ -89,24 +89,26 @@
     <!-- Inicio do formulario -->
       <h1 align="center">CONSULTA CEP</h1>
       <form method="get" action=".">
-        <label>Cep:
+        <table>
+        <tr><td>Cep:</td><td>
         <input name="cep" type="text" id="cep" value="" size="10" maxlength="9" onblur="pesquisacep(this.value);" />
-        </label><br /><br />
-        <label>Rua:
+        </td></tr>
+        <tr><td>Rua:</td><td>
         <input name="rua" type="text" id="rua" size="60" />
-        </label><br /><br />
-        <label>Bairro:
+        </td></tr>
+        <tr><td>Bairro:</td><td>
         <input name="bairro" type="text" id="bairro" size="40" />
-        </label><br /><br />
-        <label>Cidade:
+        </td></tr>
+        <tr><td>Cidade:</td><td>
         <input name="cidade" type="text" id="cidade" size="40" />
-        </label><br /><br />
-        <label>Estado:
+        </td></tr>
+        <tr><td>Estado:</td><td>
         <input name="uf" type="text" id="uf" size="2" />
-        </label><br /><br />
-        <label>IBGE:
+        </td></tr>
+        <tr><td>IBGE:</td><td>
         <input name="ibge" type="text" id="ibge" size="8" />
-        </label><br /><br />
+        </td></tr>
+        </table>
       </form>
     </body>
 
