@@ -91,8 +91,8 @@
       <h1 align="center">CONSULTA CEP</h1>
       <form method="get" action=".">
         <table>
-        <tr><td>Cep:</td><td>
-        <input name="cep" type="text" id="cep" value="" size="10" maxlength="9" onblur="pesquisacep(this.value);" />
+        <tr><td>Cep:</td><td> <!--onblur-->
+        <input name="cep" type="text" id="cep" value="" size="10" maxlength="8" onkeyup="pesquisacep(this.value);" />
         </td></tr>
         <tr><td>Rua:</td><td>
         <input name="rua" type="text" id="rua" size="40" />
