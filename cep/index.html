@@ -39,9 +39,11 @@
     }
     
     function campocheio(valor) {
-        if (valor.value.lenght >= 8) {
-            alert(valor.value+" \n"+valor.value.lenght)
-        }
+        var ret = valor.value+" \n"+valor.value.lenght
+        var par = document.getElementById("par").innerHTML=ret
+        //if (valor.value.lenght >= 8) {
+            
+        //}
     }
 
     function pesquisacep(valor) {
@@ -116,6 +118,8 @@
         </td></tr>
         </table>
       </form>
+      <br>
+      <p id="par">.</p>
     </body>
 
     </html>
