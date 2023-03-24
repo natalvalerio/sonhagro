@@ -39,7 +39,7 @@
     }
     
     function campocheio(valor) {
-        valor
+        alert(valor.value)
     }
 
     function pesquisacep(valor) {
@@ -95,7 +95,7 @@
       <form method="get" action=".">
         <table>
         <tr><td>CEP:</td><td> <!--onblur-->
-        <input name="cep" type="text" id="cep" value="" size="10" maxlength="8" onblur="pesquisacep(this.value);"  placeholder="CEP..."/>
+        <input name="cep" type="text" id="cep" value="" size="10" maxlength="8" onkeyup="campocheio(this)" onblur="pesquisacep(this.value);"  placeholder="CEP..."/>
         </td></tr>
         <tr><td>Rua:</td><td>
         <input name="rua" type="text" id="rua" size="40" placeholder="Rua..." />
