@@ -30,8 +30,6 @@ function drawBoard() {
   }
 }
 
-drawBoard();
-
 const PIECES = [
     [Z, "red"],
     [S, "green"],
