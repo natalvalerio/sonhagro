@@ -1,15 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Tetris</title>
-    <style>
-      canvas {
-        border: 1px solid black;
-      }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Tetris Game</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <canvas id="canvas"></canvas>
-    <script src="tetris.js"></script>
+    <div class="container">
+      <h1>Tetris Game</h1>
+      <div class="score-container">
+        <h2>Score:</h2>
+        <span id="score">0</span>
+      </div>
+      <canvas id="tetris" width="240" height="400"></canvas>
+    </div>
+
+    <script src="script.js"></script>
   </body>
 </html>

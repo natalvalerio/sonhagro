@@ -1,0 +1,46 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: #111;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    color: #fff;
+  }
+  
+  h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+  
+  .score-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    font-size: 36px;
+    margin-right: 10px;
+  }
+  
+  #score {
+    font-size: 36px;
+  }
+  
+  canvas {
+    border: 1px solid #fff;
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+  
