@@ -229,4 +229,3 @@ Piece.prototype.moveRight = function () {
   
     // update the score
     scoreElement.innerHTML = score;
-  
