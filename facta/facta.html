@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FACTA</title>
+    <style>
+        .div1 {
+            //position:fixed;
+            width:  700px;
+            height: 600px;
+            border-width: 2px; 
+            border-style: dotted;
+            border-color: black;
+            //display: flex;
+            //justify-content: center;
+            //align-items: center;
+
+        }
+        .div2 {
+            //position: fixed;
+            width:  650px;
+            height: 550px;
+            margin-left: 25px;
+            margin-top: 25px;
+            border-width: 2px; 
+            border-style: solid;
+            border-color: black;
+            align: center;
+        }
+        .div3 {
+            width:  610px;
+            height: 420px;
+            margin-left:16px;
+            margin-top: -5px;
+            border-width: 2px; 
+            border-style: solid;
+            border-color: black;
+        }
+        .div4 {
+            width:  610px;
+            height: 30px;
+            //color: white;
+            //background-color: #1F4E78;
+            font-size: larger;
+            text-align: center;
+        }
+        .table1 {
+            border-width: 2px; 
+            border-style: solid;
+            border-color: black;
+        }
+        .corescura {
+            color: white;
+            background-color: #1F4E78;
+        }
+
+        .corclara {
+            //color: white;
+            background-color: #BDD7EE;
+        }
+        input,select {
+			text-align: right;
+            height: 100%;
+            width: 95%;
+            border: 0 none;
+            //font-size: medium;
+		}
+        .bordas {
+            border-width: 1px; 
+            border-style: solid;
+            border-color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="div1">
+        <div class="div2">
+            <img width="650" src="top.png" alt="">
+            <div class="div3">
+                <div class="div4 corescura">
+                    SIMULADOR OFF-LINE - SAQUE FGTS
+                </div>
+                <table class="table1"><!--border="1" cellspacing="0" cellpading="0"-->
+                    <tr>
+                        <td width="150" class="corescura">Próximo Aniversário</td>
+                        <td><img width="15" src="seta01.jpg" alt=""></td>
+                        <td width="150" class="bordas"><select name="ani" id="ani">
+                            <option value="mês/ano">mês/ano</option>
+                            <option value="mês/ano">mês/ano</option>
+                            <option value="mês/ano">mês/ano</option>
+                            <option value="mês/ano">mês/ano</option>
+                        </select>
+                        </td>
+                        <td width="10" ></td>
+                        <td  width="270" colspan="2" class="corescura" align="center">Valor Disponível de Saldo FGTS</td>
+                    </tr>
+                    <tr>
+                        <td class="corescura">Condição Cliente</td>
+                        <td><img width="15" src="seta01.jpg" alt=""></td>
+                        <td class="bordas"><select name="con" id="con">
+                            <option value="Gold">Gold</option>
+                        </select>
+                        </td>
+                        <td></td>
+                        <td rowspan="3"><img width="25" src="seta02.jpg" alt=""></td>
+                        <td rowspan="3"><input type="number" id="disp" name="disp"></td>
+                    </tr>
+                    <tr>
+                        <td class="corescura">Parcelas a Antecipar</td>
+                        <td><img width="15" src="seta01.jpg" alt=""></td>
+                        <td class="bordas"><select name="par" id="par">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12" selected>12</option>
+                        </select>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="corescura">Data Contrato</td>
+                        <td></td>
+                        <td align="center" class="bordas corclara">05/05/2023</td>
+                        <td></td>
+                    </tr>                        
+                    <tr height="10"><td colspan="4"></td></tr>
+                    <tr>
+                        <td class="corescura" align="center">Vencimento</td>
+                        <td></td>
+                        <td class="corescura" align="center">Valor Antecipação</td>
+                        <td></td>
+                        <td class="corescura" align="center" colspan="2">Líquido Cliente</td>
+                        <!--itens-->
+                        <tr>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <td class="corclara" rowspan="2" colspan="2"></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <!--td class="corclara" colspan="2"></td-->
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <td class="corescura" rowspan="2" colspan="2"></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <!--td class="corclara" colspan="2"></td-->
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <td class="corescura" rowspan="4" colspan="2"></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <!--td class="corclara" colspan="2"></td-->
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <!--td class="corclara" colspan="2"></td-->
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <!--td class="corclara" colspan="2"></td-->
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <td class="corclara" rowspan="4" colspan="2"></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <!--td class="corclara" colspan="2"></td-->
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <!--td class="corclara" colspan="2"></td-->
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <td class="corclara">teste</td>
+                            <td></td>
+                            <!--td class="corclara" colspan="2"></td-->
+                        </tr>
+                        
+                    </tr>
+                </table>
+            </div></br>
+            <img width="650" src="bott.png" alt="">
+        </div>
+    </div>
+</body>
+</html>
