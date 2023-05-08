@@ -67,17 +67,49 @@
             border: 0 none;
             //font-size: medium;
 		}
+        .valor {
+            height: 50px;
+            font-size:x-large;
+        }
         .bordas {
             border-width: 1px; 
             border-style: solid;
             border-color: black;
         }
     </style>
+    <script>
+        function funi() {
+            var comboani=window.document.getElementById("ani")
+
+            var meses=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"]
+            var dt = new Date()
+            var ano = dt.getFullYear()
+            var mes = dt.getMonth()+1
+
+            var m1
+            var a1
+            for ( var i = 0; i < meses.length; i++ ) { 
+                m1 = mes-1+i
+                a1 = ano
+                if (m1>11) {
+                    //alert(mes)
+                    mes=-7
+                    m1 = mes-1+i
+                    ano=ano+1
+                    a1 = ano
+                }
+
+	            comboani.options[i].text=meses[m1]+"/"+a1
+                comboani.options[i].value=i+1
+            }
+
+        }
+    </script>
 </head>
 <body>
     <div class="div1">
         <div class="div2">
-            <img width="650" src="top.png" alt="">
+            <img width="650" src="top.png" alt="" onclick="funi()">
             <div class="div3">
                 <div class="div4 corescura">
                     SIMULADOR OFF-LINE - SAQUE FGTS
@@ -87,10 +119,18 @@
                         <td width="150" class="corescura">Próximo Aniversário</td>
                         <td><img width="15" src="seta01.jpg" alt=""></td>
                         <td width="150" class="bordas"><select name="ani" id="ani">
-                            <option value="mês/ano">mês/ano</option>
-                            <option value="mês/ano">mês/ano</option>
-                            <option value="mês/ano">mês/ano</option>
-                            <option value="mês/ano">mês/ano</option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
                         </select>
                         </td>
                         <td width="10" ></td>
@@ -105,7 +145,7 @@
                         </td>
                         <td></td>
                         <td rowspan="3"><img width="25" src="seta02.jpg" alt=""></td>
-                        <td rowspan="3"><input type="number" id="disp" name="disp"></td>
+                        <td rowspan="3"><input class="valor" type="number" id="disp" name="disp"></td>
                     </tr>
                     <tr>
                         <td class="corescura">Parcelas a Antecipar</td>
