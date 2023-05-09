@@ -78,13 +78,20 @@
         }
     </style>
     <script>
-        function funi() {
+        window.onload = function funi() {
             var comboani=window.document.getElementById("ani")
 
             var meses=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"]
             var dt = new Date()
             var ano = dt.getFullYear()
-            var mes = dt.getMonth()+1
+            var mes = dt.getMonth()+2
+            var dia = dt.getDate()
+            
+            //var myDate = new Date(Date.now()).toLocaleString().split(',')[0];
+            //alert(myDate); // 
+            
+
+            window.document.getElementById("agora").value = dia+"/"+mes+"/"+ano 
 
             var m1
             var a1
@@ -92,17 +99,22 @@
                 m1 = mes-1+i
                 a1 = ano
                 if (m1>11) {
-                    //alert(mes)
-                    mes=-7
+                    mes=-6
                     m1 = mes-1+i
                     ano=ano+1
                     a1 = ano
                 }
-
 	            comboani.options[i].text=meses[m1]+"/"+a1
-                comboani.options[i].value=i+1
+                comboani.options[i].value="/"+Number(m1+1)+"/"+a1
             }
-
+        }
+        
+        function dt_ani() {
+            var dt = new Date()
+            var dia = dt.getDate()
+            let ani = window.document.getElementById("ani").value
+            //window.document.getElementById("agora").value=dia+ani
+            //    alert(dia+ani)
         }
     </script>
 </head>
@@ -118,7 +130,7 @@
                     <tr>
                         <td width="150" class="corescura">Próximo Aniversário</td>
                         <td><img width="15" src="seta01.jpg" alt=""></td>
-                        <td width="150" class="bordas"><select name="ani" id="ani">
+                        <td width="150" class="bordas"><select name="ani" id="ani" onchange="dt_ani()">
                             <option value=""></option>
                             <option value=""></option>
                             <option value=""></option>
@@ -140,7 +152,9 @@
                         <td class="corescura">Condição Cliente</td>
                         <td><img width="15" src="seta01.jpg" alt=""></td>
                         <td class="bordas"><select name="con" id="con">
-                            <option value="Gold">Gold</option>
+                            <option value="2.04">Gold</option>
+                            <option value="1.98">Normal</option>
+                            <option value="1.70">Flex</option>
                         </select>
                         </td>
                         <td></td>
@@ -170,7 +184,7 @@
                     <tr>
                         <td class="corescura">Data Contrato</td>
                         <td></td>
-                        <td align="center" class="bordas corclara">05/05/2023</td>
+                        <td align="center" class="bordas corclara"><input type="text" id="agora" name="agora"></td>
                         <td></td>
                     </tr>                        
                     <tr height="10"><td colspan="4"></td></tr>
