@@ -57,10 +57,12 @@
         }
 
         .corclara {
-            //color: white;
+            color: #1F4E78;
             background-color: #BDD7EE;
         }
         input,select {
+            font-weight: bold;
+            color: #1F4E78;
 			text-align: right;
             height: 100%;
             width: 95%;
@@ -68,33 +70,44 @@
             //font-size: medium;
 		}
         .valor {
+            color: #1F4E78;
             height: 50px;
             font-size:x-large;
         }
         .bordas {
             border-width: 1px; 
             border-style: solid;
-            border-color: black;
+            border-color: #1F4E78;
+        }
+        .liquido {
+            color: #DAAF00;
+            background-color: #BDD7EE;
+            font-weight: bold;
+            text-align: center;
+            font-size:x-large;
         }
     </style>
     <script>
+        var meses=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"]
         window.onload = function funi() {
             var comboani=window.document.getElementById("ani")
-
-            var meses=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"]
             var dt = new Date()
             var ano = dt.getFullYear()
             var mes = dt.getMonth()+2
             var dia = dt.getDate()
+            if (dia<10) {dia="0"+dia}
+            if (mes<10) {mes="0"+mes}
             
             //var myDate = new Date(Date.now()).toLocaleString().split(',')[0];
-            //alert(myDate); // 
-            
+            //alert(myDate)
 
             window.document.getElementById("agora").value = dia+"/"+mes+"/"+ano 
+            var par = window.document.getElementById("par").value
 
-            var m1
-            var a1
+            var m1,a1,v,d,n,mesf,anof,mesc,valor,data
+            mesf = mes
+            if (mesf<10) {mes="0"+mesf}
+            anof = ano
             for ( var i = 0; i < meses.length; i++ ) { 
                 m1 = mes-1+i
                 a1 = ano
@@ -104,17 +117,50 @@
                     ano=ano+1
                     a1 = ano
                 }
-	            comboani.options[i].text=meses[m1]+"/"+a1
-                comboani.options[i].value="/"+Number(m1+1)+"/"+a1
+                mesc = Number(m1+1) 
+                if (mesc<10) {
+                    mesc = "0"+Number(m1+1)
+                }
+	            comboani.options[i].text  = meses[m1]+"/"+a1
+                comboani.options[i].value = mesc + "/" + a1
+                n=Number(i+1)
+                v="v"+n
+                d="d"+n
+                data  = "01/"+mes+"/"+Number(ano+i)
+                valor = n
+                if (i>=par) {
+                    data  = "."
+                    valor = "."
+                }
+                window.document.getElementById(d).innerText="01/"+mesf+"/"+Number(anof+i)
+                window.document.getElementById(v).innerText=n  
             }
         }
         
         function dt_ani() {
+            var ani = window.document.getElementById("ani").value
+            var par = window.document.getElementById("par").value
+            var disp = window.document.getElementById("disp").value
             var dt = new Date()
-            var dia = dt.getDate()
-            let ani = window.document.getElementById("ani").value
+            var ano = Number(ani.substr(-4))   //dt.getFullYear()
+            var mes = ani.substr(-7,2) //dt.getMonth()+2
+            //var dia = dt.getDate()
+            var v,d,n,data,valor
+            for ( var i = 0; i < 12; i++ ) { 
+                n=Number(i+1)
+                v="v"+n
+                d="d"+n
+                data  = "01/"+mes+"/"+Number(ano+i)
+                valor = n
+                if (i>=par) {
+                    data  = "."
+                    valor = "."
+                }
+                window.document.getElementById(d).innerText = data
+                window.document.getElementById(v).innerText = valor  
+            }
             //window.document.getElementById("agora").value=dia+ani
-            //    alert(dia+ani)
+            window.document.getElementById("liquido").innerText=Number(disp * 0.6753334458889)
         }
     </script>
 </head>
@@ -159,12 +205,12 @@
                         </td>
                         <td></td>
                         <td rowspan="3"><img width="25" src="seta02.jpg" alt=""></td>
-                        <td rowspan="3"><input class="valor" type="number" id="disp" name="disp"></td>
+                        <td rowspan="3"><input class="valor" type="number" id="disp" name="disp" value="1000.00" onblur="dt_ani()"></td>
                     </tr>
                     <tr>
                         <td class="corescura">Parcelas a Antecipar</td>
                         <td><img width="15" src="seta01.jpg" alt=""></td>
-                        <td class="bordas"><select name="par" id="par">
+                        <td class="bordas"><select name="par" id="par" onchange="dt_ani()">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -184,7 +230,7 @@
                     <tr>
                         <td class="corescura">Data Contrato</td>
                         <td></td>
-                        <td align="center" class="bordas corclara"><input type="text" id="agora" name="agora"></td>
+                        <td align="center" class="bordas corclara"><input class="corclara" readonly=“true” type="text" id="agora" name="agora"></td>
                         <td></td>
                     </tr>                        
                     <tr height="10"><td colspan="4"></td></tr>
@@ -196,97 +242,97 @@
                         <td class="corescura" align="center" colspan="2">Líquido Cliente</td>
                         <!--itens-->
                         <tr>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="d1">teste</td>
                             <td></td>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="v1">teste</td>
                             <td></td>
-                            <td class="corclara" rowspan="2" colspan="2"></td>
+                            <td id="liquido" name="liquido" class="liquido" rowspan="2" colspan="2">liquido</td>
                         </tr>
                         
                         <tr>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="d2">teste</td>
                             <td></td>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="v2">teste</td>
                             <td></td>
                             <!--td class="corclara" colspan="2"></td-->
                         </tr>
                         
                         <tr>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="d3">teste</td>
                             <td></td>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="v3">teste</td>
                             <td></td>
                             <td class="corescura" rowspan="2" colspan="2"></td>
                         </tr>
                         
                         <tr>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="d4">teste</td>
                             <td></td>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="v4">teste</td>
                             <td></td>
                             <!--td class="corclara" colspan="2"></td-->
                         </tr>
                         
                         <tr>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="d5">teste</td>
                             <td></td>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="v5">teste</td>
                             <td></td>
                             <td class="corescura" rowspan="4" colspan="2"></td>
                         </tr>
                         
                         <tr>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="d6">teste</td>
                             <td></td>
-                            <td class="corclara">teste</td>
-                            <td></td>
-                            <!--td class="corclara" colspan="2"></td-->
-                        </tr>
-                        
-                        <tr>
-                            <td class="corclara">teste</td>
-                            <td></td>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="v6">teste</td>
                             <td></td>
                             <!--td class="corclara" colspan="2"></td-->
                         </tr>
                         
                         <tr>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="d7">teste</td>
                             <td></td>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="v7">teste</td>
                             <td></td>
                             <!--td class="corclara" colspan="2"></td-->
                         </tr>
                         
                         <tr>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="d8">teste</td>
                             <td></td>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="v8">teste</td>
+                            <td></td>
+                            <!--td class="corclara" colspan="2"></td-->
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara" id="d9">teste</td>
+                            <td></td>
+                            <td class="corclara" id="v9">teste</td>
                             <td></td>
                             <td class="corclara" rowspan="4" colspan="2"></td>
                         </tr>
                         
                         <tr>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="d10">teste</td>
                             <td></td>
-                            <td class="corclara">teste</td>
-                            <td></td>
-                            <!--td class="corclara" colspan="2"></td-->
-                        </tr>
-                        
-                        <tr>
-                            <td class="corclara">teste</td>
-                            <td></td>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="v10">teste</td>
                             <td></td>
                             <!--td class="corclara" colspan="2"></td-->
                         </tr>
                         
                         <tr>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="d11">teste</td>
                             <td></td>
-                            <td class="corclara">teste</td>
+                            <td class="corclara" id="v11">teste</td>
+                            <td></td>
+                            <!--td class="corclara" colspan="2"></td-->
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara" id="d12">teste</td>
+                            <td></td>
+                            <td class="corclara" id="v12">teste</td>
                             <td></td>
                             <!--td class="corclara" colspan="2"></td-->
                         </tr>
