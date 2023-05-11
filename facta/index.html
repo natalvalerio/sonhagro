@@ -100,6 +100,8 @@
         var meses=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"]
         window.onload = function funi() {
             var comboani=window.document.getElementById("ani")
+            var disp = window.document.getElementById("disp").value
+            var par = window.document.getElementById("par").value
             var dt = new Date()
             var ano = dt.getFullYear()
             var mes = dt.getMonth()+2
@@ -109,9 +111,6 @@
             
             //var myDate = new Date(Date.now()).toLocaleString().split(',')[0];
             //alert(myDate)
-
-            window.document.getElementById("agora").value = dia+"/"+mes+"/"+ano 
-            var par = window.document.getElementById("par").value
 
             var m1,a1,v,d,n,mesf,anof,mesc,valor,data
             mesf = mes
@@ -136,7 +135,7 @@
                 v="v"+n
                 d="d"+n
                 data  = "01/"+mes+"/"+Number(ano+i)
-                valor = n
+                valor = disp
                 if (i>=par) {
                     data  = "."
                     valor = "."
@@ -144,8 +143,8 @@
                 window.document.getElementById(d).innerText="01/"+mesf+"/"+Number(anof+i)
                 window.document.getElementById(v).innerText=n 
             }
+            window.document.getElementById("agora").value = dia+"/"+mes+"/"+ano 
             window.document.getElementById("doze").innerText=par
-            var disp = window.document.getElementById("disp").value
             window.document.getElementById("liquido").innerText=Number(disp * 0.6753334458889)
         }
         
@@ -163,7 +162,7 @@
                 v="v"+n
                 d="d"+n
                 data  = "01/"+mes+"/"+Number(ano+i)
-                valor = n
+                valor = disp
                 if (i>=par) {
                     data  = "."
                     valor = "."
