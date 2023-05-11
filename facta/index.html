@@ -59,7 +59,9 @@
         .corclara {
             color: #1F4E78;
             background-color: #BDD7EE;
+            text-align: center;
         }
+    
         input,select {
             font-weight: bold;
             color: #1F4E78;
@@ -114,8 +116,9 @@
 
             var m1,a1,v,d,n,mesf,anof,mesc,valor,data
             mesf = mes
-            if (mesf<10) {mes="0"+mesf}
+            //if (mesf<10) {mes="0"+mesf}
             anof = ano
+            window.document.getElementById("agora").value = dia+"/"+mes+"/"+ano
             for ( var i = 0; i < meses.length; i++ ) { 
                 m1 = mes-1+i
                 a1 = ano
@@ -135,17 +138,16 @@
                 v="v"+n
                 d="d"+n
                 data  = "01/"+mes+"/"+Number(ano+i)
-                valor = disp
+                valor = Number(disp).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
                 if (i>=par) {
                     data  = "."
                     valor = "."
                 }
                 window.document.getElementById(d).innerText="01/"+mesf+"/"+Number(anof+i)
-                window.document.getElementById(v).innerText=n 
-            }
-            window.document.getElementById("agora").value = dia+"/"+mes+"/"+ano 
+                window.document.getElementById(v).innerText=valor
+            } 
             window.document.getElementById("doze").innerText=par
-            window.document.getElementById("liquido").innerText=Number(disp * 0.6753334458889)
+            window.document.getElementById("liquido").innerText=Number(disp * 0.6753334458889).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
         }
         
         function dt_ani() {
@@ -162,7 +164,7 @@
                 v="v"+n
                 d="d"+n
                 data  = "01/"+mes+"/"+Number(ano+i)
-                valor = disp
+                valor = Number(disp).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
                 if (i>=par) {
                     data  = "."
                     valor = "."
@@ -171,7 +173,7 @@
                 window.document.getElementById(v).innerText = valor  
             }
             window.document.getElementById("doze").innerText=par
-            window.document.getElementById("liquido").innerText=Number(disp * 0.6753334458889)
+            window.document.getElementById("liquido").innerText=Number(disp * 0.6753334458889).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
         }
     </script>
 </head>
