@@ -67,7 +67,6 @@
             height: 100%;
             width: 95%;
             border: 0 none;
-            //font-size: medium;
 		}
         .valor {
             color: #1F4E78;
@@ -85,6 +84,16 @@
             font-weight: bold;
             text-align: center;
             font-size:x-large;
+        }
+        .aviso {
+            font-size:small;
+        }
+        .pequeno {
+            font-size: 12px;
+        }
+        .doze {
+            font-size: 36px; 
+            font-weight: bold;           
         }
     </style>
     <script>
@@ -133,8 +142,11 @@
                     valor = "."
                 }
                 window.document.getElementById(d).innerText="01/"+mesf+"/"+Number(anof+i)
-                window.document.getElementById(v).innerText=n  
+                window.document.getElementById(v).innerText=n 
             }
+            window.document.getElementById("doze").innerText=par
+            var disp = window.document.getElementById("disp").value
+            window.document.getElementById("liquido").innerText=Number(disp * 0.6753334458889)
         }
         
         function dt_ani() {
@@ -159,7 +171,7 @@
                 window.document.getElementById(d).innerText = data
                 window.document.getElementById(v).innerText = valor  
             }
-            //window.document.getElementById("agora").value=dia+ani
+            window.document.getElementById("doze").innerText=par
             window.document.getElementById("liquido").innerText=Number(disp * 0.6753334458889)
         }
     </script>
@@ -211,15 +223,15 @@
                         <td class="corescura">Parcelas a Antecipar</td>
                         <td><img width="15" src="seta01.jpg" alt=""></td>
                         <td class="bordas"><select name="par" id="par" onchange="dt_ani()">
-                            <option value="01">1</option>
-                            <option value="02">2</option>
-                            <option value="03">3</option>
-                            <option value="04">4</option>
-                            <option value="05">5</option>
-                            <option value="06">6</option>
-                            <option value="07">7</option>
-                            <option value="08">8</option>
-                            <option value="09">9</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
                             <option value="10">10</option>
                             <option value="11">11</option>
                             <option value="12" selected>12</option>
@@ -246,7 +258,7 @@
                             <td></td>
                             <td class="corclara" id="v1">teste</td>
                             <td></td>
-                            <td id="liquido" name="liquido" class="liquido" rowspan="2" colspan="2">liquido</td>
+                            <td id="liquido" name="liquido" class="liquido" rowspan="2" colspan="2"></td>
                         </tr>
                         
                         <tr>
@@ -262,7 +274,7 @@
                             <td></td>
                             <td class="corclara" id="v3">teste</td>
                             <td></td>
-                            <td class="corescura" rowspan="2" colspan="2"></td>
+                            <td class="corescura" rowspan="2" colspan="2" align="center">Atenção! Nenhum valor adicional <br> deverá ser cobrado do cliente!</td>
                         </tr>
                         
                         <tr>
@@ -278,7 +290,7 @@
                             <td></td>
                             <td class="corclara" id="v5">teste</td>
                             <td></td>
-                            <td class="corescura" rowspan="4" colspan="2"></td>
+                            <td class="corescura aviso" rowspan="4" colspan="2">Obs.:<br>Este simulador foi criado apenas para referência<br>de valores na data mencionada, não podendo ser<br>considerado como proposta final. Para um valor<br>exato, énecessário autorizar a Facta Financeira</td>
                         </tr>
                         
                         <tr>
@@ -310,7 +322,7 @@
                             <td></td>
                             <td class="corclara" id="v9">teste</td>
                             <td></td>
-                            <td class="corclara" rowspan="4" colspan="2"></td>
+                            <td class="corclara pequeno" rowspan="4" colspan="2" align="center">NESTA SIMULAÇÃO VC ESTÁ ANTECIPANDO</BR><SPAN id="doze" name="doze" class="doze"></SPAN></BR>ANOS DO SEU SAQUE ANIVERSÁRIO</td>
                         </tr>
                         
                         <tr>
