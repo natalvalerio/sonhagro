@@ -1,127 +1,159 @@
+<!DOCTYPE html>
 <html>
-    <head>
+<head>
     <title>CONSULTA CEP</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <style>
         body {
-            background-color: green;
-            color: greenyellow;
+            background-color: rgb(49, 185, 39);
+            color: #ffffff;
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+
+        input[type="text"] {
+            background-color: #ffffff;
+            color: rgb(49, 185, 39);
+            border: none;
+            padding: 5px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        input[type="text"]::placeholder {
+            color: rgb(49, 185, 39);
+            opacity: 0.6;
+            text-transform: uppercase;
+        }
+        
+        table {
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            text-transform: uppercase;
+        }
+
+        #par {
+            color: #ffffff;
+            text-align: center;
         }
     </style>
     
     <!-- Adicionando Javascript -->
     <script>
-    
-    function limpa_formulário_cep() {
-            //Limpa valores do formulário de cep.
-            document.getElementById('rua').value=("");
-            document.getElementById('bairro').value=("");
-            document.getElementById('cidade').value=("");
-            document.getElementById('uf').value=("");
-            document.getElementById('ibge').value=("");
-    }
-
-    function meu_callback(conteudo) {
-        if (!("erro" in conteudo)) {
-            //Atualiza os campos com os valores.
-            document.getElementById('rua').value=(conteudo.logradouro);
-            document.getElementById('bairro').value=(conteudo.bairro);
-            document.getElementById('cidade').value=(conteudo.localidade);
-            document.getElementById('uf').value=(conteudo.uf);
-            document.getElementById('ibge').value=(conteudo.ibge);
-        } //end if.
-        else {
-            //CEP não Encontrado.
-            limpa_formulário_cep();
-            alert("CEP não encontrado.");
+        function limpa_formulário_cep() {
+            // Limpa valores do formulário de cep.
+            document.getElementById('rua').value = "";
+            document.getElementById('bairro').value = "";
+            document.getElementById('cidade').value = "";
+            document.getElementById('uf').value = "";
+            document.getElementById('ibge').value = "";
         }
-    }
-    
-    function campocheio(valor) {
-        var ret = "<p>Valor: "+valor.value+"<br>Valor: "+valor.value.length+"</p>"
-        var par = document.getElementById("par").innerHTML=ret
-        if (valor.value.length >= 8) {
-            //alert("Deu certo!") 
-            //pesquisacep()   
-            document.getElementById('cep').blur();
-        }
-    }
 
-    function pesquisacep(valor) {
-
-        //Nova variável "cep" somente com dígitos.
-        var cep = valor.replace(/\D/g, '');
-
-        //Verifica se campo cep possui valor informado.
-        if (cep != "") {
-            //Expressão regular para validar o CEP.
-            var validacep = /^[0-9]{8}$/;
-
-            //Valida o formato do CEP.
-            if(validacep.test(cep)) {
-
-                //Preenche os campos com "..." enquanto consulta webservice.
-                /*
-                document.getElementById('rua').value="...";
-                document.getElementById('bairro').value="...";
-                document.getElementById('cidade').value="...";
-                document.getElementById('uf').value="...";
-                document.getElementById('ibge').value="...";
-                */
-
-                //Cria um elemento javascript.
-                var script = document.createElement('script');
-
-                //Sincroniza com o callback.
-                script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
-
-                //Insere script no documento e carrega o conteúdo.
-                document.body.appendChild(script);
-
-            } //end if.
-            else {
-                //cep é inválido.
+        function meu_callback(conteudo) {
+            if (!("erro" in conteudo)) {
+                // Atualiza os campos com os valores.
+                document.getElementById('rua').value = (conteudo.logradouro);
+                document.getElementById('bairro').value = (conteudo.bairro);
+                document.getElementById('cidade').value = (conteudo.localidade);
+                document.getElementById('uf').value = (conteudo.uf);
+                document.getElementById('ibge').value = (conteudo.ibge);
+            } else {
+                // CEP não Encontrado.
                 limpa_formulário_cep();
-                alert("Formato de CEP inválido.");
+                alert("CEP não encontrado.");
             }
-        } //end if.
-        else {
-            //cep sem valor, limpa formulário.
-            limpa_formulário_cep();
         }
-    };
 
+        function campocheio(valor) {
+            var ret = "<p>Valor: " + valor.value + "<br>Valor: " + valor.value.length + "</p>"
+            var par = document.getElementById("par").innerHTML = ret
+            if (valor.value.length >= 8) {
+                document.getElementById('cep').blur();
+            }
+        }
+
+        function pesquisacep(valor) {
+            // Nova variável "cep" somente com dígitos.
+            var cep = valor.replace(/\D/g, '');
+
+            // Verifica se campo cep possui valor informado.
+            if (cep != "") {
+                // Expressão regular para validar o CEP.
+                var validacep = /^[0-9]{8}$/;
+
+                // Valida o formato do CEP.
+                if (validacep.test(cep)) {
+                    // Cria um elemento javascript.
+                    var script = document.createElement('script');
+
+                    // Sincroniza com o callback.
+                    script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
+
+                    // Insere script no documento e carrega o conteúdo.
+                    document.body.appendChild(script);
+                } else {
+                    // CEP é inválido.
+                    limpa_formulário_cep();
+                    alert("Formato de CEP inválido.");
+                }
+            } else {
+                // CEP sem valor, limpa formulário.
+                limpa_formulário_cep();
+            }
+        };
     </script>
-    </head>
+</head>
 
-    <body>
-    <!-- Inicio do formulario -->
-      <h1 align="center">CONSULTA CEP</h1>
-      <form method="get" action=".">
+<body>
+    <!-- Início do formulário -->
+    <h1>Consulta CEP</h1>
+    <form method="get" action=".">
         <table>
-        <tr><td>CEP:</td><td> <!--onblur-->
-        <input name="cep" type="text" id="cep" value="" size="10" maxlength="8" onkeyup="campocheio(this)" onblur="pesquisacep(this.value);"  placeholder="CEP..."/>
-        </td></tr>
-        <tr><td>Rua:</td><td>
-        <input name="rua" type="text" id="rua" size="40" placeholder="Rua..." />
-        </td></tr>
-        <tr><td>Bairro:</td><td>
-        <input name="bairro" type="text" id="bairro" size="40"  placeholder="Bairro..."/>
-        </td></tr>
-        <tr><td>Cidade:</td><td>
-        <input name="cidade" type="text" id="cidade" size="40"  placeholder="Cidade..."/>
-        </td></tr>
-        <tr><td>Estado:</td><td>
-        <input name="uf" type="text" id="uf" size="2"  placeholder="Estado..."/>
-        </td></tr>
-        <tr><td>IBGE:</td><td>
-        <input name="ibge" type="text" id="ibge" size="8"  placeholder="IBGE..."/>
-        </td></tr>
+            <tr>
+                <td>CEP:</td>
+                <td>
+                    <input name="cep" type="text" id="cep" value="" size="10" maxlength="8" onkeyup="campocheio(this)" onblur="pesquisacep(this.value);" placeholder="CEP..." />
+                </td>
+            </tr>
+            <tr>
+                <td>Rua:</td>
+                <td>
+                    <input name="rua" type="text" id="rua" size="40" placeholder="Rua..." />
+                </td>
+            </tr>
+            <tr>
+                <td>Bairro:</td>
+                <td>
+                    <input name="bairro" type="text" id="bairro" size="40" placeholder="Bairro..." />
+                </td>
+            </tr>
+            <tr>
+                <td>Cidade:</td>
+                <td>
+                    <input name="cidade" type="text" id="cidade" size="40" placeholder="Cidade..." />
+                </td>
+            </tr>
+            <tr>
+                <td>Estado:</td>
+                <td>
+                    <input name="uf" type="text" id="uf" size="2" placeholder="Estado..." />
+                </td>
+            </tr>
+            <tr>
+                <td>IBGE:</td>
+                <td>
+                    <input name="ibge" type="text" id="ibge" size="8" placeholder="IBGE..." />
+                </td>
+            </tr>
         </table>
-      </form>
-      <br>
-      <p id="par">.</p>
-    </body>
+    </form>
+    <br>
+    <p id="par">.</p>
+</body>
 
-    </html>
+</html>

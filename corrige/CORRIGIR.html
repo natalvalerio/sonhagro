@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)https://natalvalerio.github.io/sonhagro/corrige/ -->
+<html lang="pt-br"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORRIGIR</title>
+    <style>
+        body {
+            background-color: #e6ff07; 
+        }
+    </style>
+    <script>
+        function MAI() {
+            let texto1=window.document.getElementById("texto1").value
+            texto1=texto1.toUpperCase()
+            window.document.getElementById("texto1").value=texto1
+            copiarTexto()
+        }
+
+        function minusculas() {
+            let texto1=window.document.getElementById("texto1").value
+            texto1=texto1.toLowerCase()
+            window.document.getElementById("texto1").value=texto1
+            copiarTexto()
+        }
+
+        function PrimeiraMai() {
+            let texto1=window.document.getElementById("texto1").value
+            texto1=texto1.toLowerCase()
+            texto1=texto1.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase());
+            window.document.getElementById("texto1").value=texto1
+            copiarTexto()
+        }
+
+        function copiarTexto() {
+            let textoCopiado = document.getElementById("texto1");
+            textoCopiado.select();
+            textoCopiado.setSelectionRange(0, 99999)
+            document.execCommand("copy");
+            //alert("O texto é: " + textoCopiado.value);
+        }
+
+        function RemCarEsp() {
+            let texto1=window.document.getElementById("texto1").value
+            texto1=texto1.replace(/[^a-zA-Z0-9]/g, "");
+            window.document.getElementById("texto1").value=texto1
+            copiarTexto()
+        }
+
+        function SoNum() {
+            let texto1=window.document.getElementById("texto1").value
+            texto1=texto1.replace(/[^0-9]/g,'');
+            window.document.getElementById("texto1").value=texto1
+            copiarTexto()
+        }
+
+        function RemNum() {
+            let texto1=window.document.getElementById("texto1").value
+            texto1=texto1.replace(/[^a-zA-Z]/g,'');
+            window.document.getElementById("texto1").value=texto1
+            copiarTexto()
+        }
+
+        function RemEsp() {
+            let texto1=window.document.getElementById("texto1").value
+            texto1=texto1.replace(/ /g, "");
+            window.document.getElementById("texto1").value=texto1
+            copiarTexto()
+        }
+
+        
+
+    </script>
+</head>
+<body>
+    <h1>DIGITE SEU TEXTO</h1>
+
+    <textarea id="texto1" name="texto1" rows="10" cols="40" placeholder="Cole ou digite seu texto..."></textarea><br><br>
+
+    <!--input type="text" id="texto2" name="texto2" size="40" width="10" height="10" placeholder="Cole ou digite seu texto..."><br/><br/-->
+
+    <input type="button" value="MAIÚSCULAS" onclick="MAI()"><br><br>
+
+    <input type="button" value="minúsculas" onclick="minusculas()"><br><br>
+
+    <input type="button" value="Primeiras Maiúsculas" onclick="PrimeiraMai()"><br><br>
+
+    <input type="button" value="Apenas Números" onclick="SoNum()"><br><br>
+
+    <input type="button" value="Remover Números" onclick="RemNum()"><br><br>
+
+    <input type="button" value="Remover Caracteres Especiais" onclick="RemCarEsp()"><br><br>
+
+    <input type="button" value="Remover Espaços" onclick="RemEsp()"><br><br>
+
+    <input type="button" value="Copiar Texto" onclick="copiarTexto()"><br><br>
+
+
+</body><!--
+altera
+
+        function MAI() {
+            var texto1=window.document.getElementById("texto1").value
+            var texto2=window.document.getElementById("texto2").value
+            texto1=texto1.toUpperCase()
+            texto2=texto2.toUpperCase()
+            window.document.getElementById("texto1").value=texto1
+            window.document.getElementById("texto2").value=texto2
+        }
+
+
+
+--></html>
