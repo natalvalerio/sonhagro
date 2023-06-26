@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEP</title>
+    <script>
+    function cep2() {    
+        var uf     = document.getElementById("uf").value;
+        var cidade = document.getElementById("cidade").value;
+        var rua    = document.getElementById("rua").value;
+        var url = 'https://viacep.com.br/ws/'+uf+'/'+cidade+'/'+rua+'/json/';
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0) {
+                    var cep = data[0].cep;
+                    if (cep) {
+                        document.getElementById('resposta').textContent = 'CEP: ' + cep;
+                    } else {
+                        document.getElementById('resposta').textContent = 'CEP não encontrado.';
+                    }
+                } else {
+                    document.getElementById('resposta').textContent = 'CEP não encontrado.';
+                }
+            })
+            .catch(error => {
+                document.getElementById('resposta').textContent = 'Ocorreu um erro ao buscar o CEP.';
+                console.error(error);
+            });
+    }    
+    </script>
+</head>
+<body>
+    <h1>Entre com a UF, Cidade e Rua para obter o CEP</h1>
+    <table>
+        <tr>
+            <td>UF:</td>
+            <td><input type="text" id="uf" value="mg"></td>
+        </tr>
+        <tr>
+            <td>Cidade:</td>
+            <td><input type="text" id="cidade" value="divino"></td>   
+        </tr>
+        <tr>
+            <td>Rua:</td>
+            <td><input type="text" id="rua" value="divino"></td>   
+        </tr> 
+    </table>
+    <button onclick="cep2()">Pesquisar</button>
+
+    <div id="resposta"></div>
+</body>
+</html>
