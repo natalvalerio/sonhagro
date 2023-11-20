@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONSÓRCIO</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+
+    <style>
+	body {
+		font-family: "Helvetica", arial;
+		background-color: rgb(49, 185, 39);
+		color: #ffffff;
+		font-size: 18px;
+		text-transform: uppercase;
+	}	
+	h1 {
+		font-size: 40px;
+		margin-bottom: 40px;
+	}
+		h1 span {
+		color: #428bca;
+	}
+	b {
+		font-weight: bold;
+	}
+	.principal {
+		padding: 40px;
+	}
+	hr {
+		clear: both;
+		margin-top: 40px;
+		margin-bottom: 40px;
+		border: 0;
+		border-top: 1px solid #999;
+	}
+	h1 {
+		font-size: 30px;
+		margin-bottom: 40px;
+	}
+	p {
+		margin-bottom: 20px;
+	}
+	.form-item {
+		max-width: none;
+		margin-bottom: 15px;
+		position: relative;
+	}
+	.form-control {
+		box-sizing: border-box;
+		border-radius: 2px;
+		border: 1px solid #999;
+		color: #333;
+		font-size: 16px;
+		display: block;
+		height: 60px;
+		padding: 20px 20px 0;
+		width: 100%;
+	}
+	.form-control:valid {
+		border-color: #00b232;
+	}
+	.form-control:focus {
+		border-color: #428bca;
+	}
+	.label-float {
+		color: #999;
+		position: absolute;
+		top: 0;
+		line-height: 60px;
+		padding: 0 20px;
+		-webkit-transition: line-height linear 0.2s;
+		transition: line-height linear 0.2s;
+		cursor: text;
+	}
+	.form-control:focus + .label-float,
+	.form-control:valid + .label-float {
+		color: #ccc;
+		font-size: 12px;
+		line-height: 1.5;
+	}
+
+
+    /* Estilizando campos de entrada */
+	input[type="text"], select {
+		border: none; 
+		background-color: #ffffff;
+		color: rgb(49, 185, 39);
+		text-transform: uppercase; 
+		font-size: 32px; 
+		box-sizing: border-box;
+	}
+
+	input[type="text"]::placeholder {
+		color: rgb(49, 185, 39);
+		opacity: 0.6;
+		text-transform: uppercase;
+	}
+
+	h1 {
+		text-align: center;
+		margin-top: 20px;
+		text-transform: uppercase;
+	}
+
+	button {
+		font-size: 32px; 
+		width: 90%;
+		box-sizing: border-box;
+	}
+
+
+	
+
+    </style>
+	<script>
+	function fx(numero, decimal) {
+		//if (typeof numero === 'number') {
+			return parseFloat(numero.toFixed(decimal));
+		//} else {
+		//	return NaN; // Retorna NaN se o parâmetro não for um número
+		//}
+	}
+
+	function calcula() {
+		var val_car, parcela, prazo, tip_lan_emb, lan_emb, tip_lan_pro, lan_pro, par_pag
+		var pra_res, tax_men, tax_anu, por_tot_lan, val_tot_lan, nov_par, pra_res2, nov_pra, parcela2
+		val_car = parseFloat(document.querySelector('#val_car').value)
+		parcela = parseFloat(document.querySelector('#parcela').value)
+		prazo =   Number(document.querySelector('#prazo').value)
+		tip_lan_emb = document.querySelector('#tip_lan_emb').value
+		lan_emb     = Number(document.querySelector('#lan_emb').value)
+		tip_lan_pro = document.querySelector('#tip_lan_pro').value
+		lan_pro = parseFloat(document.querySelector('#lan_pro').value)
+		par_pag = parseFloat(document.querySelector('#par_pag').value)
+
+		var VT = parcela * prazo
+		var TX = VT / val_car
+		var TM = fx((TX - 1) / prazo * 100 , 3)
+		var TA = fx(TM * 12 , 2)       
+		
+		pra_res = prazo - par_pag
+		tax_men = TM
+		tax_anu = TA
+		if (tip_lan_emb == "%") {lan_emb = fx(lan_emb / 100 * val_car,2)}
+		if (tip_lan_pro == "%") {lan_pro = fx(lan_pro / 100 * val_car,2)}
+
+		val_tot_lan = lan_emb + lan_pro
+		por_tot_lan = fx(val_tot_lan / val_car * 100,2)
+
+		var VP = fx((parcela * par_pag) + val_tot_lan,2)
+		var VR = VT - VP
+
+		nov_par = fx(VR / pra_res,2)
+		pra_res2 = pra_res
+		nov_pra = fx(VR / parcela,0)
+		parcela2 = parcela
+		
+		console.log('        VALOR CARTA: '+val_car)
+		console.log('            PARCELA: '+parcela)
+		console.log('              PRAZO: '+prazo)
+		console.log('TIPO LANCE EMBUTIDO: '+tip_lan_emb)
+		console.log(' TIPO LANCE PROPRIO: '+tip_lan_pro)
+		console.log('     LANCE EMBUTIDO: '+lan_emb)
+		console.log('      LANCE PROPRIO: '+lan_pro)
+
+		console.log('   VALOR TOTAL: '+VT)
+		console.log('          TAXA: '+TX)
+		console.log('    VALOR PAGO: '+VP)
+		console.log('VALOR RESTANTE: '+VR)
+		console.log('   TAXA MENSAL: '+TM)
+		console.log('    TAXA ANUAL: '+TA)
+
+		console.log('PRAZO RESTANTE: '+pra_res)
+		console.log('   TAXA MENSAL: '+tax_men)
+		console.log('    TAXA ANUAL: '+tax_anu)
+		console.log('LANCE EMBUTIDO: '+lan_emb)
+		console.log(' LANCE PROPRIO: '+lan_pro)
+
+		console.log('$ TOTAL DE LANCE: '+val_tot_lan)
+		console.log('% TOTAL DE LANCE: '+por_tot_lan)
+		console.log('NOVA PARCELA: '+nov_par)
+		console.log('       PRAZO: '+pra_res2)
+		console.log('  NOVO PRAZO: '+nov_pra)
+		console.log('     PARCELA: '+parcela2)
+
+		document.getElementById('pra_res').value=pra_res
+		document.getElementById('tax_men').value=TM
+		document.getElementById('tax_anu').value=TA
+		document.getElementById('val_tot_lan').value=val_tot_lan
+		document.getElementById('por_tot_lan').value=por_tot_lan
+		document.getElementById('nov_par').value=nov_par
+		document.getElementById('pra_res2').value=pra_res2
+		document.getElementById('nov_pra').value=nov_pra
+		document.getElementById('parcela2').value=parcela2
+	}
+    </script>
+	
+	
+	
+	
+</head>
+<body>
+<div class="principal"> 
+	<fieldset>
+	<H1>CONSÓRCIO</H1>
+	<div class="form-group">
+		<div class="form-item">
+			<input class="form-control" id="val_car" type="text" REQUIRED="">
+			<label class="label-float"  for="val_car">VALOR DA CARTA</label>
+		</div>
+		<div class="form-item">
+			<input class="form-control" type="text" id="parcela" required="">
+			<label class="label-float"  for="parcela">PARCELA</label>
+		</div>
+		<div class="form-item">
+			<input class="form-control" type="text" id="prazo" required="">
+			<label class="label-float"    for="prazo">PRAZO</label>
+		</div>
+		<div class="form-item">
+			<select class="form-control" id="tip_lan_emb" name="tip_lan_emb">
+				<option value="%">%</option>
+				<option value="R$">R$</option>
+			</select>
+			<label class="label-float"  for="tip_lan_emb" id="label_tip_lan_emb">LANCE EMBUTIDO % ou R$</label>
+		</div>
+		<div class="form-item">
+			<input class="form-control" type="text" id="lan_emb" required="">
+			<label class="label-float"  for="lan_emb" id="label_lan_emb">LANCE EMBUTIDO</label>
+		</div>
+		<div class="form-item">
+			<select class="form-control" id="tip_lan_pro" name="tip_lan_pro">
+				<option value="%">%</option>
+				<option value="R$">R$</option>
+			</select>
+			<label class="label-float"  for="tip_lan_pro" id="label_tip_lan_pro">LANCE PRÓPRIO % ou R$</label>
+		</div>
+		<div class="form-item">
+			<input class="form-control" type="text" id="lan_pro" required="">
+			<label class="label-float"  for="lan_pro" id="label_lan_pro">LANCE PRÓPRIO</label>
+		</div>
+		<div class="form-item">
+			<input class="form-control" type="text" id="par_pag" value="1">
+			<label class="label-float"  for="par_pag" id="label_par_pag">PARCELAS PAGAS [M]</label>
+		</div>
+		
+		<div class="form-item">
+			<button class="form-control" onclick="calcula()">CALCULAR</button>
+			<!--button class="form-control" onclick="reset">LIMPAR</button-->
+		</div>
+		</fieldset><br>  <!--hr-->
+	
+		<fieldset>
+		<H1>APÓS O LANCE</H1>
+		<div class="form-item">
+			<input class="form-control" type="text" id="pra_res2">
+			<label class="label-float"  for="pra_res2">PRAZO</label>
+		</div>
+		<div class="form-item">
+			<input class="form-control" type="text" id="nov_par">
+			<label class="label-float"  for="nov_par">NOVA PARCELA</label>
+		</div>
+	
+		<H1>OU</H1>
+	
+		<div class="form-item">
+			<input class="form-control" type="text" id="nov_pra">
+			<label class="label-float"  for="nov_pra">NOVO PRAZO</label>
+		</div>
+		<div class="form-item">
+			<input class="form-control" type="text" id="parcela2">
+			<label class="label-float"  for="parcela2">PARCELA</label>
+		</div>
+		</fieldset><br>
+		
+		<fieldset>
+		<H1>INFORMAÇÕES ADICIONAIS</H1>
+		<div class="form-item">
+			<input class="form-control" type="text" id="pra_res">
+			<label class="label-float"  for="pra_res">PRAZO RESTANTE [M]</label>
+		</div>
+		<div class="form-item">
+			<input class="form-control" type="text" id="tax_men">
+			<label class="label-float"  for="tax_men">TAXA MENSAL [%]</label>
+		</div>
+		<div class="form-item">
+			<input class="form-control" type="text" id="tax_anu">
+			<label class="label-float"  for="tax_anu">TAXA ANUAL [%]</label>
+		</div>
+		<div class="form-item">
+			<input class="form-control" type="text" id="val_tot_lan">
+			<label class="label-float"  for="val_tot_lan">$ TOTAL DE LANCE</label>
+		</div>
+		<div class="form-item">
+			<input class="form-control" type="text" id="por_tot_lan">
+			<label class="label-float"  for="por_tot_lan">% TOTAL DE LANCE</label>
+		</div>
+		</fieldset>
+
+	</div>
+<!--/fieldset->
+</div>
+</body>
+</html>
