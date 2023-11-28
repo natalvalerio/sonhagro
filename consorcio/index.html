@@ -24,10 +24,6 @@
 			font-size: 18px;
 			text-transform: uppercase;
 		}
-		.form-group {
-			margin-bottom: 20px;
-			position: relative;
-		}
 		label {
 			position: absolute;
 			top: 10px;
@@ -50,6 +46,14 @@
 		textarea:focus ~ label,
 		textarea:hover ~ label {
 			top: -8px;
+			left: 10px;
+			font-size: 12px;
+			color: rgb(49, 185, 39);
+			background-color: #fff;
+			padding: 0 5px;
+		}
+		.tipo {
+		top: -8px;
 			left: 10px;
 			font-size: 12px;
 			color: rgb(49, 185, 39);
@@ -90,9 +94,33 @@
 		b {
 			font-weight: bold;
 		}
-		
-		
-		
+		.container {
+			display: flex;
+		}
+		.form-group {
+			margin-bottom: 20px;
+			position: relative;
+			flex: 1;
+			margin-right: 05px; 
+		}
+
+
+
+
+    .form-group {
+        margin-right: 2px; 
+        #box-sizing: border-box; 
+    }
+
+    .form-group:nth-child(1) {
+        flex: 0 0 20%; 
+    }
+
+    .form-group:nth-child(2) {
+        flex: 0 0 79%; 
+    }
+
+
 
 	</style>
 	<script>
@@ -188,44 +216,55 @@
 <body>
 <div class="principal"> 
 	<H1>CONSÓRCIO</H1>
-	<div class="">
-		<div class="form-group">
-			<input id="val_car" type="text" required>
-			<label for="val_car">VALOR DA CARTA</label>
+		<div class="container">
+			<div class="form-group" style="flex: 0 0 55%;">
+				<input id="val_car" type="text" required>
+				<label for="val_car">VALOR DA CARTA</label>
+			</div>
+			<div class="form-group" style="flex: 0 0 44%;">
+				<input type="text" id="parcela" required>
+				<label for="parcela">PARCELA</label>
+			</div>
 		</div>
-		<div class="form-group">
-			<input type="text" id="parcela" required>
-			<label for="parcela">PARCELA</label>
+
+		<div class="container">
+			<div class="form-group" style="flex: 0 0 50%;">
+				<input type="text" id="prazo" required>
+				<label for="prazo">PRAZO</label>
+			</div>
+			<div class="form-group" style="flex: 0 0 49%;">
+				<input type="text" id="par_pag" value="1">
+				<label for="par_pag" id="label_par_pag">PARCELAS PAGAS [M]</label>
+			</div>
 		</div>
-		<div class="form-group">
-			<input type="text" id="prazo" required>
-			<label for="prazo">PRAZO</label>
-		</div>
-		<div class="form-group">
-			<select id="tip_lan_emb" name="tip_lan_emb">
-				<option value="%">%</option>
-				<option value="R$">R$</option>
-			</select>
+		
 			
+		<div class="container">
+			<div class="form-group">
+				<select id="tip_lan_emb" name="tip_lan_emb">
+					<option value="%">%</option>
+					<option value="R$">R$</option>
+				</select>	
+				<label class="tipo">TIPO</label> 
+			</div>
+			<div class="form-group">
+				<input type="text" id="lan_emb" required>
+				<label for="lan_emb" id="label_lan_emb">LANCE EMBUTIDO</label>
+			</div>
 		</div>
-		<div class="form-group">
-			<input type="text" id="lan_emb" required>
-			<label for="lan_emb" id="label_lan_emb">LANCE EMBUTIDO</label>
-		</div>
-		<div class="form-group">
-			<select id="tip_lan_pro" name="tip_lan_pro">
-				<option value="%">%</option>
-				<option value="R$">R$</option>
-			</select>
-			
-		</div>
-		<div class="form-group">
-			<input type="text" id="lan_pro" required>
-			<label for="lan_pro" id="label_lan_pro">LANCE PRÓPRIO</label>
-		</div>
-		<div class="form-group">
-			<input type="text" id="par_pag" value="1">
-			<label for="par_pag" id="label_par_pag">PARCELAS PAGAS [M]</label>
+		
+		<div class="container">
+			<div class="form-group">
+				<select id="tip_lan_pro" name="tip_lan_pro">
+					<option value="%">%</option>
+					<option value="R$">R$</option>
+				</select>
+				<label class="tipo">TIPO</label>
+			</div>
+			<div class="form-group">
+				<input type="text" id="lan_pro" required>
+				<label for="lan_pro" id="label_lan_pro">LANCE PRÓPRIO</label>
+			</div>
 		</div>
 	
 		<button onclick="calcula()">calcula</button><br>
@@ -235,48 +274,53 @@
 		<br>  
 	
 		<H1>APÓS O LANCE</H1>
-		<div class="form-group">
-			<input type="text" id="pra_res2" required>
-			<label for="pra_res2">PRAZO</label>
+		<div class="container">
+			<div class="form-group" style="flex: 0 0 50%;">
+				<input type="text" id="pra_res2" required>
+				<label for="pra_res2">PRAZO</label>
+			</div>
+			<div class="form-group" style="flex: 0 0 49%;">
+				<input type="text" id="nov_par" required>
+				<label for="nov_par">PARCELA MENOR</label>
+			</div>
 		</div>
-		<div class="form-group">
-			<input type="text" id="nov_par" required>
-			<label for="nov_par">NOVA PARCELA</label>
-		</div>
-	
 		<H1>OU</H1>
-	
-		<div class="form-group">
-			<input type="text" id="nov_pra" required>
-			<label for="nov_pra">NOVO PRAZO</label>
-		</div>
-		<div class="form-group">
-			<input type="text" id="parcela2" required>
-			<label for="parcela2">PARCELA</label>
+		<div class="container">
+			<div class="form-group" style="flex: 0 0 50%;">
+				<input type="text" id="nov_pra" required>
+				<label for="nov_pra">PRAZO MENOR</label>
+			</div>
+			<div class="form-group" style="flex: 0 0 49%;">
+				<input type="text" id="parcela2" required>
+				<label for="parcela2">PARCELA</label>
+			</div>
 		</div>
 		
 		<br>
 		
 
 		<H1>INFORMAÇÕES ADICIONAIS</H1>
+		<div class="container">
+			<div class="form-group" style="flex: 0 0 50%;">
+				<input type="text" id="tax_men" required>
+				<label for="tax_men">TAXA MENSAL [%]</label>
+			</div>
+			<div class="form-group" style="flex: 0 0 49%;">
+				<input type="text" id="tax_anu" required>
+				<label for="tax_anu">TAXA ANUAL [%]</label>
+			</div>
+		</div>
 
-		<div class="form-group">
-			<input type="text" id="tax_men" required>
-			<label for="tax_men">TAXA MENSAL [%]</label>
-		</div>
-		<div class="form-group">
-			<input type="text" id="tax_anu" required>
-			<label for="tax_anu">TAXA ANUAL [%]</label>
-		</div>
-		<div class="form-group">
-			<input type="text" id="val_tot_lan" required>
-			<label for="val_tot_lan">$ TOTAL DE LANCE</label>
-		</div>
-		<div class="form-group">
-			<input type="text" id="por_tot_lan" required>
-			<label for="por_tot_lan">% TOTAL DE LANCE</label>
+		<div class="container">
+			<div class="form-group" style="flex: 0 0 50%;">
+				<input type="text" id="val_tot_lan" required>
+				<label for="val_tot_lan">$ TOTAL DE LANCE</label>
+			</div>
+			<div class="form-group" style="flex: 0 0 49%;">
+				<input type="text" id="por_tot_lan" required>
+				<label for="por_tot_lan">% TOTAL DE LANCE</label>
+			</div>
 		</div>
 	</div>
-</div>
 </body>
 </html>
