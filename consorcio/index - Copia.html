@@ -12,10 +12,6 @@
 			padding: 0;
 			box-sizing: border-box;
 		}
-		@font-face{
-			font-family: futuraxk;
-			src: url("futuraxk.ttf");
-		}
 		body {
 			#font-family: Arial, sans-serif;
 			#font-family: "Helvetica", arial;
@@ -76,7 +72,32 @@
 		fieldset {
 			background-color: white
 		}
+		
+		@font-face{
+			font-family: futuraxk;
+	
+			/*Caso a fonte esteja na mesma pasta*/
+			src: url("futuraxk.ttf");
+		}
+		
+		
+		button:focus {
+		outline: none;
+		border-color: #0000FF;
+		}
+	
+		button {
+		color: #fff;
+		background-color: #0000FF;
+		cursor: pointer;
+		}
+	
+		button:hover {
+		background-color: #00008B;
+		}
 
+	
+	
 		h1 {
 			font-size: 30px;
 			margin-bottom: 40px;
@@ -91,6 +112,24 @@
 			font-weight: bold;
 		}
 		
+		#hr {
+		#	clear: both;
+		#	margin-top: 20px;
+		#	margin-bottom: 40px;
+		#	border: 0;
+		#	border-top: 1px solid #999;
+		#}
+		#p {
+		#	margin-bottom: 20px;
+		#}
+		
+		#button {
+		#	background-color: rgb(30, 300, 25);
+		#	color: white;
+		#	font-size: 32px; 
+		#	width: 100%;
+		#	box-sizing: border-box;
+		#}
 		
 		
 
@@ -100,10 +139,6 @@
 			return parseFloat(numero.toFixed(decimal));
 		}
 	
-		function alerta() {
-			alert("Teste")
-		}  
-		
 		function calcula() {
 			var val_car, parcela, prazo, tip_lan_emb, lan_emb, tip_lan_pro, lan_pro, par_pag
 			var pra_res, tax_men, tax_anu, por_tot_lan, val_tot_lan, nov_par, pra_res2, nov_pra, parcela2
@@ -125,6 +160,9 @@
 			tax_men = TM
 			tax_anu = TA
 			
+			console.log('Lance Emb '+lan_emb)
+			console.log('Lance Pro '+lan_pro)		
+			
 			if (tip_lan_emb == "%") {lan_emb = fx(lan_emb / 100 * val_car,2)}
 			if (tip_lan_pro == "%") {lan_pro = fx(lan_pro / 100 * val_car,2)}
 	
@@ -139,8 +177,6 @@
 			nov_pra = fx(VR / parcela,0)
 			parcela2 = parcela
 			
-			console.log('Lance Emb '+lan_emb)
-			console.log('Lance Pro '+lan_pro)		
 			console.log('        VALOR CARTA: '+val_car)
 			console.log('            PARCELA: '+parcela)
 			console.log('              PRAZO: '+prazo)
@@ -168,8 +204,8 @@
 			console.log('       PRAZO: '+pra_res2)
 			console.log('  NOVO PRAZO: '+nov_pra)
 			console.log('     PARCELA: '+parcela2)
-			
-			/*document.getElementById('pra_res').value=pra_res */
+	
+			document.getElementById('pra_res').value=pra_res
 			document.getElementById('tax_men').value=TM
 			document.getElementById('tax_anu').value=TA
 			document.getElementById('val_tot_lan').value=val_tot_lan
@@ -187,6 +223,7 @@
 </head>
 <body>
 <div class="principal"> 
+<!--fieldset-->
 	<H1>CONSÓRCIO</H1>
 	<div class="">
 		<div class="form-group">
@@ -206,7 +243,7 @@
 				<option value="%">%</option>
 				<option value="R$">R$</option>
 			</select>
-			
+			<!--label for="tip_lan_emb" id="label_tip_lan_emb">LANCE EMBUTIDO % ou R$</label-->
 		</div>
 		<div class="form-group">
 			<input type="text" id="lan_emb" required>
@@ -217,7 +254,7 @@
 				<option value="%">%</option>
 				<option value="R$">R$</option>
 			</select>
-			
+			<!--label for="tip_lan_pro" id="label_tip_lan_pro">LANCE PRÓPRIO % ou R$</label-->
 		</div>
 		<div class="form-group">
 			<input type="text" id="lan_pro" required>
@@ -227,13 +264,13 @@
 			<input type="text" id="par_pag" value="1">
 			<label for="par_pag" id="label_par_pag">PARCELAS PAGAS [M]</label>
 		</div>
-	
-		<button onclick="calcula()">calcula</button><br>
-	
-		<!--input type="submit" value="CALCULAR" onclick="calcula()"><br-->
+		
+			<button onclick="calcula()">CALCULAR</button><br>
+			<input type="submit" value="CALCULAR" onclick="calcula()"><br>
 
-		<br>  
+		<!--/fieldset--><br>  
 	
+		<!--fieldset-->
 		<H1>APÓS O LANCE</H1>
 		<div class="form-group">
 			<input type="text" id="pra_res2" required>
@@ -254,12 +291,14 @@
 			<input type="text" id="parcela2" required>
 			<label for="parcela2">PARCELA</label>
 		</div>
+		<!--/fieldset--><br>
 		
-		<br>
-		
-
+		<!--fieldset-->
 		<H1>INFORMAÇÕES ADICIONAIS</H1>
-
+		<!--div class="form-group">
+			<input type="text" id="pra_res" required>
+			<label for="pra_res">PRAZO RESTANTE [M]</label>
+		</div-->
 		<div class="form-group">
 			<input type="text" id="tax_men" required>
 			<label for="tax_men">TAXA MENSAL [%]</label>
@@ -276,7 +315,10 @@
 			<input type="text" id="por_tot_lan" required>
 			<label for="por_tot_lan">% TOTAL DE LANCE</label>
 		</div>
+		<!--/fieldset-->
+
 	</div>
+<!--/fieldset-->
 </div>
 </body>
 </html>
