@@ -338,6 +338,25 @@
 				<label for="por_tot_lan">% TOTAL DE LANCE</label>
 			</div>
 		</div>
+		
+		<div class="container">
+			<div class="form-group" style="flex: 0 0 50%;">
+				<select id="tipos" name="tipos">
+					<option value="IMÓVEIS">IMÓVEIS 🏠🏚️</option>
+					<option value="PESADOS">PESADOS 🚚🚜</option>
+					<option value="AUTOS">AUTOS 🚗🚘</option>
+					<option value="MOTOS">MOTOS 🏍️🛵</option>
+					<option value="SERVIÇOS">SERVIÇOS 🚧👨‍⚕️</option>
+					<option value="OUTRO">OUTRO</option>
+				</select>				
+				<label class="tipo" for="tipos">TIPO</label>
+			</div>
+			<div class="form-group" style="flex: 0 0 49%;">
+				<input type="text" id="grupo" required>
+				<label for="grupo">GRUPO</label>
+			</div>
+		</div>
+
 		</div>
 	<br>
 	<button onclick="exportarParaPDF()">Exportar para PDF</button>
