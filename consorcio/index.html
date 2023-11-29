@@ -129,16 +129,23 @@
 
 	
 	<script>
-    function exportarParaPDF() {
+    function exportarParaPDF1() {
         const elementoParaExportar = document.querySelector('.principal'); 
 
         html2pdf()
             .from(elementoParaExportar)
             .save('arquivo.pdf');
     }
+	
+	
+	function exportarParaPDF() {
+		const principal = document.querySelector('.principal');
+	
+		window.print();
+	}	
+	
 	</script>
-	
-	
+
 	
 	<script>
 		function fx(numero, decimal) {
