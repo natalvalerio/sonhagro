@@ -138,6 +138,47 @@
 	}	
 	
 	</script>
+	
+	
+	<!--script>
+	// Função para formatar o valor em moeda (R$)
+	/* function formatarValor(valor) {
+		return valor.toLocaleString('pt-BR', {
+		style: 'currency',
+		currency: 'BRL'
+		});
+	}
+	
+	// Adicionar evento para formatar ao perder o foco do campo
+	document.addEventListener('DOMContentLoaded', function() {
+		const camposValores = document.querySelectorAll('input[type="text"]');
+	
+		camposValores.forEach(function(campo) {
+		if (campo.id === 'val_car' || campo.id === 'parcela'  || campo.id === 'lan_emb' || campo.id === 'lan_pro') {
+			campo.addEventListener('blur', function() {
+			if (this.value !== '') {
+				const valor = parseFloat(this.value.replace(/[^\d,]/g, '').replace(',', '.'));
+				this.value = formatarValor(valor);
+			}
+			});
+		}
+		});
+	});  */
+	</script-->
+	
+    <!-- Incluindo jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Incluindo jQuery Mask Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+
+    <script>
+        $(document).ready(function(){
+            // Aplicando máscaras para os campos de valor
+            $('#val_car, #parcela').mask('000.000.000,00', { reverse: true });
+        });
+    </script>
+
 
 	
 	<script>
@@ -215,14 +256,14 @@
 			console.log('     PARCELA: '+parcela2)
 			
 			/*document.getElementById('pra_res').value=pra_res */
-			document.getElementById('tax_men').value=TM
-			document.getElementById('tax_anu').value=TA
-			document.getElementById('val_tot_lan').value=val_tot_lan
-			document.getElementById('por_tot_lan').value=por_tot_lan
-			document.getElementById('nov_par').value=nov_par
+			document.getElementById('tax_men').value=TM+'%'
+			document.getElementById('tax_anu').value=TA+'%'
+			document.getElementById('val_tot_lan').value='R$ '+val_tot_lan*1000
+			document.getElementById('por_tot_lan').value=por_tot_lan+'%'
+			document.getElementById('nov_par').value=nov_par*1000
 			document.getElementById('pra_res2').value=pra_res2
 			document.getElementById('nov_pra').value=nov_pra
-			document.getElementById('parcela2').value=parcela2
+			document.getElementById('parcela2').value=parcela2*1000
 		}
     </script>
 	
@@ -359,7 +400,7 @@
 
 		</div>
 	<br>
-	<button onclick="exportarParaPDF()">Exportar para PDF</button>
 </div>
+<button onclick="exportarParaPDF()">Exportar para PDF</button>
 </body>
 </html>
