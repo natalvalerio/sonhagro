@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CALCULADORA DE CONSÓRCIOS</title>
+    <style>
+        .caixa {
+            background-color: #808080; 
+        }
+        .entrada {
+            background-color: #E2EFDa; 
+        }
+        table {
+            background-color: white;
+        }
+        .titulo {
+            background-color: #00B050;
+            color: white;
+        }
+		td {
+			text-align: center;
+		}
+		input,select {
+			text-align: right;
+            width: 95%;
+            border: 0 none;
+            font-size: medium;
+		}
+        
+        button {
+            float: center;
+            align-items: center;
+        }
+    </style>
+    <script>
+        function amil(num) {   
+            return (((num/1000).toFixed(0))*1000).toFixed(0)
+        }
+
+        function a() {
+            var comboValor=window.document.getElementById("pValor")
+            
+            console.log("O indice é: " + comboValor.selectedIndex);
+            console.log("O texto é: " + comboValor.options[comboValor.selectedIndex].text);
+            console.log("A chave é: " + comboValor.options[comboValor.selectedIndex].value);
+        }
+            
+        function b() {
+            while (comboValor.length) {
+                comboValor.remove(0);
+            }
+
+        }
+
+        function embutido() {
+			var eValor=window.document.getElementById("eValor").value
+            var eTotal=eValor/0.75
+            eTotal=amil(eTotal)
+            window.document.getElementById("eTotal").value=eTotal			
+
+			var comboValor=window.document.getElementById("pValor")
+
+            comboValor.options[1].text=eValor
+            comboValor.options[1].value=eValor
+
+            comboValor.options[2].text=eTotal
+            comboValor.options[2].value=eTotal
+        }
+
+        function porcentagem() {
+			var pValor=window.document.getElementById("pValor").value
+			var pTaxa =window.document.getElementById("pTaxa").value
+            var pTotal=(pValor*pTaxa/100).toFixed(0)
+            window.document.getElementById("pTotal").value=pTotal	
+            window.document.getElementById("oMontante1").value=pValor		
+			window.document.getElementById("oMontante2").value=pValor
+			window.document.getElementById("oMontante3").value=pValor
+			var comboValor=window.document.getElementById("pValor")
+            var indice=comboValor.selectedIndex
+            if ( indice > 1) {
+                window.document.getElementById("oLance1").value=pTotal
+            } else {
+                window.document.getElementById("oLance1").value=0
+            }
+            obter()
+            carta()
+        }
+
+        function obter() {
+			var oLance1   =window.document.getElementById("oLance1").value
+			var oMontante1=window.document.getElementById("oMontante1").value
+            window.document.getElementById("oTotal1").value=(oLance1/oMontante1*100).toFixed(1)			
+
+			var oLance2   =window.document.getElementById("oLance2").value
+			var oMontante2=oMontante1    
+            window.document.getElementById("oTotal2").value=(oLance2/oMontante2*100).toFixed(1)		
+
+			var oLance3   =Number(oLance1)+Number(oLance2)
+			var oMontante3=oMontante1
+			window.document.getElementById("oLance3").value   =oLance3
+            window.document.getElementById("oTotal3").value=(oLance3/oMontante3*100).toFixed(1)		
+            window.document.getElementById("cValor").value=oMontante1-oLance2			
+        }
+
+        function carta() {
+			var cValor=window.document.getElementById("cValor").value
+			var cPrazo=window.document.getElementById("cPrazo").value
+			window.document.getElementById("cParcela").value=((Number(cValor)*1.22)/Number(cPrazo)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })	
+		}
+    </script>
+</head>
+<body>
+    <table border="0" class="caixa">
+        <tr><td>.</td></tr>
+        <td>.</td>
+        <td>
+        <div align="right">
+            <!--Embutido 25%-->
+            <table border="1" cellspacing="0" cellpading="0">
+                <tr><td colspan="3" align="center" style="color: #00B050;"><img width="100" src="img.jpg"><h3>CALCULADORA DE CONSÓRCIOS</h3></td></tr>
+                <tr class="titulo"><td colspan="3" align="center">PARA LANCE EMBUTIDO DE 25%</td></tr>
+                <tr>
+                    <td rowspan="2" width="200"></td>
+                    <td>VALOR DA CARTA</td>
+                    <td>TOTAL</td>
+                </tr>
+                <tr>
+                    <!--td></td-->
+                    <td class="entrada"><input class="entrada" type="number" id="eValor" name="eValor" onkeyup="embutido()"></td>
+                    <td><input type="number" id="eTotal" name="eTotal"></td>
+                </tr>
+            </table>
+            <!--Porcentagem-->
+            <br>
+            <table border="1" cellspacing="0" cellpading="0">
+                <tr class="titulo"><td colspan="3" align="center">PARA OBTER VALOR DE PORCENTAGEM</td></tr>
+                <tr>
+                    <td width="200">VALOR </td>
+                    <td>TAXA</td>
+                    <td>TOTAL</td>
+                </tr>
+                <tr>
+                    <td class="entrada">
+                        <select class="entrada" id="pValor" name="pValor" onchange="porcentagem()" size="3">
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                        <!--input type="number" id="pValor" name="pValor" onkeyup="porcentagem()"-->
+                    </td>
+                    <td class="entrada"><input class="entrada" type="number" id="pTaxa"  name="pTaxa" value="25" onkeyup="porcentagem()"></td>
+                    <td><input type="number" id="pTotal" name="pTotal"></td>
+                </tr>
+            </table>
+            <!--Obter-->
+            <br>
+            <table border="1" cellspacing="0" cellpading="0">
+                <tr class="titulo"><td colspan="4" align="center">PARA OBTER PERCENTUAL</td></tr>
+                <tr>
+                    <td colspan="2">LANCE</td>
+                    <td>VALOR DA CARTA</td>
+                    <td>TOTAL</td>
+                </tr>
+                <tr>
+                    <td>EMBUTIDO</td>
+                    <td><input type="number" id="oLance1"    name="oLance1"    onkeyup="obter()"></td>
+                    <td><input type="number" id="oMontante1" name="oMontante1" onkeyup="obter()"></td>
+                    <td><input type="number" id="oTotal1"    name="oTotal1"></td>
+                </tr>
+                <tr>
+                    <td>LANCE/TROCA DE CHAVES</td>
+                    <td class="entrada"><input class="entrada" type="number" id="oLance2"    name="oLance2"    onkeyup="obter()"></td>
+                    <td><input type="number" id="oMontante2" name="oMontante2" onkeyup="obter()"></td>
+                    <td><input type="number" id="oTotal2"    name="oTotal2"></td>
+                </tr>			
+                <tr>
+                    <td>TOTAL</td>
+                    <td><input type="number" id="oLance3"    name="oLance3"    onkeyup="obter()"></td>
+                    <td><input type="number" id="oMontante3" name="oMontante3" onkeyup="obter()"></td>
+                    <td><input type="number" id="oTotal3"    name="oTotal3"></td>
+                </tr>			
+            </table>
+            <!--Parcela-->
+            <br>
+            <table border="1" cellspacing="0" cellpading="0">
+                <tr class="titulo"><td colspan="3" align="center">FORMULA PARA PARCELA</td></tr>
+                <tr>
+                    <td>VALOR DA CARTA</td> 		
+                    <td>PRAZO</td>
+                    <td>PARCELA</td>
+                </tr>
+                <tr>
+                    <td><input type="number" id="cValor"   name="cValor"  onkeyup="carta()"></td>
+                    <td class="entrada"><input class="entrada" value="100" type="number" id="cPrazo"   name="cPrazo"  onkeyup="carta()"></td>
+                    <td><input type="text" id="cParcela" name="cParcela"></td>
+                </tr>
+            </table>
+            <div>
+                <input type="button" value="LIMPAR" onClick="window.location.reload()"> 
+            </div>
+        </div>
+    </td><td>.</td></tr>   
+    <tr><td>.</td></tr>
+    </table>
+</body>
+</html>
+
+<!--
+toFixed(2).
+toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })	
+
+
+
+
+document.getElementById("btnRemoverTodos").onclick = function () {
+    var comboCidades = document.getElementById("cboCidades");
+    while (comboCidades.length) {
+        comboCidades.remove(0);
+    }
+};
+
+        .button {
+            float: right;
+        }
+        .input {
+            overflow: hidden;
+            padding: 0 3px 0 0;
+        }
+        .input input {
+            width: 100%
+        }
+
+
+		input[type=text] {
+			text-align: right;
+            width: 95%;
+            overflow: hidden;
+            padding: 0 3px 0 0;
+		}
+
+            box-shadow: 0 0 0 0;
+            outline: 0;
+            border-color: #cccccc;
+            outline: 0;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+-->

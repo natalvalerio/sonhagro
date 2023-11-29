@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <script type="text/javascript">
+            function selecionaTexto()
+            {
+                document.getElementById("email").select();
+            }
+ 
+            function getfocus()
+            {
+                document.getElementById('nome').focus();
+            }
+            function losefocus()
+            {
+                document.getElementById('nome').blur();
+            }
+ 
+            function setFocoESelecionaTextoCampo(){
+                document.getElementById('email').focus();
+                document.getElementById("email").select();
+            }
+ 
+        </script>
+    </head>
+    <body>
+ 
+        <form>
+            email: <input type="text" id="email" value="someone@example.com" size="30" />
+            <br>
+            nome: <input type="text" id="nome" value="ricardo spinoza" size="30" />
+        </form>
+ 
+        <button type="button" onclick="selecionaTexto()">Selecione text campo email</button>
+        <br>
+        <button type="button" onclick="getfocus()">setar foco no campo nome</button>
+        <button type="button" onclick="losefocus()">tirar foco no campo nome</button>
+        <br>
+        <button type="button" onclick="setFocoESelecionaTextoCampo()">Seta foco e seleciona texto campo email</button>
+ 
+    </body>
+</html>

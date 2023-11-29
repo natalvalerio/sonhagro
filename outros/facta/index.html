@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FACTA</title>
+    <style>
+        .div1 {
+            //position:fixed;
+            width:  700px;
+            height: 600px;
+            border-width: 2px; 
+            border-style: dotted;
+            border-color: black;
+            //display: flex;
+            //justify-content: center;
+            //align-items: center;
+
+        }
+        .div2 {
+            //position: fixed;
+            width:  650px;
+            height: 550px;
+            margin-left: 25px;
+            margin-top: 25px;
+            border-width: 2px; 
+            border-style: solid;
+            border-color: black;
+            align: center;
+        }
+        .div3 {
+            width:  610px;
+            height: 420px;
+            margin-left:16px;
+            margin-top: -5px;
+            border-width: 2px; 
+            border-style: solid;
+            border-color: black;
+        }
+        .div4 {
+            width:  610px;
+            height: 30px;
+            //color: white;
+            //background-color: #1F4E78;
+            font-size: larger;
+            text-align: center;
+        }
+        .table1 {
+            border-width: 2px; 
+            border-style: solid;
+            border-color: black;
+        }
+        .corescura {
+            color: white;
+            background-color: #1F4E78;
+        }
+
+        .corclara {
+            color: #1F4E78;
+            background-color: #BDD7EE;
+            text-align: center;
+        }
+    
+        input,select {
+            font-weight: bold;
+            color: #1F4E78;
+			text-align: right;
+            height: 100%;
+            width: 95%;
+            border: 0 none;
+		}
+        .valor {
+            color: #1F4E78;
+            height: 50px;
+            font-size:x-large;
+        }
+        .bordas {
+            border-width: 1px; 
+            border-style: solid;
+            border-color: #1F4E78;
+        }
+        .liquido {
+            color: #DAAF00;
+            background-color: #BDD7EE;
+            font-weight: bold;
+            text-align: center;
+            font-size:x-large;
+        }
+        .aviso {
+            font-size:small;
+        }
+        .pequeno {
+            font-size: 12px;
+        }
+        .doze {
+            font-size: 36px; 
+            font-weight: bold;           
+        }
+    </style>
+    <script>
+        var meses=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"]
+        window.onload = function funi() {
+            var comboani=window.document.getElementById("ani")
+            var disp = window.document.getElementById("disp").value
+            var par = window.document.getElementById("par").value
+            var dt = new Date()
+            var ano = dt.getFullYear()
+            var mes = dt.getMonth()+2
+            var dia = dt.getDate()
+            if (dia<10) {dia="0"+dia}
+            if (mes<10) {mes="0"+mes}
+            
+            //var myDate = new Date(Date.now()).toLocaleString().split(',')[0];
+            //alert(myDate)
+
+            var m1,a1,v,d,n,mesf,anof,mesc,valor,data
+            mesf = mes
+            //if (mesf<10) {mes="0"+mesf}
+            anof = ano
+            window.document.getElementById("agora").value = dia+"/"+mes+"/"+ano
+            for ( var i = 0; i < meses.length; i++ ) { 
+                m1 = mes-1+i
+                a1 = ano
+                if (m1>11) {
+                    mes=-6
+                    m1 = mes-1+i
+                    ano=ano+1
+                    a1 = ano
+                }
+                mesc = Number(m1+1) 
+                if (mesc<10) {
+                    mesc = "0"+Number(m1+1)
+                }
+	            comboani.options[i].text  = meses[m1]+"/"+a1
+                comboani.options[i].value = mesc + "/" + a1
+                n=Number(i+1)
+                v="v"+n
+                d="d"+n
+                data  = "01/"+mes+"/"+Number(ano+i)
+                valor = Number(disp).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+                if (i>=par) {
+                    data  = "."
+                    valor = "."
+                }
+                window.document.getElementById(d).innerText="01/"+mesf+"/"+Number(anof+i)
+                window.document.getElementById(v).innerText=valor
+            } 
+            window.document.getElementById("doze").innerText=par
+            window.document.getElementById("liquido").innerText=Number(disp * 0.6753334458889).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+        }
+        
+        function dt_ani() {
+            var ani = window.document.getElementById("ani").value
+            var par = window.document.getElementById("par").value
+            var disp = window.document.getElementById("disp").value
+            var dt = new Date()
+            var ano = Number(ani.substr(-4))   //dt.getFullYear()
+            var mes = ani.substr(-7,2) //dt.getMonth()+2
+            //var dia = dt.getDate()
+            var v,d,n,data,valor
+            for ( var i = 0; i < 12; i++ ) { 
+                n=Number(i+1)
+                v="v"+n
+                d="d"+n
+                data  = "01/"+mes+"/"+Number(ano+i)
+                valor = Number(disp).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+                if (i>=par) {
+                    data  = "."
+                    valor = "."
+                }
+                window.document.getElementById(d).innerText = data
+                window.document.getElementById(v).innerText = valor  
+            }
+            window.document.getElementById("doze").innerText=par
+            window.document.getElementById("liquido").innerText=Number(disp * 0.6753334458889).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+        }
+    </script>
+</head>
+<body>
+    <div class="div1">
+        <div class="div2">
+            <img width="650" src="top.png" alt="" onclick="funi()">
+            <div class="div3">
+                <div class="div4 corescura">
+                    SIMULADOR OFF-LINE - SAQUE FGTS
+                </div>
+                <table class="table1"><!--border="1" cellspacing="0" cellpading="0"-->
+                    <tr>
+                        <td width="150" class="corescura">Próximo Aniversário</td>
+                        <td><img width="15" src="seta01.jpg" alt=""></td>
+                        <td width="150" class="bordas"><select name="ani" id="ani" onchange="dt_ani()">
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                        </td>
+                        <td width="10" ></td>
+                        <td  width="270" colspan="2" class="corescura" align="center">Valor Disponível de Saldo FGTS</td>
+                    </tr>
+                    <tr>
+                        <td class="corescura">Condição Cliente</td>
+                        <td><img width="15" src="seta01.jpg" alt=""></td>
+                        <td class="bordas"><select name="con" id="con">
+                            <option value="2.04">Gold</option>
+                            <option value="1.98">Normal</option>
+                            <option value="1.70">Flex</option>
+                        </select>
+                        </td>
+                        <td></td>
+                        <td rowspan="3"><img width="25" src="seta02.jpg" alt=""></td>
+                        <td rowspan="3"><input class="valor" type="number" id="disp" name="disp" value="1000.00" onblur="dt_ani()"></td>
+                    </tr>
+                    <tr>
+                        <td class="corescura">Parcelas a Antecipar</td>
+                        <td><img width="15" src="seta01.jpg" alt=""></td>
+                        <td class="bordas"><select name="par" id="par" onchange="dt_ani()">
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12" selected>12</option>
+                        </select>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="corescura">Data Contrato</td>
+                        <td></td>
+                        <td align="center" class="bordas corclara"><input class="corclara" readonly=“true” type="text" id="agora" name="agora"></td>
+                        <td></td>
+                    </tr>                        
+                    <tr height="10"><td colspan="4"></td></tr>
+                    <tr>
+                        <td class="corescura" align="center">Vencimento</td>
+                        <td></td>
+                        <td class="corescura" align="center">Valor Antecipação</td>
+                        <td></td>
+                        <td class="corescura" align="center" colspan="2">Líquido Cliente</td>
+                        <!--itens-->
+                        <tr>
+                            <td class="corclara" id="d1">teste</td>
+                            <td></td>
+                            <td class="corclara" id="v1">teste</td>
+                            <td></td>
+                            <td id="liquido" name="liquido" class="liquido" rowspan="2" colspan="2"></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara" id="d2">teste</td>
+                            <td></td>
+                            <td class="corclara" id="v2">teste</td>
+                            <td></td>
+                            <!--td class="corclara" colspan="2"></td-->
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara" id="d3">teste</td>
+                            <td></td>
+                            <td class="corclara" id="v3">teste</td>
+                            <td></td>
+                            <td class="corescura" rowspan="2" colspan="2" align="center">Atenção! Nenhum valor adicional <br> deverá ser cobrado do cliente!</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara" id="d4">teste</td>
+                            <td></td>
+                            <td class="corclara" id="v4">teste</td>
+                            <td></td>
+                            <!--td class="corclara" colspan="2"></td-->
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara" id="d5">teste</td>
+                            <td></td>
+                            <td class="corclara" id="v5">teste</td>
+                            <td></td>
+                            <td class="corescura aviso" rowspan="4" colspan="2">Obs.:<br>Este simulador foi criado apenas para referência<br>de valores na data mencionada, não podendo ser<br>considerado como proposta final. Para um valor<br>exato, énecessário autorizar a Facta Financeira</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara" id="d6">teste</td>
+                            <td></td>
+                            <td class="corclara" id="v6">teste</td>
+                            <td></td>
+                            <!--td class="corclara" colspan="2"></td-->
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara" id="d7">teste</td>
+                            <td></td>
+                            <td class="corclara" id="v7">teste</td>
+                            <td></td>
+                            <!--td class="corclara" colspan="2"></td-->
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara" id="d8">teste</td>
+                            <td></td>
+                            <td class="corclara" id="v8">teste</td>
+                            <td></td>
+                            <!--td class="corclara" colspan="2"></td-->
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara" id="d9">teste</td>
+                            <td></td>
+                            <td class="corclara" id="v9">teste</td>
+                            <td></td>
+                            <td class="corclara pequeno" rowspan="4" colspan="2" align="center">NESTA SIMULAÇÃO VC ESTÁ ANTECIPANDO</BR><SPAN id="doze" name="doze" class="doze"></SPAN></BR>ANOS DO SEU SAQUE ANIVERSÁRIO</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara" id="d10">teste</td>
+                            <td></td>
+                            <td class="corclara" id="v10">teste</td>
+                            <td></td>
+                            <!--td class="corclara" colspan="2"></td-->
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara" id="d11">teste</td>
+                            <td></td>
+                            <td class="corclara" id="v11">teste</td>
+                            <td></td>
+                            <!--td class="corclara" colspan="2"></td-->
+                        </tr>
+                        
+                        <tr>
+                            <td class="corclara" id="d12">teste</td>
+                            <td></td>
+                            <td class="corclara" id="v12">teste</td>
+                            <td></td>
+                            <!--td class="corclara" colspan="2"></td-->
+                        </tr>
+                        
+                    </tr>
+                </table>
+            </div></br>
+            <img width="650" src="bott.png" alt="">
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORRIGIR</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: rgb(49, 185, 39);
+            padding: 20px;
+        }
+
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+        }
+    </style>
+    <script>
+        function MAI() {
+            let texto1 = window.document.getElementById("texto1").value
+            texto1 = texto1.toUpperCase()
+            window.document.getElementById("texto1").value = texto1
+            copiarTexto()
+        }
+
+        function minusculas() {
+            let texto1 = window.document.getElementById("texto1").value
+            texto1 = texto1.toLowerCase()
+            window.document.getElementById("texto1").value = texto1
+            copiarTexto()
+        }
+
+        function PrimeiraMai() {
+            let texto1 = window.document.getElementById("texto1").value
+            texto1 = texto1.toLowerCase()
+            texto1 = texto1.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase());
+            window.document.getElementById("texto1").value = texto1
+            copiarTexto()
+        }
+
+        function copiarTexto() {
+            let textoCopiado = document.getElementById("texto1");
+            textoCopiado.select();
+            textoCopiado.setSelectionRange(0, 99999)
+            document.execCommand("copy");
+            //alert("O texto é: " + textoCopiado.value);
+        }
+
+        function RemCarEsp() {
+            let texto1 = window.document.getElementById("texto1").value
+            texto1 = texto1.replace(/[^a-zA-Z0-9]/g, "");
+            window.document.getElementById("texto1").value = texto1
+            copiarTexto()
+        }
+
+        function SoNum() {
+            let texto1 = window.document.getElementById("texto1").value
+            texto1 = texto1.replace(/[^0-9]/g, '');
+            window.document.getElementById("texto1").value = texto1
+            copiarTexto()
+        }
+
+        function RemNum() {
+            let texto1 = window.document.getElementById("texto1").value
+            texto1 = texto1.replace(/[^a-zA-Z]/g, '');
+            window.document.getElementById("texto1").value = texto1
+            copiarTexto()
+        }
+
+        function RemEsp() {
+            let texto1 = window.document.getElementById("texto1").value
+            texto1 = texto1.replace(/ /g, "");
+            window.document.getElementById("texto1").value = texto1
+            copiarTexto()
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>DIGITE SEU TEXTO</h1>
+
+        <textarea id="texto1" name="texto1" rows="10" cols="40" placeholder="Cole ou digite seu texto..."></textarea><br><br>
+
+        <div class="btn-grid">
+            <input type="button" class="btn btn-primary" value="MAIÚSCULAS" onclick="MAI()">
+            <input type="button" class="btn btn-primary" value="minúsculas" onclick="minusculas()">
+            <input type="button" class="btn btn-primary" value="Primeiras Maiúsculas" onclick="PrimeiraMai()">
+            <input type="button" class="btn btn-primary" value="Apenas Números" onclick="SoNum()">
+            <input type="button" class="btn btn-primary" value="Remover Números" onclick="RemNum()">
+            <input type="button" class="btn btn-primary" value="Remover Caracteres Especiais" onclick="RemCarEsp()">
+            <input type="button" class="btn btn-primary" value="Remover Espaços" onclick="RemEsp()">
+            <input type="button" class="btn btn-primary" value="Copiar Texto" onclick="copiarTexto()">
+        </div>
+    </div>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>
