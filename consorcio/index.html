@@ -98,28 +98,21 @@
 			display: flex;
 		}
 		.form-group {
-			margin-bottom: 20px;
+			#margin-bottom: 20px;
 			position: relative;
 			flex: 1;
 			margin-right: 05px; 
+			margin-right: 2px; 
+			#box-sizing: border-box; 
 		}
 
+		.form-group:nth-child(1) {
+			flex: 0 0 50%; 
+		}
 
-
-
-    .form-group {
-        margin-right: 2px; 
-        #box-sizing: border-box; 
-    }
-
-    .form-group:nth-child(1) {
-        flex: 0 0 20%; 
-    }
-
-    .form-group:nth-child(2) {
-        flex: 0 0 79%; 
-    }
-
+		.form-group:nth-child(2) {
+			flex: 0 0 49%; 
+		}
 
 
 	</style>
@@ -264,28 +257,28 @@
 		
 			
 		<div class="container">
-			<div class="form-group">
+			<div class="form-group" style="flex: 0 0 30%;">
 				<select id="tip_lan_emb" name="tip_lan_emb">
 					<option value="%">%</option>
 					<option value="R$">R$</option>
 				</select>	
 				<label class="tipo">TIPO</label> 
 			</div>
-			<div class="form-group">
+			<div class="form-group" style="flex: 0 0 69%;">
 				<input type="text" id="lan_emb" required>
 				<label for="lan_emb" id="label_lan_emb">LANCE EMBUTIDO</label>
 			</div>
 		</div>
 		
 		<div class="container">
-			<div class="form-group">
+			<div class="form-group" style="flex: 0 0 30%;">
 				<select id="tip_lan_pro" name="tip_lan_pro">
 					<option value="%">%</option>
 					<option value="R$">R$</option>
 				</select>
 				<label class="tipo">TIPO</label>
 			</div>
-			<div class="form-group">
+			<div class="form-group" style="flex: 0 0 69%;">
 				<input type="text" id="lan_pro" required>
 				<label for="lan_pro" id="label_lan_pro">LANCE PRÓPRIO</label>
 			</div>
