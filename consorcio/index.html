@@ -123,6 +123,23 @@
 
 
 	</style>
+	
+	
+	<script src="html2pdf.bundle.min.js"></script>
+
+	
+	<script>
+    function exportarParaPDF() {
+        const elementoParaExportar = document.querySelector('.principal'); 
+
+        html2pdf()
+            .from(elementoParaExportar)
+            .save('arquivo.pdf');
+    }
+	</script>
+	
+	
+	
 	<script>
 		function fx(numero, decimal) {
 			return parseFloat(numero.toFixed(decimal));
@@ -214,7 +231,7 @@
 	
 </head>
 <body>
-<div class="principal"> 
+<div id="principal" class="principal"> 
 	<H1>CONSÓRCIO</H1>
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 55%;">
@@ -321,6 +338,8 @@
 				<label for="por_tot_lan">% TOTAL DE LANCE</label>
 			</div>
 		</div>
-	</div>
+	<br>
+	<button onclick="exportarParaPDF()">Exportar para PDF</button>
+</div>
 </body>
 </html>
