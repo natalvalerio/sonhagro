@@ -98,11 +98,10 @@
 			display: flex;
 		}
 		.form-group {
-			#margin-bottom: 20px;
+			margin-bottom: 10px;
 			position: relative;
 			flex: 1;
-			margin-right: 05px; 
-			margin-right: 2px; 
+			margin-right: 3px; 
 			#box-sizing: border-box; 
 		}
 
@@ -255,15 +254,14 @@
 			console.log('  NOVO PRAZO: '+nov_pra)
 			console.log('     PARCELA: '+parcela2)
 			
-			/*document.getElementById('pra_res').value=pra_res */
 			document.getElementById('tax_men').value=TM+'%'
 			document.getElementById('tax_anu').value=TA+'%'
-			document.getElementById('val_tot_lan').value='R$ '+val_tot_lan*1000
+			document.getElementById('val_tot_lan').value='R$ '+val_tot_lan   	//*1
 			document.getElementById('por_tot_lan').value=por_tot_lan+'%'
-			document.getElementById('nov_par').value=nov_par*1000
+			document.getElementById('nov_par').value=nov_par 					//*1
 			document.getElementById('pra_res2').value=pra_res2
 			document.getElementById('nov_pra').value=nov_pra
-			document.getElementById('parcela2').value=parcela2*1000
+			document.getElementById('parcela2').value=parcela2 					//*1
 		}
     </script>
 	
