@@ -1,21 +1,7 @@
 function exportarParaPDF() {
 	const principal = document.querySelector('.principal');
-
 	window.print();
 }	
-
-
-function fx(numero, decimal) {
-	return parseFloat(numero.toFixed(decimal));
-}
-
-function money(numero) {
-	return numero.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-}
-
-function alerta() {
-	alert("Teste")
-}  
 
 function calcula() {
 	var val_car, parcela, prazo, tip_lan_emb, lan_emb, tip_lan_pro, lan_pro, par_pag
@@ -92,15 +78,14 @@ function fecharPopup() {
 
 function mul() {
 	fecharPopup()
-
 	var mult   =numero(prompt('Digite o fator multiplicador!'))
 	var val_car=numero(document.getElementById('val_car').value)			
 	var parcela=numero(document.getElementById('parcela').value)
 	var lan_emb=numero(document.getElementById('lan_emb').value)
 	var lan_pro=numero(document.getElementById('lan_pro').value)
 	
-	document.getElementById('val_car').value=val_car*mult			
-	document.getElementById('parcela').value=parcela*mult
+	document.getElementById('val_car').value=fx(val_car*mult,2)			
+	document.getElementById('parcela').value=fx(parcela*mult,2)
 	document.getElementById('lan_emb').value=lan_emb
 	document.getElementById('lan_pro').value=lan_pro
 	calcula()
@@ -118,13 +103,20 @@ function red() {
 //------------------------
 
 
-function numero(input) {
-    var numero = input.replace(/[^\d,]/g, '');
+function numero(input1) {
+    var numero = input1.replace(/[^\d,]/g, '');
     numero = numero.replace(',', '.');
-    return Number(numero); 
+	numero = Number(numero) 
+    return (numero); 
 }
 
+function fx(input2, decimal) {
+	return parseFloat(input2.toFixed(decimal));
+}
 
+function money(input3) {
+	return input3.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+}
 
 function console() {
 	console.log('Lance Emb '+lan_emb)
