@@ -88,7 +88,7 @@ function mul() {
 	document.getElementById('parcela').value=fx(parcela*mult,2)
 	document.getElementById('lan_emb').value=lan_emb
 	document.getElementById('lan_pro').value=lan_pro
-	calcula()
+	//calcula()
 }
 
 function dif() {
@@ -104,6 +104,7 @@ function red() {
 
 
 function numero(input1) {
+	//input1.replace('.', ',')
     var numero = input1.replace(/[^\d,]/g, '');
     numero = numero.replace(',', '.');
 	numero = Number(numero) 
