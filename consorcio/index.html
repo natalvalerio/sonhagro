@@ -4,277 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CONSÓRCIO</title>
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
-
-    <style>
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
-		@font-face{
-			font-family: futuraxk;
-			src: url("futuraxk.ttf");
-		}
-		body {
-			#font-family: Arial, sans-serif;
-			#font-family: "Helvetica", arial;
-			font-family: futuraxk;
-			padding: 20px;
-			font-size: 18px;
-			text-transform: uppercase;
-		}
-		label {
-			position: absolute;
-			top: 10px;
-			left: 10px;
-			transition: 0.3s ease-out;
-			pointer-events: none;
-			color: #888;
-		}
-		input:focus ~ label,
-		input:hover ~ label,
-		input:focus,
-		textarea:focus,
-		textarea:hover {
-			outline: none;
-			border-color: rgb(49, 185, 39);
-		}
-		input:focus ~ label,
-		input:hover ~ label,
-		input:valid ~ label,
-		textarea:focus ~ label,
-		textarea:hover ~ label {
-			top: -8px;
-			left: 10px;
-			font-size: 12px;
-			color: rgb(49, 185, 39);
-			background-color: #fff;
-			padding: 0 5px;
-		}
-		.tipo {
-		top: -8px;
-			left: 10px;
-			font-size: 12px;
-			color: rgb(49, 185, 39);
-			background-color: #fff;
-			padding: 0 5px;
-		}
-		input:focus,
-		input:hover,
-		textarea:focus,
-			textarea:hover {
-			color: rgb(49, 185, 39);
-			border-color: rgb(49, 185, 39);
-		}
-		input, textarea, select, button {
-			width: 100%;
-			padding: 10px;
-			border-radius: 5px;
-			border: 1px solid #ccc;
-			transition: border-color 0.3s ease;
-			text-transform: uppercase;
-			font-size: 18px; 
-			font-family: futuraxk
-		} 
-		fieldset {
-			background-color: white
-		}
-
-		h1 {
-			font-size: 18px;
-			margin-bottom: 20px;
-			text-align: center;
-			text-transform: uppercase;
-			color: rgb(49, 185, 39)
-		}
-		img {
-			align: center;
-		}
-		h1 span {
-			color: rgb(49, 185, 39);
-		}
-		b {
-			font-weight: bold;
-		}
-		.container {
-			display: flex;
-		}
-		.form-group {
-			margin-bottom: 10px;
-			position: relative;
-			flex: 1;
-			margin-right: 3px; 
-			#box-sizing: border-box; 
-		}
-
-		.form-group:nth-child(1) {
-			flex: 0 0 50%; 
-		}
-
-		.form-group:nth-child(2) {
-			flex: 0 0 49%; 
-		}
-
-
-	</style>
-	
-	
-	<!--script src="html2pdf.bundle.min.js"></script-->
-
-	
-	<script>
-    function exportarParaPDF1() {
-        const elementoParaExportar = document.querySelector('.principal'); 
-
-        html2pdf()
-            .from(elementoParaExportar)
-            .save('arquivo.pdf');
-    }
-	
-	
-	function exportarParaPDF() {
-		const principal = document.querySelector('.principal');
-	
-		window.print();
-	}	
-	
-	</script>
-	
-	
-	<!--script>
-	// Função para formatar o valor em moeda (R$)
-	/* function formatarValor(valor) {
-		return valor.toLocaleString('pt-BR', {
-		style: 'currency',
-		currency: 'BRL'
-		});
-	}
-	
-	// Adicionar evento para formatar ao perder o foco do campo
-	document.addEventListener('DOMContentLoaded', function() {
-		const camposValores = document.querySelectorAll('input[type="text"]');
-	
-		camposValores.forEach(function(campo) {
-		if (campo.id === 'val_car' || campo.id === 'parcela'  || campo.id === 'lan_emb' || campo.id === 'lan_pro') {
-			campo.addEventListener('blur', function() {
-			if (this.value !== '') {
-				const valor = parseFloat(this.value.replace(/[^\d,]/g, '').replace(',', '.'));
-				this.value = formatarValor(valor);
-			}
-			});
-		}
-		});
-	});  */
-	</script-->
-	
-    <!-- Incluindo jQuery ->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Incluindo jQuery Mask Plugin ->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-
-
-    <script>
-        $(document).ready(function(){
-            // Aplicando máscaras para os campos de valor
-            $('#val_car, #parcela').mask('000.000.000,00', { reverse: true });
-        });
-    </script-->
-
-
-	
-	<script>
-		function fx(numero, decimal) {
-			return parseFloat(numero.toFixed(decimal));
-		}
-	
-		function alerta() {
-			alert("Teste")
-		}  
-		
-		function calcula() {
-			var val_car, parcela, prazo, tip_lan_emb, lan_emb, tip_lan_pro, lan_pro, par_pag
-			var pra_res, tax_men, tax_anu, por_tot_lan, val_tot_lan, nov_par, pra_res2, nov_pra, parcela2
-			val_car     = parseFloat(document.querySelector('#val_car').value)
-			parcela     = parseFloat(document.querySelector('#parcela').value)
-			prazo       = Number(document.querySelector('#prazo').value)
-			tip_lan_emb = document.querySelector('#tip_lan_emb').value
-			lan_emb     = Number(document.querySelector('#lan_emb').value)
-			tip_lan_pro = document.querySelector('#tip_lan_pro').value
-			lan_pro     = Number(document.querySelector('#lan_pro').value)
-			par_pag     = Number(document.querySelector('#par_pag').value)
-	
-			var VT = parcela * prazo
-			var TX = VT / val_car
-			var TM = fx((TX - 1) / prazo * 100 , 3)
-			var TA = fx(TM * 12 , 2)       
-			
-			pra_res = prazo - par_pag
-			tax_men = TM
-			tax_anu = TA
-			
-			if (tip_lan_emb == "%") {lan_emb = fx(lan_emb / 100 * val_car,2)}
-			if (tip_lan_pro == "%") {lan_pro = fx(lan_pro / 100 * val_car,2)}
-	
-			val_tot_lan = lan_emb + lan_pro
-			por_tot_lan = fx(val_tot_lan / val_car * 100,2)
-	
-			var VP = fx((parcela * par_pag) + val_tot_lan,2)
-			var VR = VT - VP
-	
-			nov_par = fx(VR / pra_res,2)
-			pra_res2 = pra_res
-			nov_pra = fx(VR / parcela,0)
-			parcela2 = parcela
-			
-			console.log('Lance Emb '+lan_emb)
-			console.log('Lance Pro '+lan_pro)		
-			console.log('        VALOR CARTA: '+val_car)
-			console.log('            PARCELA: '+parcela)
-			console.log('              PRAZO: '+prazo)
-			console.log('TIPO LANCE EMBUTIDO: '+tip_lan_emb)
-			console.log(' TIPO LANCE PROPRIO: '+tip_lan_pro)
-			console.log('     LANCE EMBUTIDO: '+lan_emb)
-			console.log('      LANCE PROPRIO: '+lan_pro)
-	
-			console.log('   VALOR TOTAL: '+VT)
-			console.log('          TAXA: '+TX)
-			console.log('    VALOR PAGO: '+VP)
-			console.log('VALOR RESTANTE: '+VR)
-			console.log('   TAXA MENSAL: '+TM)
-			console.log('    TAXA ANUAL: '+TA)
-	
-			console.log('PRAZO RESTANTE: '+pra_res)
-			console.log('   TAXA MENSAL: '+tax_men)
-			console.log('    TAXA ANUAL: '+tax_anu)
-			console.log('LANCE EMBUTIDO: '+lan_emb)
-			console.log(' LANCE PROPRIO: '+lan_pro)
-	
-			console.log('$ TOTAL DE LANCE: '+val_tot_lan)
-			console.log('% TOTAL DE LANCE: '+por_tot_lan)
-			console.log('NOVA PARCELA: '+nov_par)
-			console.log('       PRAZO: '+pra_res2)
-			console.log('  NOVO PRAZO: '+nov_pra)
-			console.log('     PARCELA: '+parcela2)
-			
-			document.getElementById('tax_men').value=TM+'%'
-			document.getElementById('tax_anu').value=TA+'%'
-			document.getElementById('val_tot_lan').value='R$ '+val_tot_lan   	//*1
-			document.getElementById('por_tot_lan').value=por_tot_lan+'%'
-			document.getElementById('nov_par').value=nov_par 					//*1
-			document.getElementById('pra_res2').value=pra_res2
-			document.getElementById('nov_pra').value=nov_pra
-			document.getElementById('parcela2').value=parcela2 					//*1
-		}
-    </script>
-	
-	
-	
+    <link href="favicon.png" rel="shortcut icon" type="image/x-icon" >
+	<link href="estilos.css" rel="stylesheet"    type="text/css">
+    <script src="js.js"></script>
 	
 </head>
 <body>
 <div id="principal" class="principal"> 
+	<!--Logo Sonhagro dentro da tag H1-->
 	<h1><img src="logo.png" width="20%" height="20%"></h1>
+		
+		<!--Valor da carta e parcela-->
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 55%;">
 				<input id="val_car" type="text" required>
@@ -286,6 +26,7 @@
 			</div>
 		</div>
 
+		<!--Prazo e parcelas pagas-->
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 50%;">
 				<input type="text" id="prazo" required>
@@ -297,7 +38,7 @@
 			</div>
 		</div>
 		
-			
+		<!--Lance embutido-->	
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 30%;">
 				<select id="tip_lan_emb" name="tip_lan_emb">
@@ -312,6 +53,7 @@
 			</div>
 		</div>
 		
+		<!--Lamce próprio-->
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 30%;">
 				<select id="tip_lan_pro" name="tip_lan_pro">
@@ -326,13 +68,31 @@
 			</div>
 		</div>
 	
-		<button onclick="calcula()">calcula</button><br>
-	
-		<!--input type="submit" value="CALCULAR" onclick="calcula()"><br-->
+		<!--Botões-->
+		<div class="container">
+			<div class="form-group" style="flex: 0 0 33%;">
+				<button onclick="calcula()">CALCULAR</button><br>
+			</div>
+			<div class="form-group" style="flex: 0 0 33%;">
+				<button onclick="location.reload()">LIMPAR</button>
+			</div>
+			<div class="form-group" style="flex: 0 0 33%;">
+				<button onclick="exibirPopup()">OPÇÕES</button>
+			</div>
+		</div>
 
-		<br>  
+		<!-- Estrutura do menu pop-up -->
+		<div class="menu-popup" id="menuPopup">
+		<span class="fechar-menu" onclick="fecharPopup();">[X]</span>
+		<p><a href="#" onclick="mul()">Multiplicar Carta  </a></p>
+		<p><a href="#" onclick="dif()">Parcelas Diferentes</a></p>
+		<p><a href="#" onclick="red()">Parcelas Reduzidas </a></p>
+		</div>		
 	
+		<!--Após o Lance-->
 		<H1>APÓS O LANCE</H1>
+		
+		<!--Parcela reduzida-->
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 50%;">
 				<input type="text" id="pra_res2" required>
@@ -344,6 +104,8 @@
 			</div>
 		</div>
 		<H1>OU</H1>
+		
+		<!--Prazo reduzido-->
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 50%;">
 				<input type="text" id="nov_pra" required>
@@ -354,11 +116,13 @@
 				<label for="parcela2">PARCELA</label>
 			</div>
 		</div>
-		
-		<br>
-		
+
 		<!--div style="page-break-before: always;"-->
+		
+		<!--Informações adicionais da carta-->
 		<H1>INFORMAÇÕES ADICIONAIS</H1>
+
+		<!--Taxas mensais e anuais-->
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 50%;">
 				<input type="text" id="tax_men" required>
@@ -369,7 +133,8 @@
 				<label for="tax_anu">TAXA ANUAL [%]</label>
 			</div>
 		</div>
-
+		
+		<!--Lance total em % e em R$-->
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 50%;">
 				<input type="text" id="val_tot_lan" required>
@@ -381,6 +146,7 @@
 			</div>
 		</div>
 		
+		<!--Tipo de carta-->
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 40%;">
 				<select id="tipos" name="tipos">
@@ -393,6 +159,8 @@
 				</select>				
 				<label class="tipo" for="tipos">TIPO</label>
 			</div>
+			
+			<!--Administradora de consórcio-->
 			<div class="form-group" style="flex: 0 0 20%;">
 				<select id="bancos" name="bancos">
 					<option value="BBC">🟨</option>
@@ -411,6 +179,6 @@
 		<!--/div-->
 	<br>
 </div>
-<button onclick="exportarParaPDF()">Exportar para PDF</button>
+<button onclick="exportarParaPDF()">Imprimir em PDF</button>
 </body>
 </html>
