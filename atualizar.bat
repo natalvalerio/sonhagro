@@ -17,6 +17,6 @@ echo Empurrando alteracoes para o repositorio remoto
 echo ----------------------------------------------
 git push
 echo ----------------------------------------------
-echo Aguarde tecle alogo para sair ou aguarde...
+echo Aguarde 03 segundos...
 echo ----------------------------------------------
-timeout /nobreak /t 8 >nul
+timeout /nobreak /t 3 >nul
