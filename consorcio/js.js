@@ -93,7 +93,9 @@ function mul() {
 
 function dif() {
 	fecharPopup()
-	alert('Parcelas Diferentes')
+	// alert('Parcelas Diferentes')
+	var adicional = document.getElementById("adicional");
+	adicional.style.display = "block";
 }
 
 function red() {

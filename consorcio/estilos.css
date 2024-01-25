@@ -134,3 +134,7 @@ a {
   text-align: right;
   cursor: pointer;
 }
+
+.adicional {
+	display: none;
+}
