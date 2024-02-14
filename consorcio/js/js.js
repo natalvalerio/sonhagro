@@ -91,10 +91,31 @@ function mul() {
 	var lan_emb=numero(document.getElementById('lan_emb').value)
 	var lan_pro=numero(document.getElementById('lan_pro').value)
 	
+	//------ADICIONADO---------
+	tip_lan_emb = document.querySelector('#tip_lan_emb').value
+	lan_emb     = numero(document.querySelector('#lan_emb').value)
+	tip_lan_pro = document.querySelector('#tip_lan_pro').value
+	lan_pro     = numero(document.querySelector('#lan_pro').value)
+		
+	if (tip_lan_emb == "%") {
+		document.getElementById('lan_emb').value=lan_emb+'%' 
+		lan_emb = fx(lan_emb / 100 * val_car ,2) 
+	} else {
+		document.getElementById('lan_emb').value=money(lan_emb*mult) 
+	}
+	
+	if (tip_lan_pro == "%") {
+		document.getElementById('lan_pro').value=lan_pro+'%' 
+		lan_pro = fx(lan_pro / 100 * val_car ,2) 
+	} else {
+		document.getElementById('lan_pro').value=money(lan_pro*mult) 
+	}
+	//---------------------------
+	
 	document.getElementById('val_car').value=  fx(val_car*mult ,2) 			
 	document.getElementById('parcela').value=  fx(parcela*mult ,2) 
-	document.getElementById('lan_emb').value=lan_emb
-	document.getElementById('lan_pro').value=lan_pro
+	//document.getElementById('lan_emb').value=lan_emb
+	//document.getElementById('lan_pro').value=lan_pro
 	calcula()
 	return
 }
