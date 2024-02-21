@@ -21,12 +21,15 @@ function calcula() {
 	parcela_dois= numero(document.querySelector('#parcela_dois').value)
 	prazo_dois  = numero(document.querySelector('#prazo_dois').value)
 
-	var VT = parcela * prazo
-	var TX = VT / val_car
-	var TM = fx((TX - 1) / prazo * 100 , 3)
-	var TA = fx(TM * 12 , 2)       
+	var prazo_T = prazo + prazo_dois
+	var VT2 = parcela_dois * prazo_dois
+	var VT  = (parcela * prazo) + VT2
+	var parcela_M = VT / prazo_T 
+	var TX  = VT / val_car
+	var TM  = fx((TX - 1) / prazo_T * 100 , 3)
+	var TA  = fx(TM * 12 , 2)       
 	
-	pra_res = prazo - par_pag
+	pra_res = prazo_T - par_pag
 	tax_men = TM
 	tax_anu = TA
 	
@@ -88,6 +91,7 @@ function mul() {
 	var mult   =numero(prompt('Digite o fator multiplicador!'))
 	var val_car=numero(document.getElementById('val_car').value)			
 	var parcela=numero(document.getElementById('parcela').value)
+	var parcela_dois=numero(document.getElementById('parcela_dois').value)
 	var lan_emb=numero(document.getElementById('lan_emb').value)
 	var lan_pro=numero(document.getElementById('lan_pro').value)
 	
@@ -114,6 +118,7 @@ function mul() {
 	
 	document.getElementById('val_car').value=  fx(val_car*mult ,2) 			
 	document.getElementById('parcela').value=  fx(parcela*mult ,2) 
+	document.getElementById('parcela_dois').value=  fx(parcela_dois*mult ,2) 
 	//document.getElementById('lan_emb').value=lan_emb
 	//document.getElementById('lan_pro').value=lan_pro
 	calcula()
