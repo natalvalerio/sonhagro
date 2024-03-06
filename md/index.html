@@ -1,0 +1,107 @@
+<!--!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div><p>Apena Teste</p></div>
+  <div id="markdown-container"></div>
+  <script src="marked.js"></script>
+  <script src="script.js"></script>
+</body>
+</html-->
+<!--https://cdn.jsdelivr.net/npm/marked/-->
+
+
+
+<!--!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown</title>
+</head>
+<body>
+  <div id="content"></div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    window.onload = function() {
+      fetch('exemplo.md')
+        .then(response => response.text())
+        .then(text => {
+          document.getElementById('content').innerHTML = marked(text);
+        });
+    };
+  </script>
+</body>
+</html-->
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Marked</title>
+</head>
+<body>
+  <div id="content1"></div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    document.getElementById('content1').innerHTML =
+      marked.parse('# Marked in the browser\n\nRendered by **marked**.');
+  </script>
+</body>
+</html>
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Marked</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <input type="file" id="file-input" accept=".md">
+  <div id="content"></div>
+<script type="module">
+/*
+  import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+  document.getElementById('content').innerHTML =
+    marked.parse('# Marked in the browser\n\nRendered by **marked**.'); 
+
+  import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+  
+  
+  
+  window.onload = function() {
+    fetch('exemplo.md')
+      .then(response => response.text())
+      .then(text => {
+        document.getElementById('content').innerHTML = marked(text);
+      });
+  };
+*/
+
+  import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+  
+  document.getElementById('file-input').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function() {
+      const markdownContent = reader.result;
+      document.getElementById('content').innerHTML = marked(markdownContent);
+    };
+
+    reader.readAsText(file);
+  });
+</script>
+</body>
+</html>
+
+<!--
+https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js
+https://cdn.jsdelivr.net/npm/marked/marked.min.js
+-->
