@@ -10,6 +10,9 @@
 	
 </head>
 <body>
+<div id="tamanho" name="tamanho">
+</div>
+
 <div id="principal" class="principal"> 
 	<!--Logo Sonhagro dentro da tag H1-->
 	<h1><img src="img/logo.png" width="300px"></h1>
@@ -213,5 +216,12 @@
 	<br>
 </div>
 <button onclick="exportarParaPDF()"><img width="100px" src="img/pdf.png"></button>
+<script>
+  // Chamando a função para determinar o tamanho do dispositivo quando a página carrega
+  window.onload = determinarTamanhoDispositivo;
+
+  // Atualizando o tamanho do dispositivo quando a janela é redimensionada
+  window.onresize = determinarTamanhoDispositivo;
+</script>
 </body>
 </html>
