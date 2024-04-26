@@ -18,11 +18,11 @@
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 55%;">
 				<input id="val_car" type="text" required>
-				<label for="val_car">VALOR DA CARTA</label>
+				<label for="val_car">Valor da Carta [R$]</label>
 			</div>
 			<div class="form-group" style="flex: 0 0 44%;">
 				<input type="text" id="parcela" required>
-				<label for="parcela">PARCELA</label>
+				<label for="parcela">Valor da Parcela [R$]</label>
 			</div>
 		</div>
 
@@ -30,11 +30,11 @@
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 50%;">
 				<input type="text" id="prazo" required>
-				<label for="prazo">PRAZO</label>
+				<label for="prazo">Prazo [Meses]</label>
 			</div>
 			<div class="form-group" style="flex: 0 0 49%;">
 				<input type="text" id="par_pag" value="1">
-				<label for="par_pag" id="label_par_pag">PARCELAS PAGAS [M]</label>
+				<label for="par_pag" id="label_par_pag">Nº Parcelas Pagas [Meses]</label>
 			</div>
 		</div>
 		
@@ -44,11 +44,11 @@
 		<div class="container">
 			<div class="form-group azul" style="flex: 0 0 50%;">
 				<input id="prazo_dois" type="text" value="0" required>
-				<label for="prazo_dois">PRAZO RESTANTE</label>
+				<label for="prazo_dois">Prazo Restante [Meses]</label>
 			</div>
 			<div class="form-group azul" style="flex: 0 0 49%;">
 				<input id="parcela_dois" type="text" value="0" required>
-				<label for="parcela_dois">PARCELA RESTANTE</label>
+				<label for="parcela_dois">Valor Parcela Restante [R$]</label>
 			</div>
 		</div>
 		</fieldset>
@@ -61,7 +61,7 @@
 					<option value="%" selected>%</option>
 					<option value="R$">R$</option>
 				</select>	
-				<label class="tipo">TIPO</label> 
+				<label class="tipo">Tipo [R$ ou %]</label> 
 			</div>
 			<div class="form-group" style="flex: 0 0 69%;">
 				<input type="text" id="lan_emb" value="0" required>
@@ -76,7 +76,7 @@
 					<option value="%" selected>%</option>
 					<option value="R$">R$</option>
 				</select>
-				<label class="tipo">TIPO</label>
+				<label class="tipo">Tipo [R$ ou %]</label>
 			</div>
 			<div class="form-group" style="flex: 0 0 69%;">
 				<input type="text" id="lan_pro" value="0" required>
@@ -87,24 +87,40 @@
 		<!--Botões-->
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 33%;">
-				<button onclick="calcula()">CALCULAR</button><br>
+				<button onclick="calcula()"><img width="100px" src="img/calcular.png"></button><br>
 			</div>
 			<div class="form-group" style="flex: 0 0 33%;">
-				<button onclick="location.reload()">LIMPAR</button>
+				<button onclick="location.reload()"><img width="100px" src="img/limpar.png"></button>
 			</div>
 			<div class="form-group" style="flex: 0 0 33%;">
-				<button onclick="exibirPopup()">OPÇÕES</button>
+				<button onclick="exibirPopup()"><img width="100px" src="img/menu.png"></button>
 			</div>
 		</div>
 
 		<!-- MENU-->
 		<!-- Estrutura do menu pop-up -->
-		<div class="menu-popup" id="menuPopup">
-		<span class="fechar-menu" onclick="fecharPopup();">[X]</span>
-		<p><a href="#" onclick="mul()">Multiplicar Carta  </a></p>
-		<p><a href="#" onclick="dif()">Parcelas Diferentes</a></p>
+		<div class="menu-popup" id="menuPopup" style="border-radius: 5px; border: 1px solid #000;">
+			<span class="fechar-menu" onclick="fecharPopup();"><img width="15%" src="img/fechar2.png"></span>
+			<table style="border-collapse: collapse; width: 100%;">
+				<tr>
+					<td style="border-bottom: 1px solid #000; padding: 10px;">
+						<p><a href="#" onclick="mul()">Multiplicar Carta</a></p>
+					</td>
+				</tr>
+				<tr>
+					<td style="border-bottom: 1px solid #000; padding: 10px;">
+						<p><a href="#" onclick="dif()">Parcelas Diferentes</a></p>
+					</td>
+				</tr>
+				<tr>
+					<td style="border-bottom: 1px solid #000; padding: 10px;">
+						<p><a href="#" onclick="teste()">Teste</a></p>
+					</td>
+				</tr>
+			</table>
 		<!--p><a href="#" onclick="red()">Parcelas Reduzidas </a></p-->
-		</div>		
+		</div>
+
 	
 		<!--Após o Lance-->
 		<H1>APÓS O LANCE</H1>
@@ -196,6 +212,6 @@
 		<!--/div-->
 	<br>
 </div>
-<button onclick="exportarParaPDF()">Imprimir em PDF</button>
+<button onclick="exportarParaPDF()"><img width="100px" src="img/pdf.png"></button>
 </body>
 </html>
