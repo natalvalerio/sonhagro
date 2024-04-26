@@ -210,13 +210,17 @@ function tela() {
 function determinarTamanhoDispositivo() {
   var tamanhoDiv = document.getElementById("tamanho");
   var larguraJanela = window.innerWidth;
+  var valorCartaLabel = document.querySelector('label[for="val_car"]');
 
   if (larguraJanela >= 1024) {
     tamanhoDiv.textContent = "Desktop";
 	tamanhoDiv.innerHTML = '<img width="50px" src="img/desktop.png" alt="Desktop">';
+    valorCartaLabel.textContent = "Valor da Carta [R$]";
   } else if (larguraJanela >= 600) {
    	tamanhoDiv.innerHTML = '<img width="30px" src="img/tablet.png" alt="Tablet">';
+    valorCartaLabel.textContent = "Valor da Carta [R$]";
   } else {
 	tamanhoDiv.innerHTML = '<img width="10px" src="img/cel.png" alt="Celular">';
+    valorCartaLabel.textContent = "CARTA [R$]";
   }
 }
