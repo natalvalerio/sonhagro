@@ -6,7 +6,7 @@
 @font-face{
 	font-family: futuraxk;
 	src: url("../fonts/futuraxk.ttf");
-	#font-family: futuraxk;
+	#font-family: titillium;
 	#src: url('https://fonts.cdnfonts.com/css/titillium-web');
 }
 body {
@@ -74,7 +74,7 @@ fieldset {
     padding-top: 20px;
     padding-bottom: 10px;
     background-color: rgb(250, 250, 250);
-    border-color: rgb(255,255,255); /*/ rgb(0, 128, 255); azul */
+    border-color: rgb(0, 128, 255); 
     border-width: 2px; /* Largura da borda */
     border-style: solid; /* Estilo da borda (neste caso, é uma linha sólida) */
 }
@@ -150,14 +150,12 @@ a {
 	display: none;
 }
 
-.azul {
-	color: rgb(0, 128, 255);
-	border-color: rgb(0, 128, 255);
-}
+
 #tamanho {
   font-size: 24px;
   font-weight: bold;
 }
+
 /* Estilos para ocultar os botões durante a impressão */
 @media print {
     button {

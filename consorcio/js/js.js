@@ -81,6 +81,7 @@ function calcula() {
 	document.getElementById('TF').value="1.25%"
 	document.getElementById('PC').value=money(parcela_M)
 	document.getElementById('PF').value=money(PGM)
+	return
 }
 
 //------MENU DE OPÇÕES-------------------
@@ -143,6 +144,13 @@ function dif() {
 	return 
 }
 
+//-------------FECHAR COMPARAÇÃO-------------------------
+function fechardif() {
+	var adicional = document.getElementById("adicional");
+	adicional.style.display = "none";
+	return 	
+}
+
 //-----------PARCELAS REDUZIDAS-----------------
 function red() {
 	fecharPopup()
@@ -151,13 +159,18 @@ function red() {
 }
 
 //-----------COMPARAR FINANCIAMENTO-----------
-function comp() {
+function exibirComp() {
 	fecharPopup()
-	var adicional = document.getElementById("comparativo");
+	var comparativo = document.getElementById("comparativo");
 	comparativo.style.display = "block";
-	return 
+	return 	
+}
 
-	
+//-------------FECHAR COMPARAÇÃO-------------------------
+function fecharComp() {
+	var comparativo = document.getElementById("comparativo");
+	comparativo.style.display = "none";
+	return 	
 }
 
 //function numero(numero) {
@@ -204,6 +217,7 @@ function tam() {
   } else {
 	tamanhoDiv.innerHTML = '<img width="10px" src="img/cel.png" alt="Celular">';
   }
+  return
 }
 
 //---------RESPONSIVO--------------------
@@ -255,6 +269,7 @@ function determinarTamanhoDispositivo() {
 	valorPFLabel.textContent = "PARC. FINANC. [R$]";
   }
 	atualizarTexto();
+	return
 }
 
 
@@ -277,6 +292,7 @@ function atualizarTexto() {
     } else if (tip_lan_pro === "%") {
         valorLan_proLabel.textContent = "LANCE PROPRIO [%]";
     }
+	return
 }
 
 //-------------------------------------------------------------
