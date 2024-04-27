@@ -58,11 +58,15 @@ function calcula() {
 	nov_pra = fx(VR / parcela,0)
 	parcela2 = parcela
 
-	
+	// -------Financiamento----
+	var resultado, VF, PGM 
+	resultado = Financiamento(val_car, prazo_T, 1.25); // VP = val_car, P = prazo_T, T = 1.25%
+	VF = resultado.VF
+	PGM = resultado.PGM
+
 	document.getElementById('val_car').value=money(val_car)			
 	document.getElementById('parcela').value=money(parcela)			
 	document.getElementById('parcela_dois').value=money(parcela_dois)			
-	//document.getElementById('prazo_dois').value=(prazo_dois)
 	document.getElementById('tax_men').value=TM+'%'
 	document.getElementById('tax_anu').value=TA+'%'
 	document.getElementById('val_tot_lan').value=money(val_tot_lan)   
@@ -70,7 +74,13 @@ function calcula() {
 	document.getElementById('nov_par').value=money(nov_par) 					
 	document.getElementById('pra_res2').value=pra_res2
 	document.getElementById('nov_pra').value=nov_pra
-	document.getElementById('parcela2').value=money(parcela2) 					
+	document.getElementById('parcela2').value=money(parcela2) 
+	document.getElementById('consorcio').value=money(VT) 
+	document.getElementById('financiamento').value=money(VF)
+	document.getElementById('TC').value=TM+'%'
+	document.getElementById('TF').value="1.25%"
+	document.getElementById('PC').value=money(parcela_M)
+	document.getElementById('PF').value=money(PGM)
 }
 
 //------MENU DE OPÇÕES-------------------
@@ -231,6 +241,10 @@ function determinarTamanhoDispositivo() {
   var valorPar_pagLabel = document.querySelector('label[for="par_pag"]');
   var valorPrazo_doisLabel = document.querySelector('label[for="prazo_dois"]');
   var valorParcela_doisLabel = document.querySelector('label[for="parcela_dois"]');
+
+  var valorFinanciamentoLabel = document.querySelector('label[for="financiamento"]');  
+  var valorTFLabel = document.querySelector('label[for="TF"]');  
+  var valorPFLabel = document.querySelector('label[for="PF"]');
   
   if (larguraJanela >= 1024) {
     valorCartaLabel.textContent = "Valor da Carta [R$]";
@@ -239,6 +253,10 @@ function determinarTamanhoDispositivo() {
 	valorPar_pagLabel.textContent = "Nº Parcelas Pagas [Meses]";
 	valorPrazo_doisLabel.textContent = "Prazo Restante [Meses]";
 	valorParcela_doisLabel.textContent = "Valor Parcela Restante [R$]";
+
+	valorFinanciamentoLabel.textContent = "TOTAL FINANCIAMENTO [R$]";
+	valorTFLabel.textContent = "TAXA FINANCIAMENTO [% MÊS]";
+	valorPFLabel.textContent = "PARCELA FINANCIAMENTO [R$]";
   } else if (larguraJanela >= 600) {
     valorCartaLabel.textContent = "Valor da Carta [R$]";
 	valorParcelaLabel.textContent = "Parcela [R$]";
@@ -246,6 +264,10 @@ function determinarTamanhoDispositivo() {
 	valorPar_pagLabel.textContent = "Nº Parc. Pagas [M]";
 	valorPrazo_doisLabel.textContent = "Prazo Restante [M]";
 	valorParcela_doisLabel.textContent = "Val. Parc. Restante [R$]";
+
+	valorFinanciamentoLabel.textContent = "TOT. FINANCIAMENTO [R$]";
+	valorTFLabel.textContent = "TX. FINANCIAMENTO [% MÊS]";
+	valorPFLabel.textContent = "PARC. FINANCIAMENTO [R$]";
   } else {
     valorCartaLabel.textContent = "CARTA [R$]";
 	valorParcelaLabel.textContent = "PARCELA [R$]";
@@ -253,6 +275,10 @@ function determinarTamanhoDispositivo() {
 	valorPar_pagLabel.textContent = "Nº P. PAGAS [M]";
 	valorPrazo_doisLabel.textContent = "PRAZO RESTANTE [M]";
 	valorParcela_doisLabel.textContent = "PARCELA RESTANTE [R$]";
+
+	valorFinanciamentoLabel.textContent = "TOT. FINANC. [R$]";
+	valorTFLabel.textContent = "TX. FINANC. [% MÊS]";
+	valorPFLabel.textContent = "PARC. FINANC. [R$]";
   }
 	atualizarTexto();
 }
@@ -280,3 +306,21 @@ function atualizarTexto() {
 }
 
 //-------------------------------------------------------------
+function Financiamento(VP, P, T) {
+    // Converte a taxa de porcentagem para decimal
+    var taxaDecimal = T / 100;
+    
+    // Calcula o pagamento mensal usando a fórmula de amortização
+    var PGM = VP * taxaDecimal / (1 - Math.pow(1 + taxaDecimal, -P));
+
+    // Calcula o valor futuro (total)
+    var VF = PGM * P;
+
+    // Retorna o pagamento mensal (PGM) e o valor futuro (VF)
+    return { PGM: PGM, VF: VF };
+}
+
+// Exemplo de uso da função
+//var resultado = Financiamento(10000, 12, 1); // VP = 10000, P = 12, T = 1%
+//console.log("Pagamento Mensal (PGM): R$" + resultado.PGM);
+//console.log("Valor Futuro (VF): R$" + resultado.VF);

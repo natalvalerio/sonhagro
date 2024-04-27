@@ -14,7 +14,7 @@
 	</div>
 
 	<!--Logo Sonhagro dentro da tag H1-->
-	<h1><img src="img/logo.png" width="300px"></h1>
+	<h1><img src="img/logo.png" width="250px"></h1>
 		
 		<!--Valor da carta e parcela-->
 		<div class="container">
@@ -89,7 +89,7 @@
 		<!--Botões-->
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 33%;">
-				<button onclick="calcula()"><img width="100px" src="img/calcular.png"></button><br>
+				<button onclick="calcula()"><img width="100px" src="img/calcular.png"></button>
 			</div>
 			<div class="form-group" style="flex: 0 0 33%;">
 				<button onclick="location.reload()"><img width="100px" src="img/limpar.png"></button>
@@ -116,7 +116,7 @@
 				</tr>
 				<tr>
 					<td style="border-bottom: 1px solid #000; padding: 10px;">
-						<p><a href="#" onclick="teste()">Teste</a></p>
+						<p><a href="#" onclick="teste()">Comparar com Financiamento</a></p>
 					</td>
 				</tr>
 			</table>
@@ -154,7 +154,7 @@
 
 		<!--div style="page-break-before: always;"-->
 		
-		<!--Informações adicionais da carta--><br>
+		<!--Informações adicionais da carta><br-->
 		<H1>INFORMAÇÕES ADICIONAIS</H1>
 
 		<!--Taxas mensais e anuais-->
@@ -211,17 +211,43 @@
 			</div>
 		</div>
 		
-		<!--TOTAIS E COMPARATIVO COM FINANCIAMENTO-->
-		<div class="container" id="adicionais">
-			<div class="form-group" style="flex: 0 0 50%;">
-				<input type="text" id="NOME_CAMPO" required>
-				<label for="NOME_CAMPO">NOME_CAMPO</label>
+		<!--TOTAIS E COMPARATIVO COM FINANCIAMENTO><br-->
+		<div id="comparativo">
+			<!--TOTAIS E COMPARATIVO COM FINANCIAMENTO-->
+			<H1>COMPARATIVO COM FINANCIAMENTO</H1>
+			<div class="container">
+				<div class="form-group" style="flex: 0 0 50%;">
+					<input type="text" id="consorcio" required>
+					<label for="consorcio">TOTAL CONSÓRCIO [R$]</label>
+				</div>
+				<div class="form-group" style="flex: 0 0 49%;">
+					<input type="text" id="financiamento" required>
+					<label for="financiamento">TOTAL FINANCIAMENTO [R$]</label>
+				</div>
 			</div>
-			<div class="form-group" style="flex: 0 0 49%;">
-				<input type="text" id="NOME_CAMPO" required>
-				<label for="NOME_CAMPO">NOME_CAMPO</label>
+			<div class="container">
+				<div class="form-group" style="flex: 0 0 50%;">
+					<input type="text" id="TC" required>
+					<label for="TC">TAXA CONSÓRCIO [% MÊS]</label>
+				</div>
+				<div class="form-group" style="flex: 0 0 49%;">
+					<input type="text" id="TF" required>
+					<label for="TF">TAXA FINANCIAMENTO [% MÊS]</label>
+				</div>
 			</div>
+			<div class="container">
+				<div class="form-group" style="flex: 0 0 50%;">
+					<input type="text" id="PC" required>
+					<label for="PC">PARCELA CONSÓRCIO [R$]</label>
+				</div>
+				<div class="form-group" style="flex: 0 0 49%;">
+					<input type="text" id="PF" required>
+					<label for="PF">PARCELA FINANCIAMENTO [R$]</label>
+				</div>
+			</div>
+
 		</div>
+		
 
 		<!--/div-->
 	<br>
