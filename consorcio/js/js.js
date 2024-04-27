@@ -212,19 +212,23 @@ function determinarTamanhoDispositivo() {
   var larguraJanela = window.innerWidth;
   var valorCartaLabel = document.querySelector('label[for="val_car"]');
   var valorParcelaLabel = document.querySelector('label[for="parcela"]');
+  var valorPrazoLabel = document.querySelector('label[for="prazo"]');
   
   if (larguraJanela >= 1024) {
-    #tamanhoDiv.textContent = "Desktop";
-	#tamanhoDiv.innerHTML = '<img width="50px" src="img/desktop.png" alt="Desktop">';
+    //tamanhoDiv.textContent = "Desktop";
+	//tamanhoDiv.innerHTML = '<img width="50px" src="img/desktop.png" alt="Desktop">';
     valorCartaLabel.textContent = "Valor da Carta [R$]";
 	valorParcelaLabel.textContent = "Valor da Parcela [R$]";
+	valorPrazoLabel.textContent = "Prazo [Meses]";
   } else if (larguraJanela >= 600) {
-   	#tamanhoDiv.innerHTML = '<img width="30px" src="img/tablet.png" alt="Tablet">';
+   	//tamanhoDiv.innerHTML = '<img width="30px" src="img/tablet.png" alt="Tablet">';
     valorCartaLabel.textContent = "Valor da Carta [R$]";
-	valorParcelaLabel.textContent = "Valor da Parcela [R$]";
+	valorParcelaLabel.textContent = "Parcela [R$]";
+	valorPrazoLabel.textContent = "Prazo [M]";
   } else {
-	#tamanhoDiv.innerHTML = '<img width="10px" src="img/cel.png" alt="Celular">';
+	//tamanhoDiv.innerHTML = '<img width="10px" src="img/cel.png" alt="Celular">';
     valorCartaLabel.textContent = "CARTA [R$]";
 	valorParcelaLabel.textContent = "PARCELA [R$]";
+	valorPrazoLabel.textContent = "PRAZO [M]";
   }
 }
