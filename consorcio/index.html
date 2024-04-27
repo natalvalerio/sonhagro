@@ -40,8 +40,8 @@
 			</div>
 		</div>
 		
-		<!--Valor do prazo_dois e parcela_dois adicional-->
-		<div class="adicional" id="adicional">
+		<!--Valor do prazo_dois e parcela_dois diferente-->
+		<div class="diferente" id="diferente">
 	<!--fieldset-->
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 49%;">
@@ -126,91 +126,91 @@
 		<!--p><a href="#" onclick="red()">Parcelas Reduzidas </a></p-->
 		</div>
 
-	
-		<!--Após o Lance-->
-		<H1>APÓS O LANCE</H1>
-		
-		<!--Parcela reduzida-->
-		<div class="container">
-			<div class="form-group" style="flex: 0 0 50%;">
-				<input type="text" id="pra_res2" required>
-				<label for="pra_res2">PRAZO [MESES]</label>
+		<div id="aposlance">
+			<!--Após o Lance-->
+			<H1>APÓS O LANCE <img width="15px" src="img/fechar.png" onclick="fecharaposlance();"></H1>
+			<!--Parcela reduzida-->
+			<div class="container">
+				<div class="form-group" style="flex: 0 0 50%;">
+					<input type="text" id="pra_res2" required>
+					<label for="pra_res2">PRAZO [MESES]</label>
+				</div>
+				<div class="form-group" style="flex: 0 0 49%;">
+					<input type="text" id="nov_par" required>
+					<label for="nov_par">PARCELA MENOR [R$]</label>
+				</div>
 			</div>
-			<div class="form-group" style="flex: 0 0 49%;">
-				<input type="text" id="nov_par" required>
-				<label for="nov_par">PARCELA MENOR [R$]</label>
-			</div>
-		</div>
-		<H1>OU</H1>
-		
-		<!--Prazo reduzido-->
-		<div class="container">
-			<div class="form-group" style="flex: 0 0 50%;">
-				<input type="text" id="nov_pra" required>
-				<label for="nov_pra">PRAZO MENOR [M]</label>
-			</div>
-			<div class="form-group" style="flex: 0 0 49%;">
-				<input type="text" id="parcela2" required>
-				<label for="parcela2">PARCELA [R$]</label>
+			<H1>OU</H1>
+			
+			<!--Prazo reduzido-->
+			<div class="container">
+				<div class="form-group" style="flex: 0 0 50%;">
+					<input type="text" id="nov_pra" required>
+					<label for="nov_pra">PRAZO MENOR [M]</label>
+				</div>
+				<div class="form-group" style="flex: 0 0 49%;">
+					<input type="text" id="parcela2" required>
+					<label for="parcela2">PARCELA [R$]</label>
+				</div>
 			</div>
 		</div>
 
 		<!--div style="page-break-before: always;"-->
 		
-		<!--Informações adicionais da carta><br-->
-		<H1>INFORMAÇÕES ADICIONAIS</H1>
-
+		<div id="adicional">
 		<!--Taxas mensais e anuais-->
-		<div class="container">
-			<div class="form-group" style="flex: 0 0 50%;">
-				<input type="text" id="tax_men" required>
-				<label for="tax_men">TAXA MENSAL [%]</label>
-			</div>
-			<div class="form-group" style="flex: 0 0 49%;">
-				<input type="text" id="tax_anu" required>
-				<label for="tax_anu">TAXA ANUAL [%]</label>
-			</div>
-		</div>
+		<H1>INFORMAÇÕES ADICIONAIS <img width="15px" src="img/fechar.png" onclick="fecharadicional();"></H1>
+			<div class="container">
+				<div class="form-group" style="flex: 0 0 50%;">
+					<input type="text" id="tax_men" required>
+					<label for="tax_men">TAXA MENSAL [%]</label>
+				</div>
+				<div class="form-group" style="flex: 0 0 49%;">
+					<input type="text" id="tax_anu" required>
+					<label for="tax_anu">TAXA ANUAL [%]</label>
+				</div>
+			</div>	
 		
-		<!--Lance total em % e em R$-->
-		<div class="container">
-			<div class="form-group" style="flex: 0 0 50%;">
-				<input type="text" id="val_tot_lan" required>
-				<label for="val_tot_lan">TOTAL DE LANCE [R$]</label>
-			</div>
-			<div class="form-group" style="flex: 0 0 49%;">
-				<input type="text" id="por_tot_lan" required>
-				<label for="por_tot_lan">TOTAL DE LANCE [%]</label>
-			</div>
-		</div>
-		
-		<!--Tipo de carta-->
-		<div class="container">
-			<div class="form-group" style="flex: 0 0 40%;">
-				<select id="tipos" name="tipos">
-					<option value="IMÓVEIS">IMÓVEIS 🏠🏘️</option>
-					<option value="PESADOS">PESADOS 🚚🚜</option>
-					<option value="AUTOS">AUTOS 🚗🚘</option>
-					<option value="MOTOS">MOTOS 🏍️🛵</option>
-					<option value="SERVIÇOS">SERVIÇOS 🚧👨‍⚕️</option>
-					<option value="OUTRO">OUTROS</option>
-				</select>				
-				<label class="tipo" for="tipos">TIPO</label>
+			<!--Lance total em % e em R$-->
+			<div class="container">
+				<div class="form-group" style="flex: 0 0 50%;">
+					<input type="text" id="val_tot_lan" required>
+					<label for="val_tot_lan">TOTAL DE LANCE [R$]</label>
+				</div>
+				<div class="form-group" style="flex: 0 0 49%;">
+					<input type="text" id="por_tot_lan" required>
+					<label for="por_tot_lan">TOTAL DE LANCE [%]</label>
+				</div>
 			</div>
 			
-			<!--Administradora de consórcio-->
-			<div class="form-group" style="flex: 0 0 20%;">
-				<select id="bancos" name="bancos">
-					<option value="BBC">🟨</option>
-					<option value="RODOBENS">🟩</option>
-					<option value="EMBRACON">🟥</option>
-					<option value="SANTANDER">⬛</option>
-				</select>				
-				<label class="tipo" for="bancos">COR</label>
-			</div>
-			<div class="form-group" style="flex: 0 0 39%;">
-				<input type="text" id="grupo" required>
-				<label for="grupo">GRUPO</label>
+			<!--Tipo de carta-->
+			<div class="container">
+				<div class="form-group" style="flex: 0 0 40%;">
+					<select id="tipos" name="tipos">
+						<option value="IMÓVEIS">IMÓVEIS 🏠🏘️</option>
+						<option value="PESADOS">PESADOS 🚚🚜</option>
+						<option value="AUTOS">AUTOS 🚗🚘</option>
+						<option value="MOTOS">MOTOS 🏍️🛵</option>
+						<option value="SERVIÇOS">SERVIÇOS 🚧👨‍⚕️</option>
+						<option value="OUTRO">OUTROS</option>
+					</select>				
+					<label class="tipo" for="tipos">TIPO</label>
+				</div>
+				
+				<!--Administradora de consórcio-->
+				<div class="form-group" style="flex: 0 0 20%;">
+					<select id="bancos" name="bancos">
+						<option value="BBC">🟨</option>
+						<option value="RODOBENS">🟩</option>
+						<option value="EMBRACON">🟥</option>
+						<option value="SANTANDER">⬛</option>
+					</select>				
+					<label class="tipo" for="bancos">COR</label>
+				</div>
+				<div class="form-group" style="flex: 0 0 39%;">
+					<input type="text" id="grupo" required>
+					<label for="grupo">GRUPO</label>
+				</div>
 			</div>
 		</div>
 		

@@ -81,6 +81,13 @@ function calcula() {
 	document.getElementById('TF').value="1.25%"
 	document.getElementById('PC').value=money(parcela_M)
 	document.getElementById('PF').value=money(PGM)
+	
+	var adicional = document.getElementById("adicional");
+	adicional.style.display = "block";
+	
+	var aposlance = document.getElementById("aposlance");
+	aposlance.style.display = "block";
+	
 	return
 }
 
@@ -139,15 +146,15 @@ function mul() {
 //---------------PARCELAS DIFERENTES-----------
 function dif() {
 	fecharPopup()
-	var adicional = document.getElementById("adicional");
-	adicional.style.display = "block";
+	var diferente = document.getElementById("diferente");
+	diferente.style.display = "block";
 	return 
 }
 
 //-------------FECHAR COMPARAÇÃO-------------------------
 function fechardif() {
-	var adicional = document.getElementById("adicional");
-	adicional.style.display = "none";
+	var diferente = document.getElementById("diferente");
+	diferente.style.display = "none";
 	return 	
 }
 
@@ -170,6 +177,20 @@ function exibirComp() {
 function fecharComp() {
 	var comparativo = document.getElementById("comparativo");
 	comparativo.style.display = "none";
+	return 	
+}
+
+//-------------FECHAR ADICIONAL-------------------------
+function fecharadicional() {
+	var adicional = document.getElementById("adicional");
+	adicional.style.display = "none";
+	return 	
+}
+
+//-------------FECHAR APOSLANCE-------------------------
+function fecharaposlance() {
+	var aposlance = document.getElementById("aposlance");
+	aposlance.style.display = "none";
 	return 	
 }
 
