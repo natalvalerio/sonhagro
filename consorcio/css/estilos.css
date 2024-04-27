@@ -146,6 +146,10 @@ a {
 	display: none;
 }
 
+.comparativo {
+	display: none;
+}
+
 .azul {
 	color: rgb(0, 128, 255);
 	border-color: rgb(0, 128, 255);

@@ -138,7 +138,6 @@ function mul() {
 //---------------PARCELAS DIFERENTES-----------
 function dif() {
 	fecharPopup()
-	// alert('Parcelas Diferentes')
 	var adicional = document.getElementById("adicional");
 	adicional.style.display = "block";
 	return 
@@ -151,6 +150,15 @@ function red() {
 	return 
 }
 
+//-----------COMPARAR FINANCIAMENTO-----------
+function comp() {
+	fecharPopup()
+	var adicional = document.getElementById("comparativo");
+	comparativo.style.display = "block";
+	return 
+
+	
+}
 
 //function numero(numero) {
 function numero(numero1) {
@@ -183,41 +191,6 @@ function money(numero3) {
 	return numero3.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 }
 
-//---------EXIBIR CALCULOS NO CONSOLE--------------------
-function tela() {
-	console.log(typeof numero2)
-	console.log('Lance Emb '+lan_emb)
-	console.log('Lance Pro '+lan_pro)		
-	console.log('        VALOR CARTA: '+val_car)
-	console.log('            PARCELA: '+parcela)
-	console.log('              PRAZO: '+prazo)
-	console.log('TIPO LANCE EMBUTIDO: '+tip_lan_emb)
-	console.log(' TIPO LANCE PROPRIO: '+tip_lan_pro)
-	console.log('     LANCE EMBUTIDO: '+lan_emb)
-	console.log('      LANCE PROPRIO: '+lan_pro)
-
-	console.log('   VALOR TOTAL: '+VT)
-	console.log('          TAXA: '+TX)
-	console.log('    VALOR PAGO: '+VP)
-	console.log('VALOR RESTANTE: '+VR)
-	console.log('   TAXA MENSAL: '+TM)
-	console.log('    TAXA ANUAL: '+TA)
-
-	console.log('PRAZO RESTANTE: '+pra_res)
-	console.log('   TAXA MENSAL: '+tax_men)
-	console.log('    TAXA ANUAL: '+tax_anu)
-	console.log('LANCE EMBUTIDO: '+lan_emb)
-	console.log(' LANCE PROPRIO: '+lan_pro)
-
-	console.log('$ TOTAL DE LANCE: '+val_tot_lan)
-	console.log('% TOTAL DE LANCE: '+por_tot_lan)
-	console.log('NOVA PARCELA: '+nov_par)
-	console.log('       PRAZO: '+pra_res2)
-	console.log('  NOVO PRAZO: '+nov_pra)
-	console.log('     PARCELA: '+parcela2)
-	return 
-}
-
 //---------RESPONSIVO--------------------
 function tam() {
   var tamanhoDiv = document.getElementById("tamanho");
@@ -233,6 +206,7 @@ function tam() {
   }
 }
 
+//---------RESPONSIVO--------------------
 function determinarTamanhoDispositivo() {
   var larguraJanela = window.innerWidth;
   var valorCartaLabel = document.querySelector('label[for="val_car"]');
@@ -319,8 +293,3 @@ function Financiamento(VP, P, T) {
     // Retorna o pagamento mensal (PGM) e o valor futuro (VF)
     return { PGM: PGM, VF: VF };
 }
-
-// Exemplo de uso da função
-//var resultado = Financiamento(10000, 12, 1); // VP = 10000, P = 12, T = 1%
-//console.log("Pagamento Mensal (PGM): R$" + resultado.PGM);
-//console.log("Valor Futuro (VF): R$" + resultado.VF);
