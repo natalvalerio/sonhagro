@@ -218,8 +218,8 @@ function determinarTamanhoDispositivo() {
   var valorParcela_doisLabel = document.querySelector('label[for="parcela_dois"]');
   
   if (larguraJanela >= 1024) {
-    //tamanhoDiv.textContent = "Desktop";
-	//tamanhoDiv.innerHTML = '<img width="50px" src="img/desktop.png" alt="Desktop">';
+    tamanhoDiv.textContent = "Desktop";
+	tamanhoDiv.innerHTML = '<img width="5px" src="img/desktop.png" alt="Desktop">';
     valorCartaLabel.textContent = "Valor da Carta [R$]";
 	valorParcelaLabel.textContent = "Valor da Parcela [R$]";
 	valorPrazoLabel.textContent = "Prazo [Meses]";
@@ -227,7 +227,7 @@ function determinarTamanhoDispositivo() {
 	valorPrazo_doisLabel.textContent = "Prazo Restante [Meses]";
 	valorParcela_doisLabel.textContent = "Valor Parcela Restante [R$]";
   } else if (larguraJanela >= 600) {
-   	//tamanhoDiv.innerHTML = '<img width="30px" src="img/tablet.png" alt="Tablet">';
+   	tamanhoDiv.innerHTML = '<img width="3px" src="img/tablet.png" alt="Tablet">';
     valorCartaLabel.textContent = "Valor da Carta [R$]";
 	valorParcelaLabel.textContent = "Parcela [R$]";
 	valorPrazoLabel.textContent = "Prazo [M]";
@@ -235,7 +235,7 @@ function determinarTamanhoDispositivo() {
 	valorPrazo_doisLabel.textContent = "Prazo Restante [M]";
 	valorParcela_doisLabel.textContent = "Val. Parc. Restante [R$]";
   } else {
-	//tamanhoDiv.innerHTML = '<img width="10px" src="img/cel.png" alt="Celular">';
+	tamanhoDiv.innerHTML = '<img width="1px" src="img/cel.png" alt="Celular">';
     valorCartaLabel.textContent = "CARTA [R$]";
 	valorParcelaLabel.textContent = "PARCELA [R$]";
 	valorPrazoLabel.textContent = "PRAZO [M]";
