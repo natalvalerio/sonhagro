@@ -209,8 +209,21 @@ function tela() {
 }
 
 //---------RESPONSIVO--------------------
-function determinarTamanhoDispositivo() {
+function tam() {
   var tamanhoDiv = document.getElementById("tamanho");
+  var larguraJanela = window.innerWidth;
+
+  if (larguraJanela >= 1024) {
+    tamanhoDiv.textContent = "Desktop";
+	tamanhoDiv.innerHTML = '<img width="5px" src="img/desktop.png" alt="Desktop">';
+  } else if (larguraJanela >= 600) {
+   	tamanhoDiv.innerHTML = '<img width="3px" src="img/tablet.png" alt="Tablet">';
+  } else {
+	tamanhoDiv.innerHTML = '<img width="1px" src="img/cel.png" alt="Celular">';
+  }
+}
+
+function determinarTamanhoDispositivo() {
   var larguraJanela = window.innerWidth;
   var valorCartaLabel = document.querySelector('label[for="val_car"]');
   var valorParcelaLabel = document.querySelector('label[for="parcela"]');
@@ -220,8 +233,6 @@ function determinarTamanhoDispositivo() {
   var valorParcela_doisLabel = document.querySelector('label[for="parcela_dois"]');
   
   if (larguraJanela >= 1024) {
-    tamanhoDiv.textContent = "Desktop";
-	tamanhoDiv.innerHTML = '<img width="5px" src="img/desktop.png" alt="Desktop">';
     valorCartaLabel.textContent = "Valor da Carta [R$]";
 	valorParcelaLabel.textContent = "Valor da Parcela [R$]";
 	valorPrazoLabel.textContent = "Prazo [Meses]";
@@ -229,7 +240,6 @@ function determinarTamanhoDispositivo() {
 	valorPrazo_doisLabel.textContent = "Prazo Restante [Meses]";
 	valorParcela_doisLabel.textContent = "Valor Parcela Restante [R$]";
   } else if (larguraJanela >= 600) {
-   	tamanhoDiv.innerHTML = '<img width="3px" src="img/tablet.png" alt="Tablet">';
     valorCartaLabel.textContent = "Valor da Carta [R$]";
 	valorParcelaLabel.textContent = "Parcela [R$]";
 	valorPrazoLabel.textContent = "Prazo [M]";
@@ -237,7 +247,6 @@ function determinarTamanhoDispositivo() {
 	valorPrazo_doisLabel.textContent = "Prazo Restante [M]";
 	valorParcela_doisLabel.textContent = "Val. Parc. Restante [R$]";
   } else {
-	tamanhoDiv.innerHTML = '<img width="1px" src="img/cel.png" alt="Celular">';
     valorCartaLabel.textContent = "CARTA [R$]";
 	valorParcelaLabel.textContent = "PARCELA [R$]";
 	valorPrazoLabel.textContent = "PRAZO [M]";
