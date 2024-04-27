@@ -85,7 +85,10 @@ function calcula() {
 	var adicional = document.getElementById("adicional");
 	adicional.style.display = "block";
 	
-	var aposlance = document.getElementById("aposlance");
+	var aposlance = document.getElementById("aposlance1");
+	aposlance.style.display = "block";
+	
+	var aposlance = document.getElementById("aposlance2");
 	aposlance.style.display = "block";
 	
 	return
@@ -187,10 +190,16 @@ function fecharadicional() {
 	return 	
 }
 
-//-------------FECHAR APOSLANCE-------------------------
-function fecharaposlance() {
-	var aposlance = document.getElementById("aposlance");
-	aposlance.style.display = "none";
+//-------------FECHAR APOSLANCE1-------------------------
+function fecharaposlance1() {
+	var aposlance1 = document.getElementById("aposlance1");
+	aposlance1.style.display = "none";
+	return 	
+}
+//-------------FECHAR APOSLANCE2-------------------------
+function fecharaposlance2() {
+	var aposlance2 = document.getElementById("aposlance2");
+	aposlance2.style.display = "none";
 	return 	
 }
 
