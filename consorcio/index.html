@@ -60,11 +60,11 @@
 		<!--Lance embutido-->	
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 30%;">
-				<select id="tip_lan_emb" name="tip_lan_emb">
+				<select id="tip_lan_emb" name="tip_lan_emb" onchange="atualizarTexto()">
 					<option value="%" selected>%</option>
 					<option value="R$">R$</option>
 				</select>	
-				<label class="tipo">Tipo [R$ ou %]</label> 
+				<label class="tipo">[R$ ou %]</label> 
 			</div>
 			<div class="form-group" style="flex: 0 0 69%;">
 				<input type="text" id="lan_emb" value="0" required>
@@ -75,11 +75,11 @@
 		<!--Lance próprio-->
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 30%;">
-				<select id="tip_lan_pro" name="tip_lan_pro">
+				<select id="tip_lan_pro" name="tip_lan_pro" onchange="atualizarTexto()">
 					<option value="%" selected>%</option>
 					<option value="R$">R$</option>
 				</select>
-				<label class="tipo">Tipo [R$ ou %]</label>
+				<label class="tipo">[R$ ou %]</label>
 			</div>
 			<div class="form-group" style="flex: 0 0 69%;">
 				<input type="text" id="lan_pro" value="0" required>
@@ -186,7 +186,7 @@
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 40%;">
 				<select id="tipos" name="tipos">
-					<option value="IMÓVEIS">IMÓVEIS 🏠🏚️</option>
+					<option value="IMÓVEIS">IMÓVEIS 🏠🏘️</option>
 					<option value="PESADOS">PESADOS 🚚🚜</option>
 					<option value="AUTOS">AUTOS 🚗🚘</option>
 					<option value="MOTOS">MOTOS 🏍️🛵</option>

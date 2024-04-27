@@ -243,4 +243,26 @@ function determinarTamanhoDispositivo() {
 	valorPrazo_doisLabel.textContent = "PRAZO RESTANTE [M]";
 	valorParcela_doisLabel.textContent = "PARCELA RESTANTE [R$]";
   }
+	//Chame essa função quando precisar atualizar o texto do lance embutido
+	atualizarTexto();
+}
+
+function atualizarTexto() {
+    var lan_emb_label = document.querySelector('#label_lan_emb');
+	var tip_lan_emb = document.querySelector('#tip_lan_emb').value
+	var tip_lan_pro = document.querySelector('#tip_lan_pro').value
+	var valorLan_embLabel = document.querySelector('label[for="lan_emb"]');
+	var valorLan_proLabel = document.querySelector('label[for="lan_pro"]');
+
+    if (tip_lan_emb === "R$") {
+        valorLan_embLabel.textContent = "LANCE EMBUTIDO [R$]";
+    } else if (tip_lan_emb === "%") {
+        valorLan_embLabel.textContent = "LANCE EMBUTIDO [%]";
+    }
+	
+	if (tip_lan_pro === "R$") {
+        valorLan_proLabel.textContent = "LANCE PROPRIO [R$]";
+    } else if (tip_lan_pro === "%") {
+        valorLan_proLabel.textContent = "LANCE PROPRIO [%]";
+    }
 }
