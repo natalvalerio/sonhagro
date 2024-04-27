@@ -214,6 +214,8 @@ function determinarTamanhoDispositivo() {
   var valorParcelaLabel = document.querySelector('label[for="parcela"]');
   var valorPrazoLabel = document.querySelector('label[for="prazo"]');
   var valorPar_pagLabel = document.querySelector('label[for="par_pag"]');
+  var valorPrazo_doisLabel = document.querySelector('label[for="prazo_dois"]');
+  var valorParcela_doisLabel = document.querySelector('label[for="parcela_dois"]');
   
   if (larguraJanela >= 1024) {
     //tamanhoDiv.textContent = "Desktop";
@@ -222,17 +224,23 @@ function determinarTamanhoDispositivo() {
 	valorParcelaLabel.textContent = "Valor da Parcela [R$]";
 	valorPrazoLabel.textContent = "Prazo [Meses]";
 	valorPar_pagLabel.textContent = "Nº Parcelas Pagas [Meses]";
+	valorPrazo_doisLabel.textContent = "Prazo Restante [Meses]";
+	valorParcela_doisLabel.textContent = "Valor Parcela Restante [R$]";
   } else if (larguraJanela >= 600) {
    	//tamanhoDiv.innerHTML = '<img width="30px" src="img/tablet.png" alt="Tablet">';
     valorCartaLabel.textContent = "Valor da Carta [R$]";
 	valorParcelaLabel.textContent = "Parcela [R$]";
 	valorPrazoLabel.textContent = "Prazo [M]";
 	valorPar_pagLabel.textContent = "Nº Parc. Pagas [M]";
+	valorPrazo_doisLabel.textContent = "Prazo Restante [M]";
+	valorParcela_doisLabel.textContent = "Val. Parc. Restante [R$]";
   } else {
 	//tamanhoDiv.innerHTML = '<img width="10px" src="img/cel.png" alt="Celular">';
     valorCartaLabel.textContent = "CARTA [R$]";
 	valorParcelaLabel.textContent = "PARCELA [R$]";
 	valorPrazoLabel.textContent = "PRAZO [M]";
 	valorPar_pagLabel.textContent = "Nº P. PAGAS [M]";
+	valorPrazo_doisLabel.textContent = "PRAZO RESTANTE [M]";
+	valorParcela_doisLabel.textContent = "PARCELA RESTANTE [R$]";
   }
 }
