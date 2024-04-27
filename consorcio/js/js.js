@@ -214,16 +214,16 @@ function determinarTamanhoDispositivo() {
   var valorParcelaLabel = document.querySelector('label[for="parcela"]');
   
   if (larguraJanela >= 1024) {
-    tamanhoDiv.textContent = "Desktop";
-	tamanhoDiv.innerHTML = '<img width="50px" src="img/desktop.png" alt="Desktop">';
+    #tamanhoDiv.textContent = "Desktop";
+	#tamanhoDiv.innerHTML = '<img width="50px" src="img/desktop.png" alt="Desktop">';
     valorCartaLabel.textContent = "Valor da Carta [R$]";
 	valorParcelaLabel.textContent = "Valor da Parcela [R$]";
   } else if (larguraJanela >= 600) {
-   	tamanhoDiv.innerHTML = '<img width="30px" src="img/tablet.png" alt="Tablet">';
+   	#tamanhoDiv.innerHTML = '<img width="30px" src="img/tablet.png" alt="Tablet">';
     valorCartaLabel.textContent = "Valor da Carta [R$]";
 	valorParcelaLabel.textContent = "Valor da Parcela [R$]";
   } else {
-	tamanhoDiv.innerHTML = '<img width="10px" src="img/cel.png" alt="Celular">';
+	#tamanhoDiv.innerHTML = '<img width="10px" src="img/cel.png" alt="Celular">';
     valorCartaLabel.textContent = "CARTA [R$]";
 	valorParcelaLabel.textContent = "PARCELA [R$]";
   }
