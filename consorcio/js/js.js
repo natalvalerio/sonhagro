@@ -1,6 +1,6 @@
 //-------PDF------------
+//	const principal = document.querySelector('.principal');
 function exportarParaPDF() {
-	const principal = document.querySelector('.principal');
 	window.print();
 	return
 }	
@@ -207,6 +207,8 @@ function tela() {
 	console.log('     PARCELA: '+parcela2)
 	return 
 }
+
+//---------RESPONSIVO--------------------
 function determinarTamanhoDispositivo() {
   var tamanhoDiv = document.getElementById("tamanho");
   var larguraJanela = window.innerWidth;
@@ -243,10 +245,11 @@ function determinarTamanhoDispositivo() {
 	valorPrazo_doisLabel.textContent = "PRAZO RESTANTE [M]";
 	valorParcela_doisLabel.textContent = "PARCELA RESTANTE [R$]";
   }
-	//Chame essa função quando precisar atualizar o texto do lance embutido
 	atualizarTexto();
 }
 
+
+//---------CORRIGE [R$ ou %]--------------------
 function atualizarTexto() {
     var lan_emb_label = document.querySelector('#label_lan_emb');
 	var tip_lan_emb = document.querySelector('#tip_lan_emb').value
