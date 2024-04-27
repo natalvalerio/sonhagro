@@ -10,10 +10,9 @@
 	
 </head>
 <body>
-<div id="tamanho" name="tamanho">
-</div>
+	<div id="tamanho" name="tamanho">
+	</div>
 
-<div id="principal" class="principal"> 
 	<!--Logo Sonhagro dentro da tag H1-->
 	<h1><img src="img/logo.png" width="300px"></h1>
 		
@@ -211,17 +210,31 @@
 				<label for="grupo">GRUPO</label>
 			</div>
 		</div>
+		
+		<!--TOTAIS E COMPARATIVO COM FINANCIAMENTO-->
+		<div class="container" id="adicionais">
+			<div class="form-group" style="flex: 0 0 50%;">
+				<input type="text" id="NOME_CAMPO" required>
+				<label for="NOME_CAMPO">NOME_CAMPO</label>
+			</div>
+			<div class="form-group" style="flex: 0 0 49%;">
+				<input type="text" id="NOME_CAMPO" required>
+				<label for="NOME_CAMPO">NOME_CAMPO</label>
+			</div>
+		</div>
 
 		<!--/div-->
 	<br>
-</div>
+	
 <button onclick="exportarParaPDF()"><img width="100px" src="img/pdf.png"></button>
 <script>
   // Chamando a função para determinar o tamanho do dispositivo quando a página carrega
   window.onload = determinarTamanhoDispositivo;
+  //window.onload = tam;
 
   // Atualizando o tamanho do dispositivo quando a janela é redimensionada
   window.onresize = determinarTamanhoDispositivo;
+  //window.onresize = tam;
 </script>
 </body>
 </html>

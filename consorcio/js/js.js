@@ -211,15 +211,15 @@ function tela() {
 //---------RESPONSIVO--------------------
 function tam() {
   var tamanhoDiv = document.getElementById("tamanho");
-  var larguraJanela = window.innerWidth;
+  var largura = window.innerWidth;
 
-  if (larguraJanela >= 1024) {
+  if (largura >= 1024) {
     tamanhoDiv.textContent = "Desktop";
-	tamanhoDiv.innerHTML = '<img width="5px" src="img/desktop.png" alt="Desktop">';
-  } else if (larguraJanela >= 600) {
-   	tamanhoDiv.innerHTML = '<img width="3px" src="img/tablet.png" alt="Tablet">';
+	tamanhoDiv.innerHTML = '<img width="50px" src="img/desktop.png" alt="Desktop">';
+  } else if (largura >= 600) {
+   	tamanhoDiv.innerHTML = '<img width="30px" src="img/tablet.png" alt="Tablet">';
   } else {
-	tamanhoDiv.innerHTML = '<img width="1px" src="img/cel.png" alt="Celular">';
+	tamanhoDiv.innerHTML = '<img width="10px" src="img/cel.png" alt="Celular">';
   }
 }
 
@@ -278,3 +278,5 @@ function atualizarTexto() {
         valorLan_proLabel.textContent = "LANCE PROPRIO [%]";
     }
 }
+
+//-------------------------------------------------------------
