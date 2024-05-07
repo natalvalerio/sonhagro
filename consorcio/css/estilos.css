@@ -156,9 +156,18 @@ a {
   font-weight: bold;
 }
 
+.mensagem {
+  text-align: center;
+  color: red;
+  display: none;
+}
+
 /* Estilos para ocultar os botões durante a impressão */
 @media print {
     button {
         display: none;
     }
+	.mensagem {
+		display: block;
+	}
 }
