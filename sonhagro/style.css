@@ -1,0 +1,37 @@
+body {
+  font-family: Arial, sans-serif;
+  width: 300px;
+  padding: 10px;
+}
+
+h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.category {
+  margin-bottom: 20px;
+}
+
+.category h3 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.category ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.category ul li {
+  margin-bottom: 5px;
+}
+
+.category ul li a {
+  text-decoration: none;
+  color: #0078d7;
+}
+
+.category ul li a:hover {
+  text-decoration: underline;
+}
