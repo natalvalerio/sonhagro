@@ -4,7 +4,7 @@
   "version": "1.0",
   "description": "Links importantes para Franqueados Sonhagro!",
   "action": {
-    "default_popup": "https://natalvalerio.github.io/sonhagro/sonhagro/popup.html",
+    "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
