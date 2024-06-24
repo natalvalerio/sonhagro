@@ -1,0 +1,198 @@
+<!--DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📺 V Í D E O S E 📰 A R T I G O S</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+        h1 {
+            text-align: center;
+        }
+        .panel {
+            margin-top: 20px;
+        }
+        .video-panel, .article-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .video-item, .article-item {
+            text-align: center;
+            width: 200px;
+        }
+        iframe {
+            width: 100%;
+            height: 113px;
+            border: none;
+        }
+        .article-item iframe {
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📺 V Í D E O S</h1>
+        <div id="video-panel" class="panel video-panel"></div>
+
+        <h1>📰 A R T I G O S</h1>
+        <div id="article-list" class="panel article-list"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script>
+        fetch('links.csv')
+            .then(response => response.text())
+            .then(data => {
+                const parsedData = Papa.parse(data, { header: false, delimiter: ';' }).data;
+                const videoPanel = document.getElementById('video-panel');
+                const articleList = document.getElementById('article-list');
+
+                parsedData.forEach(link => {
+                    const [type, title, url] = link;
+                    if (type === 'v') {
+                        const videoId = new URL(url).searchParams.get('v');
+                        const videoItem = document.createElement('div');
+                        videoItem.classList.add('video-item');
+                        videoItem.innerHTML = `
+                            <a href="${url}" target="_blank">
+                                <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
+                            </a>
+                            <div>${title}</div>
+                        `;
+                        videoPanel.appendChild(videoItem);
+                    } else if (type === 'a') {
+                        const articleItem = document.createElement('div');
+                        articleItem.classList.add('article-item');
+                        articleItem.innerHTML = `
+                            <a href="${url}" target="_blank">
+                                <iframe src="${url}" frameborder="0"></iframe>
+                                <div>${title}</div>
+                            </a>
+                        `;
+                        articleList.appendChild(articleItem);
+                    }
+                });
+            });
+    </script>
+</body>
+</html-->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📺 V Í D E O S E 📰 A R T I G O S</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+        }
+        .video-panel, .article-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .video-item, .article-item {
+            text-align: center;
+            width: 200px;
+        }
+        iframe {
+            width: 100%;
+            height: 113px;
+        }
+        .article-item img {
+            width: 100%;
+            height: auto;
+        }
+        .article-item p {
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📁 Selecione um arquivo CSV</h1>
+        <input type="file" id="fileInput" accept=".csv">
+        <h1>📺 V Í D E O S</h1>
+        <div id="video-panel" class="video-panel"></div>
+        <h1>📰 A R T I G O S</h1>
+        <div id="article-list" class="article-list"></div>
+    </div>
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const contents = e.target.result;
+                    processCSV(contents);
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        function processCSV(data) {
+            const lines = data.split('\n');
+            const links = lines.map(line => line.split(';'));
+            const videoPanel = document.getElementById('video-panel');
+            const articleList = document.getElementById('article-list');
+            
+            videoPanel.innerHTML = '';
+            articleList.innerHTML = '';
+
+            links.forEach(link => {
+                const [type, title, url] = link;
+                if (type === 'v') {
+                    const videoId = new URL(url).searchParams.get('v');
+                    const videoItem = document.createElement('div');
+                    videoItem.classList.add('video-item');
+                    videoItem.innerHTML = `
+                        <a href="${url}" target="_blank">
+                            <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
+                        </a>
+                        <div>${title}</div>
+                    `;
+                    videoPanel.appendChild(videoItem);
+                } else if (type === 'a') {
+                    const articleItem = document.createElement('div');
+                    articleItem.classList.add('article-item');
+                    articleItem.innerHTML = `
+                        <a href="${url}" target="_blank">
+                            <p>${title}</p>
+                        </a>
+                    `;
+                    articleList.appendChild(articleItem);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
