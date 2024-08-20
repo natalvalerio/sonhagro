@@ -9,13 +9,17 @@
 	#font-family: titillium;
 	#src: url('https://fonts.cdnfonts.com/css/titillium-web');
 }
+@font-face {
+    font-family: 'titilliumweb';
+    src: url("../fonts/titilliumweb.ttf"); 
+}
 body {
 	#font-family: Arial, sans-serif;
 	#font-family: "Helvetica", arial;
 	font-family: futuraxk;
 	padding: 20px;
 	font-size: 18px;
-	text-transform: uppercase;
+	#text-transform: uppercase;
 }
 label {
 	position: absolute;
@@ -152,7 +156,7 @@ a {
 
 
 #tamanho {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
 }
 
@@ -160,6 +164,8 @@ a {
   text-align: center;
   color: red;
   display: none;
+  font-size: 12px;
+  font-family: 'titilliumweb', sans-serif;
 }
 
 /* Estilos para ocultar os botões durante a impressão */

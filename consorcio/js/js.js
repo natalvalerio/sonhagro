@@ -58,12 +58,6 @@ function calcula() {
 	nov_pra = fx(VR / parcela,0)
 	parcela2 = parcela
 
-	// -------Financiamento----
-	var resultado, VF, PGM 
-	resultado = Financiamento(val_car, prazo_T, 1.25); // VP = val_car, P = prazo_T, T = 1.25%
-	VF = resultado.VF
-	PGM = resultado.PGM
-
 	document.getElementById('val_car').value=money(val_car)			
 	document.getElementById('parcela').value=money(parcela)			
 	document.getElementById('parcela_dois').value=money(parcela_dois)			
@@ -74,13 +68,13 @@ function calcula() {
 	document.getElementById('nov_par').value=money(nov_par) 					
 	document.getElementById('pra_res2').value=pra_res2
 	document.getElementById('nov_pra').value=nov_pra
-	document.getElementById('parcela2').value=money(parcela2) 
+	document.getElementById('parcela2').value=money(parcela2)
+	//--------Consórcio-------
 	document.getElementById('consorcio').value=money(VT) 
-	document.getElementById('financiamento').value=money(VF)
-	document.getElementById('TC').value=TM+'%'
-	document.getElementById('TF').value="1.25%"
 	document.getElementById('PC').value=money(parcela_M)
-	document.getElementById('PF').value=money(PGM)
+	document.getElementById('TC').value=TM+'%'
+	
+	
 	
 	var adicional = document.getElementById("adicional");
 	adicional.style.display = "block";
@@ -92,6 +86,25 @@ function calcula() {
 	aposlance.style.display = "block";
 	
 	return
+}
+
+// -------Financiamento----
+function finan() {
+	var val_car, prazo, prazo_dois, prazo_T, TF
+	var resultado, VF, PGM 
+	TF = 1.25
+	TF          = numero(prompt('TAXA MENSAL FINANCIAMENTO:'))
+	val_car     = numero(document.querySelector('#val_car').value)
+	prazo       = numero(document.querySelector('#prazo').value)
+	prazo_dois  = numero(document.querySelector('#prazo_dois').value)
+	parcela     = numero(document.querySelector('#parcela').value)
+	prazo_T = prazo + prazo_dois
+	resultado = Financiamento(val_car, prazo_T, TF); // VP = val_car, P = prazo_T, T = 1.25%
+	VF = resultado.VF
+	PGM = resultado.PGM
+	document.getElementById('financiamento').value=money(VF)
+	document.getElementById('PF').value=money(PGM)
+	document.getElementById('TF').value=TF+'%'	
 }
 
 //------MENU DE OPÇÕES-------------------
@@ -109,7 +122,7 @@ function fecharPopup() {
 //-----------MULTIPLICA CARTAS-----------
 function mul() {
 	fecharPopup()
-	var mult   =numero(prompt('Digite o fator multiplicador!'))
+	var mult   =numero(prompt('MULTIPLICAR POR:'))
 	var val_car=numero(document.getElementById('val_car').value)			
 	var parcela=numero(document.getElementById('parcela').value)
 	var parcela_dois=numero(document.getElementById('parcela_dois').value)
@@ -171,6 +184,7 @@ function red() {
 //-----------COMPARAR FINANCIAMENTO-----------
 function exibirComp() {
 	fecharPopup()
+	finan()
 	var comparativo = document.getElementById("comparativo");
 	comparativo.style.display = "block";
 	return 	
@@ -265,23 +279,23 @@ function determinarTamanhoDispositivo() {
   var valorPFLabel = document.querySelector('label[for="PF"]');
   
   if (larguraJanela >= 1024) {
-    valorCartaLabel.textContent = "Valor da Carta [R$]";
-	valorParcelaLabel.textContent = "Valor da Parcela [R$]";
-	valorPrazoLabel.textContent = "Prazo [Meses]";
-	valorPar_pagLabel.textContent = "Nº Parcelas Pagas [Meses]";
-	valorPrazo_doisLabel.textContent = "Prazo Restante [Meses]";
-	valorParcela_doisLabel.textContent = "Valor Parcela Restante [R$]";
+    valorCartaLabel.textContent = "VALOR DA CARTA [R$]";
+	valorParcelaLabel.textContent = "VALOR DA PARCELA [R$]";
+	valorPrazoLabel.textContent = "PRAZO [MESES]";
+	valorPar_pagLabel.textContent = "Nº PARCELAS PAGAS [MESES]";
+	valorPrazo_doisLabel.textContent = "PRAZO RESTANTE [MESES]";
+	valorParcela_doisLabel.textContent = "VALOR PARCELA RESTANTE [R$]";
 
 	valorFinanciamentoLabel.textContent = "TOTAL FINANCIAMENTO [R$]";
 	valorTFLabel.textContent = "TAXA FINANCIAMENTO [% MÊS]";
 	valorPFLabel.textContent = "PARCELA FINANCIAMENTO [R$]";
   } else if (larguraJanela >= 600) {
-    valorCartaLabel.textContent = "Valor da Carta [R$]";
-	valorParcelaLabel.textContent = "Parcela [R$]";
-	valorPrazoLabel.textContent = "Prazo [M]";
-	valorPar_pagLabel.textContent = "Nº Parc. Pagas [M]";
-	valorPrazo_doisLabel.textContent = "Prazo Restante [M]";
-	valorParcela_doisLabel.textContent = "Val. Parc. Restante [R$]";
+    valorCartaLabel.textContent = "VALOR DA CARTA [R$]";
+	valorParcelaLabel.textContent = "PARCELA [R$]";
+	valorPrazoLabel.textContent = "PRAZO [M]";
+	valorPar_pagLabel.textContent = "Nº PARC. PAGAS [M]";
+	valorPrazo_doisLabel.textContent = "PRAZO RESTANTE [M]";
+	valorParcela_doisLabel.textContent = "VAL. PARC. RESTANTE [R$]";
 
 	valorFinanciamentoLabel.textContent = "TOT. FINANCIAMENTO [R$]";
 	valorTFLabel.textContent = "TX. FINANCIAMENTO [% MÊS]";

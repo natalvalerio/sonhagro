@@ -14,17 +14,17 @@
 	</div>
 
 	<!--Logo Sonhagro dentro da tag H1-->
-	<h1><img src="img/logo.png" width="200px"><br>SIMULADOR DE CONSÓRCIOS</h1>
+	<h1><img src="img/logo.png" width="200px"><br>SIMULAÇÃO DE CONSÓRCIOS</h1>
 		
 		<!--Valor da carta e parcela-->
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 55%;">
 				<input id="val_car" type="text" required>
-				<label for="val_car">Valor da Carta [R$]</label>
+				<label for="val_car">VALOR DA CARTA [R$]</label>
 			</div>
 			<div class="form-group" style="flex: 0 0 44%;">
 				<input type="text" id="parcela" required>
-				<label for="parcela">Valor da Parcela [R$]</label>
+				<label for="parcela">VALOR DA PARCELA [R$]</label>
 			</div>
 		</div>
 
@@ -32,11 +32,11 @@
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 50%;">
 				<input type="text" id="prazo" required>
-				<label for="prazo">Prazo [Meses]</label>
+				<label for="prazo">PRAZO [MESES]</label>
 			</div>
 			<div class="form-group" style="flex: 0 0 49%;">
 				<input type="text" id="par_pag" value="1">
-				<label for="par_pag" id="label_par_pag">Nº Parcelas Pagas [Meses]</label>
+				<label for="par_pag" id="label_par_pag">Nº PARCELAS PAGAS [MESES]</label>
 			</div>
 		</div>
 		
@@ -46,11 +46,11 @@
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 49%;">
 				<input id="prazo_dois" type="text" value="0" required>
-				<label for="prazo_dois">Prazo Restante [Meses]</label>
+				<label for="prazo_dois">PRASO RESTANTE [MESES]</label>
 			</div>
 			<div class="form-group" style="flex: 0 0 48%;">
 				<input id="parcela_dois" type="text" value="0" required>
-				<label for="parcela_dois">Valor Parcela Restante [R$]</label>
+				<label for="parcela_dois">VALOR PARCELA RESTANTE [R$]</label>
 			</div>
 			<div class="form-group" style="flex: 0 0 2%;">
 				<img width="15px" src="img/fechar.png" onclick="fechardif();">
@@ -92,13 +92,13 @@
 		<!--Botões-->
 		<div class="container">
 			<div class="form-group" style="flex: 0 0 33%;">
-				<button title="CALCULAR" onclick="calcula()"><img width="100px" src="img/calcular.png"></button>
+				<button title="CALCULAR 🧮" onclick="calcula()"><img width="90px" src="img/calcular.png"></button>
 			</div>
 			<div class="form-group" style="flex: 0 0 33%;">
-				<button title="LIMPAR" onclick="location.reload()"><img width="100px" src="img/limpar.png"></button>
+				<button title="LIMPAR 🗑️" onclick="location.reload()"><img width="90px" src="img/limpar.png"></button>
 			</div>
 			<div class="form-group" style="flex: 0 0 33%;">
-				<button title="MENU" onclick="exibirPopup()"><img width="100px" src="img/menu.png"></button>
+				<button title="MENU 🔧" onclick="exibirPopup()"><img width="90px" src="img/menu.png"></button>
 			</div>
 		</div>
 
@@ -109,17 +109,17 @@
 			<table style="border-collapse: collapse; width: 100%;">
 				<tr>
 					<td style="border-bottom: 1px solid #000; padding: 10px;">
-						<p><a href="#" onclick="mul()">❎ Multiplicar Carta</a></p>
+						<p><a href="#" onclick="mul()">❎ MULTIPLICAR CARTA</a></p>
 					</td>
 				</tr>
 				<tr>
 					<td style="border-bottom: 1px solid #000; padding: 10px;">
-						<p><a href="#" onclick="dif()">🔀 Parcelas Diferentes</a></p>
+						<p><a href="#" onclick="dif()">🔀 PARCELAS DIFERENTES</a></p>
 					</td>
 				</tr>
 				<tr>
 					<td style="border-bottom: 1px solid #000; padding: 10px;">
-						<p><a href="#" onclick="exibirComp()">🔁 Comparar com Financiamento</a></p>
+						<p><a href="#" onclick="exibirComp()">🔁 COMPARAR COM FINANCIAMENTO</a></p>
 					</td>
 				</tr>
 			</table>
@@ -253,13 +253,13 @@
 
 		</div>
 		<div class="mensagem">
-			<p>ESSA É APENAS UMA SIMULAÇÃO. PARA OBTER OS VALORES REAIS DO CONSÓRCIO ENTRE EM CONTATO COM UM DOS AGENTES SONHAGRO!</p>
+			<p>Essa é uma simulação. Para obter informações detalhadas sobre o consórcio, <br/>recomendamos consultar um agente Sonhagro!</p>
 		</div>
 		
 
 		<!--/div><br-->
 	
-<button title="IMPRIMIR" onclick="exportarParaPDF()"><img width="100px" src="img/pdf.png"></button>
+<button title="IMPRIMIR 🖨️" onclick="exportarParaPDF()"><img width="90px" src="img/pdf.png"></button>
 <script>
   // Chamando a função para determinar o tamanho do dispositivo quando a página carrega
   window.onload = determinarTamanhoDispositivo;
