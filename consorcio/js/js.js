@@ -1,4 +1,6 @@
 //-------PDF------------
+//divemb.style.display = "none"
+//divpro.style.display = "none"
 //	const principal = document.querySelector('.principal');
 function exportarParaPDF() {
 	window.print();
@@ -85,6 +87,7 @@ function calcula() {
 	var aposlance = document.getElementById("aposlance2");
 	aposlance.style.display = "block";
 	
+	ocultardivs()
 	return
 }
 
@@ -93,7 +96,7 @@ function finan() {
 	var val_car, prazo, prazo_dois, prazo_T, TF
 	var resultado, VF, PGM 
 	TF = 1.25
-	TF          = numero(prompt('TAXA MENSAL FINANCIAMENTO:'))
+	TF          = numero(prompt('TAXA MENSAL FINANCIAMENTO:',TF))
 	val_car     = numero(document.querySelector('#val_car').value)
 	prazo       = numero(document.querySelector('#prazo').value)
 	prazo_dois  = numero(document.querySelector('#prazo_dois').value)
@@ -352,4 +355,28 @@ function Financiamento(VP, P, T) {
 
     // Retorna o pagamento mensal (PGM) e o valor futuro (VF)
     return { PGM: PGM, VF: VF };
+}
+
+
+//ocultar divs vasias
+function ocultardivs() {
+    var embValue = numero(document.getElementById('lan_emb').value);
+    var proValue = numero(document.getElementById('lan_pro').value);
+
+    var divEmb = document.getElementById('divemb');
+    var divPro = document.getElementById('divpro');
+
+    // Verifica o valor do input 'emb' e oculta ou exibe a div correspondente
+    if (embValue === '0%' || embValue === 'R$ 0,00' || embValue === '') {
+        divEmb.style.display = 'none';
+    } else {
+        divEmb.style.display = 'block';
+    }
+
+    // Verifica o valor do input 'lan_pro' e oculta ou exibe a div correspondente
+    if (proValue === '0%' || proValue === 'R$ 0,00' || proValue === '') {
+        divPro.style.display = 'none';
+    } else {
+        divPro.style.display = 'block';
+    }
 }
