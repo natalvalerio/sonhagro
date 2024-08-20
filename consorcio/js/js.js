@@ -345,38 +345,59 @@ function atualizarTexto() {
 //-------------------------------------------------------------
 function Financiamento(VP, P, T) {
     // Converte a taxa de porcentagem para decimal
-    var taxaDecimal = T / 100;
+    var taxaDecimal = T / 100
     
     // Calcula o pagamento mensal usando a fórmula de amortização
-    var PGM = VP * taxaDecimal / (1 - Math.pow(1 + taxaDecimal, -P));
+    var PGM = VP * taxaDecimal / (1 - Math.pow(1 + taxaDecimal, -P))
 
     // Calcula o valor futuro (total)
-    var VF = PGM * P;
+    var VF = PGM * P
 
     // Retorna o pagamento mensal (PGM) e o valor futuro (VF)
-    return { PGM: PGM, VF: VF };
+    return { PGM: PGM, VF: VF }
 }
 
 
 //ocultar divs vasias
 function ocultardivs() {
-    var embValue = numero(document.getElementById('lan_emb').value);
-    var proValue = numero(document.getElementById('lan_pro').value);
+    var cond
+	cond = 0
+    var embValue = (document.getElementById('lan_emb').value)
+    var proValue = (document.getElementById('lan_pro').value)
 
-    var divEmb = document.getElementById('divemb');
-    var divPro = document.getElementById('divpro');
-
+    var divEmb = document.getElementById('divemb')
+    var divPro = document.getElementById('divpro')
+		
     // Verifica o valor do input 'emb' e oculta ou exibe a div correspondente
     if (embValue === '0%' || embValue === 'R$ 0,00' || embValue === '') {
-        divEmb.style.display = 'none';
-    } else {
-        divEmb.style.display = 'block';
+        divEmb.style.display = 'none'
+		cond ++
+    //} else {
+    //    divEmb.style.display = 'block'
     }
 
     // Verifica o valor do input 'lan_pro' e oculta ou exibe a div correspondente
     if (proValue === '0%' || proValue === 'R$ 0,00' || proValue === '') {
-        divPro.style.display = 'none';
-    } else {
-        divPro.style.display = 'block';
+        divPro.style.display = 'none'
+		cond ++
+    //} else {
+    //    divPro.style.display = 'block'
     }
+	
+	if (cond === 2) {
+		fecharaposlance1()
+		fecharaposlance2()
+	}	
+}
+
+function ofertar() {
+	fecharPopup()
+	var divEmb = document.getElementById('divemb')
+    var divPro = document.getElementById('divpro')
+	var aposlance1 = document.getElementById("aposlance1");
+	var aposlance2 = document.getElementById("aposlance2");
+	aposlance1.style.display = "block";	
+	aposlance2.style.display = "block";	
+	divEmb.style.display = 'block'
+    divPro.style.display = 'block'
 }

@@ -17,8 +17,8 @@ body {
 	#font-family: Arial, sans-serif;
 	#font-family: "Helvetica", arial;
 	font-family: futuraxk;
-	padding: 20px;
 	font-size: 18px;
+	padding: 20px;
 	#text-transform: uppercase;
 }
 label {
@@ -75,7 +75,7 @@ input, textarea, select, button {
 	font-family: futuraxk
 } 
 fieldset {
-    padding-top: 20px;
+    #padding-top: 20px;
     padding-bottom: 10px;
     background-color: rgb(250, 250, 250);
     border-color: rgb(0, 128, 255); 
