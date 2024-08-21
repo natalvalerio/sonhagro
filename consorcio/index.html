@@ -5,6 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CONSÓRCIO</title>
+
+    <!-- Inclua o CSS do Select2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .select2-container .select2-selection__rendered {
+            display: flex;
+            align-items: center;
+        }
+        .select2-container .select2-selection__rendered img {
+            margin-right: 10px;
+            height: 20px;
+        }
+		
+		.select2-container .select2-selection--single {
+			height: 44px; 
+		}
+		
+		.select2-container--default .select2-selection--single .select2-selection__rendered {
+			line-height: 44px; 
+		}
+		
+		.select2-results__option {
+			height: 44px; 
+		}
+    </style>
+	
     <link href="img/favicon.png" rel="shortcut icon" type="image/x-icon" >
 	<link href="css/estilos.css" rel="stylesheet"    type="text/css">
     <script src="js/js.js"></script>
@@ -199,31 +225,72 @@
 			<div class="container">
 				<div class="form-group" style="flex: 0 0 40%;">
 					<select id="tipos" name="tipos">
-						<option value="IMÓVEIS">IMÓVEIS 🏠🏘️</option>
-						<option value="PESADOS">PESADOS 🚚🚜</option>
-						<option value="AUTOS">AUTOS 🚗🚘</option>
-						<option value="MOTOS">MOTOS 🏍️🛵</option>
+						<option value="IMÓVEIS" >IMÓVEIS 🏠🏘️ </option>
+						<option value="PESADOS" >PESADOS 🚚🚜 </option>
+						<option value="AUTOS"   >AUTOS 🚗🚘   </option>
+						<option value="MOTOS"   >MOTOS 🏍️🛵   </option>
 						<option value="SERVIÇOS">SERVIÇOS 🚧👨‍⚕️</option>
-						<option value="OUTRO">OUTROS</option>
+						<option value="OUTRO"   >OUTROS       </option>
 					</select>				
 					<label class="tipo" for="tipos">TIPO</label>
 				</div>
 				
-				<!--Administradora de consórcio-->
+				<!--Administradora de consórcio->
 				<div class="form-group" style="flex: 0 0 20%;">
 					<select id="bancos" name="bancos">
-						<option value="BBC">🟨</option>
-						<option value="BRADESCO">🟦</option>
-						<option value="RODOBENS">🟩</option>
-						<option value="EMBRACON">🟥</option>
+						<option value="BBC"      >🟨</option>
+						<option value="BRADESCO" >🟦</option>
+						<option value="RODOBENS" >🟩</option>
+						<option value="EMBRACON" >🟥</option>
 						<option value="SANTANDER">⬛</option>
 					</select>				
 					<label class="tipo" for="bancos">COR</label>
+				</div-->
+				
+				<!--Administradora de consórcio-->
+				<div class="form-group"  style="flex: 0 0 5%;">
+				<select id="imageSelect" style="flex: 0 0 5%;">
+					<option value="bbc.png"       data-image="./img/bbc.png"      ></option>
+					<option value="bradesco.png"  data-image="./img/bradesco.png" ></option>
+					<option value="rodobens.png"  data-image="./img/rodobens.png" ></option>
+					<option value="embracon.png"  data-image="./img/embracon.png" ></option>
+					<option value="santander.png" data-image="./img/santander.png"></option>
+				</select>
 				</div>
-				<div class="form-group" style="flex: 0 0 39%;">
+				
+				
+				<!--Informação adicional de grupo-->
+				<div class="form-group" style="flex: 0 0 54%;">
 					<input type="text" id="grupo" required>
 					<label for="grupo">GRUPO</label>
 				</div>
+
+
+				<!-- Inclua o jQuery -->
+				<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+				<!-- Inclua o JS do Select2 -->
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
+				<script>
+					$(document).ready(function() {
+						function formatState(state) {
+							if (!state.id) {
+								return state.text;
+							}
+							var baseUrl = "";
+							var $state = $(
+								'<span><img src="' + state.element.dataset.image + '" class="img-flag" /> ' + state.text + '</span>'
+							);
+							return $state;
+						}
+			
+						$("#imageSelect").select2({
+							templateResult: formatState,
+							templateSelection: formatState,
+							minimumResultsForSearch: Infinity 
+						});
+					});
+				</script>
+
 			</div>
 		</div>
 		
