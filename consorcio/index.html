@@ -41,7 +41,7 @@
 	</div>
 
 	<!--Logo Sonhagro dentro da tag H1-->
-	<h1><img src="img/logo.png" width="200px"><br>SIMULAÇÃO DE CONSÓRCIOS ®️</h1>
+	<h1><img src="img/logo.png" width="200px" onclick="alternar()";><br>SIMULAÇÃO DE CONSÓRCIOS ®️</h1>
 		
 		<!--Valor da carta e parcela-->
 		<div class="container">
@@ -235,8 +235,8 @@
 					<label class="tipo" for="tipos">TIPO</label>
 				</div>
 				
-				<!--Administradora de consórcio->
-				<div class="form-group" style="flex: 0 0 20%;">
+				<!--Administradora de consórcio-->
+				<div id="cor1" class="form-group" style="flex: 0 0 5%;">
 					<select id="bancos" name="bancos">
 						<option value="BBC"      >🟨</option>
 						<option value="BRADESCO" >🟦</option>
@@ -245,17 +245,18 @@
 						<option value="SANTANDER">⬛</option>
 					</select>				
 					<label class="tipo" for="bancos">COR</label>
-				</div-->
+				</div>
 				
 				<!--Administradora de consórcio-->
-				<div class="form-group"  style="flex: 0 0 5%;">
-				<select id="imageSelect" style="flex: 0 0 5%;">
-					<option value="bbc.png"       data-image="./img/bbc.png"      ></option>
-					<option value="bradesco.png"  data-image="./img/bradesco.png" ></option>
-					<option value="rodobens.png"  data-image="./img/rodobens.png" ></option>
-					<option value="embracon.png"  data-image="./img/embracon.png" ></option>
-					<option value="santander.png" data-image="./img/santander.png"></option>
-				</select>
+				<div id="cor2" class="form-group"  style="flex: 0 0 5%;">
+					<select id="imageSelect" style="flex: 0 0 5%;">
+						<option value="bbc.png"       data-image="./img/bbc.png"      ></option>
+						<option value="bradesco.png"  data-image="./img/bradesco.png" ></option>
+						<option value="rodobens.png"  data-image="./img/rodobens.png" ></option>
+						<option value="embracon.png"  data-image="./img/embracon.png" ></option>
+						<option value="santander.png" data-image="./img/santander.png"></option>
+					</select>
+					<label class="tipo" for="bancos">COR</label>
 				</div>
 				
 				
@@ -293,6 +294,7 @@
 
 			</div>
 		</div>
+		
 		
 		<!--TOTAIS E COMPARATIVO COM FINANCIAMENTO><br-->
 		<div class="comparativo" id="comparativo">
@@ -346,6 +348,11 @@
   // Atualizando o tamanho do dispositivo quando a janela é redimensionada
   window.onresize = determinarTamanhoDispositivo;
   //window.onresize = tam;
+  
+  // Define a exibição inicial (opcional)
+  window.onload = function() {
+  document.getElementById("cor2").style.display = "none"; // Oculta cor2 inicialmente
+};
 </script>
 </body>
 </html>

@@ -401,3 +401,20 @@ function ofertar() {
 	divEmb.style.display = 'block'
     divPro.style.display = 'block'
 }
+
+function alternar() {
+    // Seleciona as duas divs
+    var cor1 = document.getElementById("cor1");
+    var cor2 = document.getElementById("cor2");
+    
+    // Verifica o estado atual e alterna a exibição
+    if (cor1.style.display === "none") {
+        cor1.style.display = "block";
+        cor2.style.display = "none";
+    } else {
+        cor1.style.display = "none";
+        cor2.style.display = "block";
+    }
+};
+
+
