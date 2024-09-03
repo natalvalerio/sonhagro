@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="primo.ico" type="image/x-icon">
+    <title>Números Primos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center; /* Alinha verticalmente */
+            justify-content: space-between; /* Espaço entre os dois elementos */
+        }
+        .formulario {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        #resultado {
+            font-size: 18px;
+            color: #555;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input {
+            margin-right: 10px;
+            padding: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .imagem-container {
+            flex: 0 0 auto;
+            padding: 10px;
+        }
+        .imagem-container img {
+            max-width: 100%; /* Ajusta a imagem ao tamanho do contêiner */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="formulario">
+            <h1>Números Primos</h1>
+            <label for="inicio">Início:</label>
+            <input type="number" id="inicio" value="1">
+            <label for="fim">Fim:</label>
+            <input type="number" id="fim" value="100">
+            <br><br>
+            <button onclick="calcularPrimos()">Calcular Primos</button>
+            <p>Números primos entre <span id="intervalo"></span>:</p>
+            <div id="resultado"></div>
+        </div>
+        <div class="imagem-container">
+            <img src="primo.jpeg" alt="Imagem de Números Primos">
+        </div>
+    </div>
+    <script>
+        function ehPrimo(num) {
+            if (num <= 1) return false; // 0 e 1 não são primos
+            if (num <= 3) return true; // 2 e 3 são primos
+            if (num % 2 === 0 || num % 3 === 0) return false; // Elimina múltiplos de 2 e 3
+            for (let i = 5; i * i <= num; i += 6) {
+                if (num % i === 0 || num % (i + 2) === 0) return false;
+            }
+            return true;
+        }
+
+        function listarPrimosNoIntervalo(inicio, fim) {
+            let primos = [];
+            for (let i = inicio; i <= fim; i++) {
+                if (ehPrimo(i)) {
+                    primos.push(i);
+                }
+            }
+            return primos;
+        }
+
+        function calcularPrimos() {
+            let inicio = parseInt(document.getElementById('inicio').value);
+            let fim = parseInt(document.getElementById('fim').value);
+            let primos = listarPrimosNoIntervalo(inicio, fim);
+            document.getElementById('resultado').textContent = primos.join(', ');
+            document.getElementById('intervalo').textContent = `${inicio} e ${fim}`;
+        }
+
+        // Inicializa com os valores padrão ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            calcularPrimos();
+        });
+    </script>
+</body>
+</html>
+
+	
+
+<!--DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Números Primos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        #resultado {
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Números Primos</h1>
+        <p>Números primos entre 100 e 200:</p>
+        <div id="resultado"></div>
+    </div>
+    <!--script src="script.js"></script->
+	<script>
+		function ehPrimo(num) {
+		if (num <= 1) return false; // 0 e 1 não são primos
+		if (num <= 3) return true; // 2 e 3 são primos
+		if (num % 2 === 0 || num % 3 === 0) return false; // Elimina múltiplos de 2 e 3
+		for (let i = 5; i * i <= num; i += 6) {
+			if (num % i === 0 || num % (i + 2) === 0) return false;
+		}
+		return true;
+	}
+	
+	function listarPrimosNoIntervalo(inicio, fim) {
+		let primos = [];
+		for (let i = inicio; i <= fim; i++) {
+			if (ehPrimo(i)) {
+				primos.push(i);
+			}
+		}
+		return primos;
+	}
+	
+	document.addEventListener('DOMContentLoaded', function() {
+		let inicio = 100; // Início do intervalo
+		let fim = 200;   // Fim do intervalo
+		let primos = listarPrimosNoIntervalo(inicio, fim);
+		
+		// Exibindo os números primos no elemento com id 'resultado'
+		document.getElementById('resultado').textContent = primos.join(', ');
+	});
+	</script>
+</body>
+</html-->
