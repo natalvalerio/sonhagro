@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Banco de Dados SQLite</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        #table-list {
+            margin-top: 10px;
+            padding: 0;
+        }
+        #table-list li {
+            cursor: pointer;
+            padding: 5px;
+            border: 1px solid black;
+            margin-bottom: 5px;
+            border-radius: 4px;
+        }
+        #table-list li:hover {
+            background-color: #f2f2f2;
+        }
+		pre {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+        }
+		h3 {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gerenciador de Banco de Dados SQLite</h1>
+
+        <input type="file" id="file-input" />
+        <button id="save-db">Salvar Banco</button>
+        <button id="help-btn">Ajuda</button>
+		
+
+        <div id="help-content" style="display: none;">
+            <h3>Exemplos de Comandos SQLite:</h3>
+            <table border="1" cellpadding="10">
+                <thead>
+                    <tr>
+                        <th>Operação</th>
+                        <th>Exemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><h3>Criar Tabela</h3></td>
+                        <td>
+<pre>
+CREATE TABLE nome_tabela (
+	id INTEGER PRIMARY KEY,
+	coluna1 TEXT NOT NULL,
+	coluna2 INTEGER
+);
+</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h3>Inserir Registro</3></td>
+                        <td>
+<pre>
+INSERT INTO nome_tabela (coluna1, coluna2) VALUES ('valor1', 123);
+</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h3>Editar Registro</3></td>
+                        <td>
+<pre>
+UPDATE nome_tabela SET coluna1 = 'novo_valor' WHERE id = 1;
+</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h3>Apagar Registro</h3></td>
+                        <td>
+<pre>
+DELETE FROM nome_tabela WHERE id = 1;
+</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h3>Exibir Registros</h3></td>
+                        <td>
+<pre>
+SELECT * FROM nome_tabela;
+</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h3>Apagar Tabela</h3></td>
+                        <td>
+<pre>
+DROP TABLE nome_tabela;
+</pre>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Listar Tabelas:</h3>
+        <ul id="table-list"></ul>
+
+        <h3>Comandos SQL:</h3>
+        <textarea id="sql-input" placeholder="Digite seu comando SQL aqui..."></textarea>
+        <button id="run-sql">Executar SQL</button>
+        <h4>Resultado:</h4>
+        <pre id="output"></pre>
+
+        <h4>Conteúdo da Tabela:</h4>
+        <div id="table-container"></div>
+    </div>
+	
+<script>
+    let db;
+    let currentTable;
+
+    // Configura o caminho do arquivo .wasm
+    const config = {
+        locateFile: filename => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/${filename}`
+    };
+
+    // Função para carregar o banco de dados a partir de um arquivo
+    async function loadDatabase(file) {
+        try {
+            const SQL = await initSqlJs(config);
+            const buffer = await file.arrayBuffer();
+            db = new SQL.Database(new Uint8Array(buffer));
+            document.getElementById('output').textContent = "Banco de dados carregado com sucesso!";
+            listTables();
+            if (currentTable) {
+                displayTable(currentTable);
+            }
+        } catch (err) {
+            document.getElementById('output').textContent = "Erro ao carregar o banco de dados.";
+            console.error(err);
+        }
+    }
+	
+	// Função para salvar o banco de dados com um nome fornecido pelo usuário
+	function saveDatabase() {
+		if (db) {
+			const dbName = prompt("Digite o nome para salvar o banco de dados (sem extensão):", "dados");
+			if (dbName) {
+				const data = db.export();
+				const blob = new Blob([data], { type: "application/octet-stream" });
+				const url = window.URL.createObjectURL(blob);
+				const a = document.createElement("a");
+				a.href = url;
+				a.download = `${dbName}.db`;
+				a.click();
+				window.URL.revokeObjectURL(url);
+			}
+		} else {
+			document.getElementById('output').textContent = "Nenhum banco de dados foi carregado.";
+		}
+	}
+
+	// Evento para salvar o banco de dados
+	document.getElementById('save-db').addEventListener('click', saveDatabase);
+	
+	
+
+    // Função para executar comandos SQL digitados
+    function runSQL() {
+        if (db) {
+            const sqlInput = document.getElementById('sql-input').value;
+            try {
+                const result = db.exec(sqlInput);
+                
+                if (sqlInput.trim().toUpperCase().startsWith("SELECT")) {
+                    // Se o comando for um SELECT, exibe o resultado da consulta
+                    if (result[0]) {
+                        displayTableFromResult(result[0]);
+                    } else {
+                        document.getElementById('table-container').innerHTML = "Nenhum resultado encontrado.";
+                    }
+                } else {
+                    // Para outros comandos, exibe uma mensagem de sucesso ou erro
+                    document.getElementById('output').textContent = "Comando SQL executado com sucesso!";
+                    listTables(); // Atualiza a lista de tabelas após executar SQL
+                    if (currentTable) {
+                        displayTable(currentTable); // Re-exibe a tabela atual
+                    }
+                }
+            } catch (err) {
+                document.getElementById('output').textContent = `Erro ao executar SQL: ${err.message}`;
+            }
+        } else {
+            document.getElementById('output').textContent = "Nenhum banco de dados foi carregado.";
+        }
+    }
+
+    // Função para exibir os dados de uma tabela a partir do resultado da consulta
+    function displayTableFromResult(result) {
+        const container = document.getElementById('table-container');
+        container.innerHTML = "";
+
+        const table = document.createElement('table');
+        const thead = document.createElement('thead');
+        const tbody = document.createElement('tbody');
+
+        // Cria a linha de cabeçalho
+        const headerRow = document.createElement('tr');
+        result.columns.forEach(col => {
+            const th = document.createElement('th');
+            th.textContent = col;
+            headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+
+        // Cria as linhas de dados
+        result.values.forEach(row => {
+            const tr = document.createElement('tr');
+            row.forEach(cell => {
+                const td = document.createElement('td');
+                td.textContent = cell;
+                tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+        });
+
+        table.appendChild(thead);
+        table.appendChild(tbody);
+        container.appendChild(table);
+    }
+
+    // Função para listar as tabelas do banco de dados
+    function listTables() {
+        if (db) {
+            const result = db.exec("SELECT name FROM sqlite_master WHERE type='table'");
+            const tableList = document.getElementById('table-list');
+            tableList.innerHTML = "";
+            if (result[0]) {
+                result[0].values.forEach(row => {
+                    const li = document.createElement("li");
+                    li.textContent = row[0];
+                    li.addEventListener('click', () => {
+                        currentTable = row[0];
+                        displayTable(currentTable);
+                    });
+                    tableList.appendChild(li);
+                });
+                if (!currentTable && tableList.children.length > 0) {
+                    currentTable = tableList.children[0].textContent; // Define a tabela atual se não estiver definida
+                    displayTable(currentTable);
+                } else if (currentTable) {
+                    displayTable(currentTable); // Re-exibe a tabela atual
+                }
+            }
+        }
+    }
+
+    // Função para exibir os dados de uma tabela em um <table> HTML
+    function displayTable(tableName) {
+        const result = db.exec(`SELECT * FROM ${tableName}`);
+        const container = document.getElementById('table-container');
+        container.innerHTML = "";
+
+        if (result[0]) {
+            const table = document.createElement('table');
+            const thead = document.createElement('thead');
+            const tbody = document.createElement('tbody');
+
+            // Cria a linha de cabeçalho
+            const headerRow = document.createElement('tr');
+            result[0].columns.forEach(col => {
+                const th = document.createElement('th');
+                th.textContent = col;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+
+            // Cria as linhas de dados
+            result[0].values.forEach(row => {
+                const tr = document.createElement('tr');
+                row.forEach(cell => {
+                    const td = document.createElement('td');
+                    td.textContent = cell;
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+
+            table.appendChild(thead);
+            table.appendChild(tbody);
+            container.appendChild(table);
+        } else {
+            container.innerHTML = "Nenhuma tabela encontrada.";
+        }
+    }
+
+    // Eventos para carregar e salvar o banco de dados
+    document.getElementById('file-input').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            loadDatabase(file);
+        }
+    });
+
+    document.getElementById('save-db').addEventListener('click', saveDatabase);
+
+    // Evento para executar SQL
+    document.getElementById('run-sql').addEventListener('click', runSQL);
+
+    // Evento para atualizar a tabela selecionada
+    document.getElementById('table-list').addEventListener('click', function(event) {
+        if (event.target.tagName === 'LI') {
+            currentTable = event.target.textContent;
+            displayTable(currentTable);
+        }
+    });
+
+    //document.getElementById('help-btn').addEventListener('click', function() {
+    //    window.open('help.html', '_blank');
+    //});
+	
+	
+    // Função para mostrar a ajuda
+    document.getElementById('help-btn').addEventListener('click', function() {
+        const helpContent = document.getElementById('help-content');
+        if (helpContent.style.display === 'none') {
+            helpContent.style.display = 'block';
+        } else {
+            helpContent.style.display = 'none';
+        }
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajuda - Exemplos de SQL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        pre {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        h2 {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Exemplos de Comandos SQL</h1>
+
+    <h2>Criar Banco de Dados</h2>
+    <pre>
+-- SQLite não possui um comando específico para criar um banco de dados. 
+-- Ao conectar a um banco de dados, ele será criado se não existir.
+-- Exemplo: 
+-- sqlite3 mydatabase.db
+    </pre>
+
+    <h2>Criar Tabela</h2>
+    <pre>
+CREATE TABLE nome_tabela (
+    id INTEGER PRIMARY KEY,
+    coluna1 TEXT NOT NULL,
+    coluna2 INTEGER
+);
+    </pre>
+
+    <h2>Inserir Registro</h2>
+    <pre>
+INSERT INTO nome_tabela (coluna1, coluna2) VALUES ('valor1', 123);
+    </pre>
+
+    <h2>Editar Registro</h2>
+    <pre>
+UPDATE nome_tabela SET coluna1 = 'novo_valor' WHERE id = 1;
+    </pre>
+
+    <h2>Apagar Registro</h2>
+    <pre>
+DELETE FROM nome_tabela WHERE id = 1;
+    </pre>
+
+    <h2>Exibir Registros</h2>
+    <pre>
+SELECT * FROM nome_tabela;
+    </pre>
+
+    <h2>Apagar Tabela</h2>
+    <pre>
+DROP TABLE nome_tabela;
+    </pre>
+
+    <p><a href="index.html">Voltar para a interface principal</a></p>
+</body>
+</html>
