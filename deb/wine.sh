@@ -1,33 +1,35 @@
 #!/bin/bash
 
-# Atualizar os repositórios e instalar pacotes necessários
+# Atualizar os repositórios
 echo "Atualizando repositórios..."
 sudo apt update -y
-sudo apt upgrade -y
 
-# Adicionar suporte a 32 bits (se o sistema for 64 bits)
+# Adicionar suporte a 32 bits
 echo "Adicionando suporte a 32 bits..."
 sudo dpkg --add-architecture i386
 
-# Baixar e adicionar a chave do repositório WineHQ
-echo "Adicionando chave do repositório WineHQ..."
-wget -nc https://dl.winehq.org/wine-builds/winehq.key
-sudo apt-key add winehq.key
+# Instalar o Wine32 pré-requisito
+#echo "Instalando Wine32..."
+#sudo apt install -y wine32:i386
 
-# Adicionar o repositório WineHQ para Debian
-echo "Adicionando repositório do WineHQ..."
-sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/debian/ bookworm main'
+# Criar diretório para chave GPG
+echo "Criando diretório para armazenar chave GPG..."
+sudo mkdir -pm755 /etc/apt/keyrings
 
-# Atualizar os repositórios após adição
-echo "Atualizando repositórios novamente..."
+# Baixar e adicionar a chave GPG do WineHQ
+echo "Baixando e adicionando chave GPG do WineHQ..."
+wget -O - https://dl.winehq.org/wine-builds/winehq.key | sudo gpg --dearmor -o /etc/apt/keyrings/winehq-archive.key
+
+# Adicionar o repositório do WineHQ para Debian 12 (Bookworm)
+echo "Adicionando repositório WineHQ..."
+sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/dists/bookworm/winehq-bookworm.sources
+
+# Atualizar os repositórios novamente
+echo "Atualizando repositórios após adicionar WineHQ..."
 sudo apt update -y
 
-# Instalar dependências necessárias
-echo "Instalando dependências recomendadas..."
-sudo apt install -y apt-transport-https software-properties-common wget gnupg2
-
 # Instalar WineHQ Stable
-echo "Instalando Wine Stable..."
+echo "Instalando WineHQ Stable..."
 sudo apt install --install-recommends winehq-stable -y
 
 # Confirmar instalação
