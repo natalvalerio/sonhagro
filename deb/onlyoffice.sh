@@ -20,7 +20,7 @@ echo "Descompactando onlyoffice.deb com 7z..."
 
 # Instalar o pacote .deb
 echo "Instalando o pacote onlyoffice.deb..."
-sudo dpkg -i "onlyoffice.deb"
+sudo dpkg -i "onlyoffice-desktopeditors_amd64.deb"
 
 # Resolver dependências
 echo "Resolvendo dependências..."
