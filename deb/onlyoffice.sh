@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Sair em caso de erro
-set -e
+#set -e
 
 # Atualizar pacotes
 echo "Atualizando pacotes do sistema..."
