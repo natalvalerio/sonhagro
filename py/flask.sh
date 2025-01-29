@@ -1,27 +1,26 @@
 #!/bin/bash
 
-echo "Iniciando instalação das dependências..."
+echo "🚀 Iniciando instalação das dependências..."
 
-# Atualiza pacotes do sistema (se necessário)
-#sudo apt update && sudo apt upgrade -y
-
-# Instala o pip caso não esteja instalado
+# Verifica e instala o pip
 if ! command -v pip &> /dev/null; then
-    echo "Pip não encontrado. Instalando..."
+    echo "⚠️ Pip não encontrado. Instalando..."
     sudo apt install python3-pip -y
 fi
 
-# Cria um ambiente virtual (se ainda não existir)
+# Cria e ativa o ambiente virtual
 if [ ! -d "venv" ]; then
-    echo "Criando ambiente virtual..."
+    echo "🛠️ Criando ambiente virtual..."
     python3 -m venv venv
 fi
 
-# Ativa o ambiente virtual
+echo "🔧 Ativando ambiente virtual..."
 source venv/bin/activate
 
-# Instala as dependências
-echo "Instalando pacotes necessários..."
-pip install flask flask-session flask-cors werkzeug matplotlib sqlite3 csv datetime io base64
+# Instala pacotes necessários
+echo "📦 Instalando pacotes..."
+pip install flask flask-session flask-cors werkzeug matplotlib
 
-echo "Instalação concluída!"
+# Finaliza o script
+echo "✅ Instalação concluída! Saindo..."
+exit
