@@ -1,0 +1,70 @@
+ls -a
+cd .virtualenvs
+ls
+initialize
+./initialize
+sudo source ./initialize
+source ./initialize
+ls
+ls -a
+cd ..
+ls
+cd crud
+ls
+ls -a
+chmod +x flask.sh
+./flask.sh
+pip install flask flask-session flask-cors werkzeug matplotlib sqlite3 csv datetime io base64
+pip install base64
+pip install io 
+pip install flask datetime
+pip install flask flask-session flask-cors werkzeug matplotlib csv
+pip install csv
+pip install matplotlib 
+pip install flask werkzeug
+pip install flask-cors 
+pip install flask-session
+cls
+ailas
+alias cls=clerar
+cls
+alias cls=clear
+cls
+ls
+ls -a
+mv app.py app.py1
+nano app.py
+exit
+ls -a
+cd venv
+ls -a
+cd bin
+ls -a
+source ./activate
+cd ..
+ls
+cd ..
+ls
+rm app.py
+ls -a
+ls -1
+mv app.py app1.py
+mv app.py1 app.py
+ls
+source ./venv/bin/activate
+ls
+python app.py
+pip install flask
+python app.py
+pip install flask-session
+cls
+alias cls=clear
+alias ls='ls -a'
+cls
+ls
+python app.py
+pip install flask_cors
+python app.py
+pip install matplotlib
+python app.py
+exit
