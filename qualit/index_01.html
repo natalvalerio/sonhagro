@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório Diário de Atendimento</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <script>
+        const nichos = [" ", "Farmácia", "Supermercado", "Loja"];
+     const situacoes = [" ", "Prospecção", "Atendimento"];
+        const canais = [" ", "Chat", "Voz"];
+        const status = [" ", "Chamada Não Atendida", "Caixa Postal", "Contato Incorreto", "Atendimento Efetuado", "Pedido Concluído", "Catálogo Enviado", "Outros"];
+
+        function createSelect(options) {
+            let select = document.createElement("select");
+            options.forEach(option => {
+                let opt = document.createElement("option");
+                opt.value = option;
+                opt.textContent = option;
+                select.appendChild(opt);
+            });
+            return select;
+        }
+
+        function populateRow(row) {
+            row.appendChild(document.createElement("td")).appendChild(document.createElement("input"));
+            row.appendChild(document.createElement("td")).appendChild(createSelect(nichos));
+            row.appendChild(document.createElement("td")).appendChild(createSelect(situacoes));
+            row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).type = "date";
+            row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).type = "time";
+            row.appendChild(document.createElement("td")).appendChild(createSelect(canais));
+            row.appendChild(document.createElement("td")).appendChild(document.createElement("input"));
+            row.appendChild(document.createElement("td")).appendChild(createSelect(status));
+        }
+
+        function addRow() {
+            let tbody = document.querySelector("tbody");
+            let row = document.createElement("tr");
+            populateRow(row);
+            tbody.appendChild(row);
+        }
+    </script>
+</head>
+<body>
+    <img src="imagem.png" width="200" alt="Logo da Empresa">
+    <h2>Relatório Diário de Atendimento</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Nicho</th>
+                <th>Situação</th>
+                <th>Data</th>
+                <th>Hora</th>
+                <th>Canal</th>
+                <th>Observações</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <script>addRow();</script>
+        </tbody>
+    </table>
+    <button onclick="addRow()">Adicionar Linha</button>
+</body>
+</html>

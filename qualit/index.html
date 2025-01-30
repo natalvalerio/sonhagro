@@ -20,38 +20,57 @@
     </style>
     <script>
         const nichos = [" ", "Farmácia", "Supermercado", "Loja"];
-     const situacoes = [" ", "Prospecção", "Atendimento"];
+        const situacoes = [" ", "Prospecção", "Atendimento"];
         const canais = [" ", "Chat", "Voz"];
         const status = [" ", "Chamada Não Atendida", "Caixa Postal", "Contato Incorreto", "Atendimento Efetuado", "Pedido Concluído", "Catálogo Enviado", "Outros"];
 
-        function createSelect(options) {
+        function createSelect(options, selectedValue = "") {
             let select = document.createElement("select");
             options.forEach(option => {
                 let opt = document.createElement("option");
                 opt.value = option;
                 opt.textContent = option;
+                if (option === selectedValue) {
+                    opt.selected = true;
+                }
                 select.appendChild(opt);
             });
             return select;
         }
 
-        function populateRow(row) {
-            row.appendChild(document.createElement("td")).appendChild(document.createElement("input"));
-            row.appendChild(document.createElement("td")).appendChild(createSelect(nichos));
-            row.appendChild(document.createElement("td")).appendChild(createSelect(situacoes));
-            row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).type = "date";
-            row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).type = "time";
-            row.appendChild(document.createElement("td")).appendChild(createSelect(canais));
-            row.appendChild(document.createElement("td")).appendChild(document.createElement("input"));
-            row.appendChild(document.createElement("td")).appendChild(createSelect(status));
+        function populateRow(row, data = {}) {
+            row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.nome || "";
+            row.appendChild(document.createElement("td")).appendChild(createSelect(nichos, data.nicho));
+            row.appendChild(document.createElement("td")).appendChild(createSelect(situacoes, data.situacao));
+            row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.data || "";
+            row.lastChild.firstChild.type = "date";
+            row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.hora || "";
+            row.lastChild.firstChild.type = "time";
+            row.appendChild(document.createElement("td")).appendChild(createSelect(canais, data.canal));
+            row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.obs || "";
+            row.appendChild(document.createElement("td")).appendChild(createSelect(status, data.status));
         }
 
-        function addRow() {
+        function addRow(data = {}) {
             let tbody = document.querySelector("tbody");
             let row = document.createElement("tr");
-            populateRow(row);
+            populateRow(row, data);
             tbody.appendChild(row);
         }
+
+        async function fetchData() {
+            try {
+                let response = await fetch("https://natalvalerio.pythonanywhere.com/api/select/qualit");
+                let data = await response.json();
+                let tbody = document.querySelector("tbody");
+                tbody.innerHTML = ""; 
+                data.forEach(item => addRow(item));
+            } catch (error) {
+                console.error("Erro ao buscar dados: ", error);
+            }
+        }
+        
+        window.onload = fetchData;
     </script>
 </head>
 <body>
@@ -71,7 +90,6 @@
             </tr>
         </thead>
         <tbody>
-            <script>addRow();</script>
         </tbody>
     </table>
     <button onclick="addRow()">Adicionar Linha</button>
