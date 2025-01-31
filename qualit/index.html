@@ -19,10 +19,10 @@
         }
     </style>
     <script>
-        const nichos = [" ", "Farmácia", "Supermercado", "Loja"];
-        const situacoes = [" ", "Prospecção", "Atendimento"];
-        const canais = [" ", "Chat", "Voz"];
-        const status = [" ", "Chamada Não Atendida", "Caixa Postal", "Contato Incorreto", "Atendimento Efetuado", "Pedido Concluído", "Catálogo Enviado", "Outros"];
+        const nichos = [" ", "LOJA", "FARMÁCIA", "SUPERMERCADO"];
+        const situacoes = [" ", "ATENDIMENTO", "PROSPECÇÃO"];
+        const canais = [" ", "Chat", "VOZ"];
+        const status = [" ", "CHAMADA NÃO ATENDIDA", "CAIXA POSTAL", "CONTATO INCORRETO", "ATENDIMENTO EFETUADO", "PEDIDO CONCLUÍDO", "CATÁLOGO ENVIADO", "OUTROS"];
 
         function createSelect(options, selectedValue = "") {
             let select = document.createElement("select");
@@ -37,7 +37,7 @@
             });
             return select;
         }
-		//nome	nicho	situacao	data	hora	canal	observacoes	status
+		//NOME	NICHO	SITUACAO	DATA	HORA	CANAL	OBSERVACOES	STATUS
         function populateRow(row, data = {}) {
             row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.nome || "";
             row.appendChild(document.createElement("td")).appendChild(createSelect(nichos, data.nicho));
