@@ -21,7 +21,7 @@
     <script>
         const nichos = [" ", "LOJA", "FARMÁCIA", "SUPERMERCADO"];
         const situacoes = [" ", "ATENDIMENTO", "PROSPECÇÃO"];
-        const canais = [" ", "CHAT", "VOZ"];
+        const canais = [" ", "Chat", "VOZ"];
         const status = [" ", "CHAMADA NÃO ATENDIDA", "CAIXA POSTAL", "CONTATO INCORRETO", "ATENDIMENTO EFETUADO", "PEDIDO CONCLUÍDO", "CATÁLOGO ENVIADO", "OUTROS"];
 
         function createSelect(options, selectedValue = "") {
@@ -37,7 +37,7 @@
             });
             return select;
         }
-
+		//NOME	NICHO	SITUACAO	DATA	HORA	CANAL	OBSERVACOES	STATUS
         function populateRow(row, data = {}) {
             row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.nome || "";
             row.appendChild(document.createElement("td")).appendChild(createSelect(nichos, data.nicho));
@@ -51,74 +51,25 @@
             row.appendChild(document.createElement("td")).appendChild(createSelect(status, data.status));
         }
 
-		//--------------------------------------------------------------------------------------------
-        function NOVO(data = {}) {
+        function addRow(data = {}) {
             let tbody = document.querySelector("tbody");
             let row = document.createElement("tr");
             populateRow(row, data);
             tbody.appendChild(row);
         }
 
-		//--------------------------------------------------------------------------------------------
         async function fetchData() {
             try {
-//                let response = await fetch("https://natalvalerio.pythonanywhere.com/api/select/qualit");
-                let response = await fetch("https://natalvalerio.pythonanywhere.com/api/sql?sql=select * from qualit order by id desc");
+                let response = await fetch("https://natalvalerio.pythonanywhere.com/api/select/qualit");
                 let data = await response.json();
                 let tbody = document.querySelector("tbody");
                 tbody.innerHTML = ""; 
-                data.forEach(item => NOVO(item));
+                data.forEach(item => addRow(item));
             } catch (error) {
                 console.error("Erro ao buscar dados: ", error);
             }
         }
-
-		//--------------------------------------------------------------------------------------------
- async function SALVAR() {
-    let tbody = document.querySelector("tbody");
-    let lastRow = tbody.rows[tbody.rows.length - 1];
-    let data = {};
-
-    lastRow.querySelectorAll("td").forEach((td, index) => {
-        if (index === 0) data.nome = td.querySelector("input").value;
-        if (index === 1) data.nicho = td.querySelector("select").value;
-        if (index === 2) data.situacao = td.querySelector("select").value;
-        if (index === 3) data.data = td.querySelector("input").value;
-        if (index === 4) data.hora = td.querySelector("input").value;
-        if (index === 5) data.canal = td.querySelector("select").value;
-        if (index === 6) data.observacoes = td.querySelector("input").value;
-        if (index === 7) data.status = td.querySelector("select").value;
-    });
-
-    let sqlQuery = `insert into qualit (nome, nicho, situacao, data, hora, canal, observacoes, status) values ('${data.nome}', '${data.nicho}', '${data.situacao}', '${data.data}', '${data.hora}', '${data.canal}', '${data.observacoes}', '${data.status}')`;
-
-    alert(sqlQuery); // Verifique o SQL gerado
-
-    try {
-        let response = await fetch("https://natalvalerio.pythonanywhere.com/api/sql", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ sql: sqlQuery }) // Envia o SQL como JSON
-        });
         
-        // Verifique a resposta completa para entender o erro
-        let result = await response.json();
-        console.log(result); // Adicione esse log para ver o conteúdo da resposta
-
-        if (result.success) {
-            alert("Dados salvos com sucesso!");
-            fetchData(); // Atualiza a tabela com os dados mais recentes
-        } else {
-            alert("Erro ao salvar dados.");
-        }
-    } catch (error) {
-        console.error("Erro ao salvar dados: ", error);
-    }
-}
-
-
         window.onload = fetchData;
     </script>
 </head>
@@ -141,7 +92,6 @@
         <tbody>
         </tbody>
     </table>
-    <button onclick="NOVO()">NOVO</button>
-    <button onclick="SALVAR()">SALVAR</button>
+    <button onclick="addRow()">Adicionar Linha</button>
 </body>
 </html>
