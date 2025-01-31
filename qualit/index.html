@@ -37,7 +37,7 @@
             });
             return select;
         }
-
+		//nome	nicho	situacao	data	hora	canal	observacoes	status
         function populateRow(row, data = {}) {
             row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.nome || "";
             row.appendChild(document.createElement("td")).appendChild(createSelect(nichos, data.nicho));
@@ -47,7 +47,7 @@
             row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.hora || "";
             row.lastChild.firstChild.type = "time";
             row.appendChild(document.createElement("td")).appendChild(createSelect(canais, data.canal));
-            row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.obs || "";
+            row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.observacoes || "";
             row.appendChild(document.createElement("td")).appendChild(createSelect(status, data.status));
         }
 
