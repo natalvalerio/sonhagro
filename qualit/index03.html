@@ -17,10 +17,6 @@
         th {
             background-color: #f2f2f2;
         }
-        button {
-            margin: 5px;
-            padding: 10px 20px;
-        }
     </style>
     <script>
         const nichos = [" ", "LOJA", "FARMÁCIA", "SUPERMERCADO"];
@@ -55,15 +51,18 @@
             row.appendChild(document.createElement("td")).appendChild(createSelect(status, data.status));
         }
 
+		//--------------------------------------------------------------------------------------------
         function NOVO(data = {}) {
             let tbody = document.querySelector("tbody");
             let row = document.createElement("tr");
             populateRow(row, data);
-            tbody.insertBefore(row, tbody.firstChild); // Insere a nova linha no topo
+            tbody.appendChild(row);
         }
 
+		//--------------------------------------------------------------------------------------------
         async function fetchData() {
             try {
+//                let response = await fetch("https://natalvalerio.pythonanywhere.com/api/select/qualit");
                 let response = await fetch("https://natalvalerio.pythonanywhere.com/api/sql?sql=select * from qualit order by id desc");
                 let data = await response.json();
                 let tbody = document.querySelector("tbody");
@@ -74,44 +73,54 @@
             }
         }
 
-        async function SALVAR() {
-            let tbody = document.querySelector("tbody");
-            let firstRow = tbody.rows[0]; // Captura a primeira linha
-            let data = {};
-        
-            firstRow.querySelectorAll("td").forEach((td, index) => {
-                if (index === 0) data.nome = td.querySelector("input").value;
-                if (index === 1) data.nicho = td.querySelector("select").value;
-                if (index === 2) data.situacao = td.querySelector("select").value;
-                if (index === 3) data.data = td.querySelector("input").value;
-                if (index === 4) data.hora = td.querySelector("input").value;
-                if (index === 5) data.canal = td.querySelector("select").value;
-                if (index === 6) data.observacoes = td.querySelector("input").value;
-                if (index === 7) data.status = td.querySelector("select").value;
-            });
-        
-            let sqlQuery = `insert into qualit (nome, nicho, situacao, data, hora, canal, observacoes, status) values ('${data.nome}', '${data.nicho}', '${data.situacao}', '${data.data}', '${data.hora}', '${data.canal}', '${data.observacoes}', '${data.status}')`;
-            let encodedQuery = encodeURIComponent(sqlQuery);
-        
-            try {
-                let response = await fetch(`https://natalvalerio.pythonanywhere.com/api/sql?sql=${encodedQuery}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
-                if (!response.ok) {
-                    alert("Erro ao salvar dados!");
-                    console.error("Erro:", response.status, response.statusText);
-                } else {
-                    alert("Dados salvos com sucesso!");
-                    fetchData();
-                }
-            } catch (error) {
-                alert("Erro ao salvar dados.");
-                console.error("Erro ao salvar dados: ", error);
-            }
-        }
+		//--------------------------------------------------------------------------------------------
+		async function SALVAR() {
+			let tbody = document.querySelector("tbody");
+			let lastRow = tbody.rows[tbody.rows.length - 1];
+			let data = {};
+		
+			lastRow.querySelectorAll("td").forEach((td, index) => {
+				if (index === 0) data.nome = td.querySelector("input").value;
+				if (index === 1) data.nicho = td.querySelector("select").value;
+				if (index === 2) data.situacao = td.querySelector("select").value;
+				if (index === 3) data.data = td.querySelector("input").value;
+				if (index === 4) data.hora = td.querySelector("input").value;
+				if (index === 5) data.canal = td.querySelector("select").value;
+				if (index === 6) data.observacoes = td.querySelector("input").value;
+				if (index === 7) data.status = td.querySelector("select").value;
+			});
+		
+			let sqlQuery = `insert into qualit (nome, nicho, situacao, data, hora, canal, observacoes, status) values ('${data.nome}', '${data.nicho}', '${data.situacao}', '${data.data}', '${data.hora}', '${data.canal}', '${data.observacoes}', '${data.status}')`;
+			// Codifica o SQL para evitar problemas com caracteres especiais
+			let encodedQuery = encodeURIComponent(sqlQuery);
+		
+			alert(encodedQuery); // Verifique o SQL gerado
+		
+			try {
+				let response = await fetch(`https://natalvalerio.pythonanywhere.com/api/sql?sql=${encodedQuery}`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+					},
+			});
+				
+			// Verifique a resposta completa para entender o erro
+			if (!response.ok) {
+				alert("Erro 01:", response.status, response.statusText);
+				console.error("Erro 01:", response.status, response.statusText);
+			} else {
+				alert("Dados Salvos!");
+				console.log("Dados Salvos!");
+				fetchData();
+			}
+
+
+			} catch (error) {
+				alert("Erro 02 ao salvar dados: ", error)
+				console.error("Erro ao salvar dados: ", error);
+			}
+		}
+
 
         window.onload = fetchData;
     </script>
@@ -119,8 +128,6 @@
 <body>
     <img src="imagem.png" width="200" alt="Logo da Empresa">
     <h2>Relatório Diário de Atendimento</h2>
-    <button onclick="NOVO()">NOVO</button>
-    <button onclick="SALVAR()">SALVAR</button>
     <table>
         <thead>
             <tr>
@@ -137,5 +144,7 @@
         <tbody>
         </tbody>
     </table>
+    <button onclick="NOVO()">NOVO</button>
+    <button onclick="SALVAR()">SALVAR</button>
 </body>
 </html>
