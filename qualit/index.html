@@ -94,6 +94,10 @@
             font-size: 14px;
             width: 300px;
         }
+		
+		#Pesquisar::placeholder {
+			color: rgba(0, 0, 0, 0.4); /* Cor preta com 10% de transparência */
+		}
 
         button {
             padding: 10px 15px;
@@ -108,90 +112,6 @@
             background-color: #393996;
         }
     </style>
-	<!--style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: #A1A1D6;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            z-index: 1000;
-        }
-
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #FFE680;
-            color: #393996;
-            text-align: center;
-            padding: 10px;
-        }
-
-        main {
-            margin-top: 120px;
-            margin-bottom: 60px;
-            padding: 20px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        table, th, td {
-            border: 1px solid black;
-        }
-
-        th {
-            background-color: #FFE680;
-            color: #393996;
-            position: sticky;
-            top: 0;
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
-
-        .controls {
-            margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        #searchBar {
-            padding: 8px;
-            font-size: 14px;
-        }
-
-        button {
-            padding: 10px 15px;
-            background-color: #A1A1D6;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        button:hover {
-            background-color: #393996;
-        }
-
-    </style--> 
 
 	
 	<!--style>
@@ -221,15 +141,8 @@
 
         setInterval(updateDateTime, 1000);
 		
-        function Pesquisar() {
-            const input = document.getElementById("Pesquisar").value.toLowerCase();
-            const rows = document.querySelectorAll("tbody tr");
 
-            rows.forEach(row => {
-                const cells = Array.from(row.querySelectorAll("td")).map(td => td.textContent.toLowerCase());
-                row.style.display = cells.some(cell => cell.includes(input)) ? "" : "none";
-            });
-        }
+
 		
         const nichos    = [" ", "LOJA", "FARMÁCIA", "SUPERMERCADO"];
         const situacoes = [" ", "ATENDIMENTO", "PROSPECÇÃO"];
@@ -431,15 +344,15 @@
     <table>
         <thead>
             <tr>
-                <th>Nome</th>
-                <th>Nicho</th>
-                <th>Situação</th>
-                <th>Data</th>
-                <th>Hora</th>
-                <th>Canal</th>
-                <th>Observações</th>
-                <th>Status</th>
-                <th>Ações</th>
+                <th>NOME</th>
+                <th>NICHO</th>
+                <th>SITUAÇÃO</th>
+                <th>DATA</th>
+                <th>HORA</th>
+                <th>CANAL</th>
+                <th>OBSERVAÇÕES</th>
+                <th>STATUS</th>
+                <th>AÇÕES</th>
             </tr>
         </thead>
         <tbody>

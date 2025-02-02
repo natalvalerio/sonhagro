@@ -71,16 +71,33 @@
             text-align: left;
         }
 
+        td input, td select {
+            width: 100%;
+            border: none;
+            background-color: transparent;
+            outline: none;
+            font-size: 14px;
+        }
+
+        td input[type="date"], td input[type="time"] {
+            width: auto;
+        }
+
         .controls {
             margin-bottom: 20px;
             display: flex;
             gap: 10px;
         }
 
-        #searchBar {
+        #Pesquisar {
             padding: 8px;
             font-size: 14px;
+            width: 300px;
         }
+		
+		#Pesquisar::placeholder {
+			color: rgba(0, 0, 0, 0.4); /* Cor preta com 10% de transparência */
+		}
 
         button {
             padding: 10px 15px;
@@ -94,8 +111,9 @@
         button:hover {
             background-color: #393996;
         }
+    </style>
 
-    </style>    
+	
 	<!--style>
         table {
             width: 100%;
@@ -122,6 +140,16 @@
         }
 
         setInterval(updateDateTime, 1000);
+		
+        function Pesquisar() {
+            const input = document.getElementById("Pesquisar").value.toLowerCase();
+            const rows = document.querySelectorAll("tbody tr");
+
+            rows.forEach(row => {
+                const cells = Array.from(row.querySelectorAll("td")).map(td => td.textContent.toLowerCase());
+                row.style.display = cells.some(cell => cell.includes(input)) ? "" : "none";
+            });
+        }
 		
         const nichos    = [" ", "LOJA", "FARMÁCIA", "SUPERMERCADO"];
         const situacoes = [" ", "ATENDIMENTO", "PROSPECÇÃO"];
@@ -316,22 +344,22 @@
     </footer>
 	<main>
 	<BR/>
-    <input type="text" id="searchBar" placeholder="🔎 Pesquisar..." onkeyup="searchTable()">
+    <input type="text" id="Pesquisar" placeholder="🔎 Pesquisar..." onkeyup="Pesquisar()">
     <!--button onclick="addRow()">NOVO</button-->
     <button onclick="NOVO()">NOVO ➕</button>
     <button onclick="SALVAR()">SALVAR 💾</button>
     <table>
         <thead>
             <tr>
-                <th>Nome</th>
-                <th>Nicho</th>
-                <th>Situação</th>
-                <th>Data</th>
-                <th>Hora</th>
-                <th>Canal</th>
-                <th>Observações</th>
-                <th>Status</th>
-                <th>Ações</th>
+                <th>NOME</th>
+                <th>NICHO</th>
+                <th>SITUAÇÃO</th>
+                <th>DATA</th>
+                <th>HORA</th>
+                <th>CANAL</th>
+                <th>OBSERVAÇÕES</th>
+                <th>STATUS</th>
+                <th>AÇÕES</th>
             </tr>
         </thead>
         <tbody>
