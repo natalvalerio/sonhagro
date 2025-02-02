@@ -71,6 +71,102 @@
             text-align: left;
         }
 
+        td input, td select {
+            width: 100%;
+            border: none;
+            background-color: transparent;
+            outline: none;
+            font-size: 14px;
+        }
+
+        td input[type="date"], td input[type="time"] {
+            width: auto;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        #Pesquisar {
+            padding: 8px;
+            font-size: 14px;
+            width: 300px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #A1A1D6;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #393996;
+        }
+    </style>
+	<!--style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #A1A1D6;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            z-index: 1000;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #FFE680;
+            color: #393996;
+            text-align: center;
+            padding: 10px;
+        }
+
+        main {
+            margin-top: 120px;
+            margin-bottom: 60px;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th {
+            background-color: #FFE680;
+            color: #393996;
+            position: sticky;
+            top: 0;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
         .controls {
             margin-bottom: 20px;
             display: flex;
@@ -95,7 +191,9 @@
             background-color: #393996;
         }
 
-    </style>    
+    </style--> 
+
+	
 	<!--style>
         table {
             width: 100%;
@@ -122,6 +220,16 @@
         }
 
         setInterval(updateDateTime, 1000);
+		
+        function Pesquisar() {
+            const input = document.getElementById("Pesquisar").value.toLowerCase();
+            const rows = document.querySelectorAll("tbody tr");
+
+            rows.forEach(row => {
+                const cells = Array.from(row.querySelectorAll("td")).map(td => td.textContent.toLowerCase());
+                row.style.display = cells.some(cell => cell.includes(input)) ? "" : "none";
+            });
+        }
 		
         const nichos    = [" ", "LOJA", "FARMÁCIA", "SUPERMERCADO"];
         const situacoes = [" ", "ATENDIMENTO", "PROSPECÇÃO"];
@@ -316,7 +424,7 @@
     </footer>
 	<main>
 	<BR/>
-    <input type="text" id="searchBar" placeholder="🔎 Pesquisar..." onkeyup="searchTable()">
+    <input type="text" id="Pesquisar" placeholder="🔎 Pesquisar..." onkeyup="Pesquisar()">
     <!--button onclick="addRow()">NOVO</button-->
     <button onclick="NOVO()">NOVO ➕</button>
     <button onclick="SALVAR()">SALVAR 💾</button>
