@@ -19,14 +19,14 @@
         }
         button {
             margin: 5px;
-            padding: 10px 20px;
+            padding: 5px 10px;
         }
     </style>
     <script>
-        const nichos = [" ", "LOJA", "FARMÁCIA", "SUPERMERCADO"];
+        const nichos    = [" ", "LOJA", "FARMÁCIA", "SUPERMERCADO"];
         const situacoes = [" ", "ATENDIMENTO", "PROSPECÇÃO"];
-        const canais = [" ", "CHAT", "VOZ"];
-        const status = [" ", "CHAMADA NÃO ATENDIDA", "CAIXA POSTAL", "CONTATO INCORRETO", "ATENDIMENTO EFETUADO", "PEDIDO CONCLUÍDO", "CATÁLOGO ENVIADO", "OUTROS"];
+        const canais    = [" ", "CHAT", "VOZ"];
+        const status    = [" ", "CHAMADA NÃO ATENDIDA", "CAIXA POSTAL", "CONTATO INCORRETO", "ATENDIMENTO EFETUADO", "PEDIDO CONCLUÍDO", "CATÁLOGO ENVIADO", "OUTROS"];
 
         function createSelect(options, selectedValue = "") {
             let select = document.createElement("select");
@@ -43,6 +43,8 @@
         }
 
         function populateRow(row, data = {}) {
+            row.dataset.id = data.id || ""; // Armazena o ID da linha
+
             row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.nome || "";
             row.appendChild(document.createElement("td")).appendChild(createSelect(nichos, data.nicho));
             row.appendChild(document.createElement("td")).appendChild(createSelect(situacoes, data.situacao));
@@ -53,6 +55,18 @@
             row.appendChild(document.createElement("td")).appendChild(createSelect(canais, data.canal));
             row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.observacoes || "";
             row.appendChild(document.createElement("td")).appendChild(createSelect(status, data.status));
+
+            // Botão Atualizar
+            let updateBtn = document.createElement("button");
+            updateBtn.textContent = "💾";
+            updateBtn.onclick = () => ATUALIZAR(row);
+            row.appendChild(document.createElement("td")).appendChild(updateBtn);
+
+            // Botão Excluir
+            let deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "🗑️";
+            deleteBtn.onclick = () => EXCLUIR(row);
+            row.lastChild.appendChild(deleteBtn);
         }
 
         function NOVO(data = {}) {
@@ -64,7 +78,7 @@
 
         async function fetchData() {
             try {
-                let response = await fetch("https://natalvalerio.pythonanywhere.com/api/sql?sql=select * from qualit order by id desc");
+                let response = await fetch("https://natalvalerio.pythonanywhere.com/api/select/qualit");
                 let data = await response.json();
                 let tbody = document.querySelector("tbody");
                 tbody.innerHTML = ""; 
@@ -78,7 +92,7 @@
             let tbody = document.querySelector("tbody");
             let firstRow = tbody.rows[0]; // Captura a primeira linha
             let data = {};
-        
+
             firstRow.querySelectorAll("td").forEach((td, index) => {
                 if (index === 0) data.nome = td.querySelector("input").value;
                 if (index === 1) data.nicho = td.querySelector("select").value;
@@ -89,10 +103,10 @@
                 if (index === 6) data.observacoes = td.querySelector("input").value;
                 if (index === 7) data.status = td.querySelector("select").value;
             });
-        
+
             let sqlQuery = `insert into qualit (nome, nicho, situacao, data, hora, canal, observacoes, status) values ('${data.nome}', '${data.nicho}', '${data.situacao}', '${data.data}', '${data.hora}', '${data.canal}', '${data.observacoes}', '${data.status}')`;
             let encodedQuery = encodeURIComponent(sqlQuery);
-        
+
             try {
                 let response = await fetch(`https://natalvalerio.pythonanywhere.com/api/sql?sql=${encodedQuery}`, {
                     method: "GET",
@@ -110,6 +124,80 @@
             } catch (error) {
                 alert("Erro ao salvar dados.");
                 console.error("Erro ao salvar dados: ", error);
+            }
+        }
+
+        async function ATUALIZAR(row) {
+            let id = row.dataset.id;
+            if (!id) {
+                alert("Não é possível atualizar uma linha sem ID.");
+                return;
+            }
+
+            let data = {};
+            row.querySelectorAll("td").forEach((td, index) => {
+                if (index === 0) data.nome = td.querySelector("input").value;
+                if (index === 1) data.nicho = td.querySelector("select").value;
+                if (index === 2) data.situacao = td.querySelector("select").value;
+                if (index === 3) data.data = td.querySelector("input").value;
+                if (index === 4) data.hora = td.querySelector("input").value;
+                if (index === 5) data.canal = td.querySelector("select").value;
+                if (index === 6) data.observacoes = td.querySelector("input").value;
+                if (index === 7) data.status = td.querySelector("select").value;
+            });
+
+            let sqlQuery = `update qualit set nome='${data.nome}', nicho='${data.nicho}', situacao='${data.situacao}', data='${data.data}', hora='${data.hora}', canal='${data.canal}', observacoes='${data.observacoes}', status='${data.status}' where id=${id}`;
+            let encodedQuery = encodeURIComponent(sqlQuery);
+
+            try {
+                let response = await fetch(`https://natalvalerio.pythonanywhere.com/api/sql?sql=${encodedQuery}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                if (!response.ok) {
+                    alert("Erro ao atualizar dados!");
+                    console.error("Erro:", response.status, response.statusText);
+                } else {
+                    alert("Dados atualizados com sucesso!");
+                    fetchData();
+                }
+            } catch (error) {
+                alert("Erro ao atualizar dados.");
+                console.error("Erro ao atualizar dados: ", error);
+            }
+        }
+
+        async function EXCLUIR(row) {
+            let id = row.dataset.id;
+            if (!id) {
+                alert("Não é possível excluir uma linha sem ID.");
+                return;
+            }
+
+            let sqlQuery = `delete from qualit where id=${id}`;
+            let encodedQuery = encodeURIComponent(sqlQuery);
+
+            if (confirm("Tem certeza de que deseja excluir esta linha?")) {
+                try {
+                    let response = await fetch(`https://natalvalerio.pythonanywhere.com/api/sql?sql=${encodedQuery}`, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    });
+                    if (!response.ok) {
+                        alert("Erro ao excluir dados!");
+                        console.error("Erro:", response.status, response.statusText);
+                    } else {
+                        alert("Dados excluídos com sucesso!");
+                        fetchData();
+                    }
+                } catch (error) {
+                    alert("Erro ao excluir dados.");
+                    console.error("Erro ao excluir dados: ", error);
+                }
             }
         }
 
@@ -132,6 +220,7 @@
                 <th>Canal</th>
                 <th>Observações</th>
                 <th>Status</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
