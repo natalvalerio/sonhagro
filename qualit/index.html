@@ -141,7 +141,38 @@
 
         setInterval(updateDateTime, 1000);
 		
+function Pesquisar() {
+    const input = document.getElementById("Pesquisar").value.trim().toLowerCase();  // Obtém o valor digitado em minúsculas e remove espaços extras
+    const rows = document.querySelectorAll("tbody tr");  // Seleciona todas as linhas da tabela
 
+    rows.forEach(row => {
+        const cells = row.querySelectorAll("td");  // Seleciona todas as células de uma linha
+        let matchFound = false;  // Variável para controlar se há uma correspondência na linha
+
+        // Limpa qualquer fundo amarelo anterior na linha
+        row.style.backgroundColor = "";  // Remove o fundo amarelo da linha
+
+        // Verifica se o valor do campo de pesquisa está presente em qualquer célula
+        cells.forEach(cell => {
+            const cellText = cell.textContent.trim().toLowerCase();  // Remove espaços extras e converte para minúsculas
+            if (cellText.includes(input) && input !== "") {
+                matchFound = true;  // Se encontrar uma correspondência, marca a linha
+            }
+        });
+
+        // Aplica o fundo amarelo na linha inteira se houver correspondência
+        if (matchFound) {
+            row.style.backgroundColor = "#FFCC00";  // Aplica o fundo amarelo na linha inteira
+        }
+        
+        // Exibe ou esconde a linha com base na correspondência
+        if (input === "") {
+            row.style.display = "";  // Exibe todas as linhas quando o campo de pesquisa está vazio
+        } else {
+            row.style.display = matchFound ? "" : "none";  // Esconde a linha se não houver correspondência
+        }
+    });
+}
 
 		
         const nichos    = [" ", "LOJA", "FARMÁCIA", "SUPERMERCADO"];
@@ -337,7 +368,7 @@
     </footer>
 	<main>
 	<BR/>
-    <input type="text" id="Pesquisar" placeholder="🔎 Pesquisar..." onkeyup="Pesquisar()">
+    <input type="text" id="Pesquisar" placeholder="🔎 Pesquisar..." onblur ="Pesquisar()"> <!--onkeyup-->
     <!--button onclick="addRow()">NOVO</button-->
     <button onclick="NOVO()">NOVO ➕</button>
     <button onclick="SALVAR()">SALVAR 💾</button>
