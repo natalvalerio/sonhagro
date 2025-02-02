@@ -5,7 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="img/icon.png" rel="shortcut icon" type="image/x-icon" >
     <title>Relatório Diário de Atendimento</title>
-    <style>
+    <!--
+	verde #4CAF50;
+	amarelo #FFCC00;
+	azul #393996;
+	Amarelo claro: #FFE680 (uma versão mais clara do #FFCC00).
+	Azul claro: #A1A1D6 (uma versão mais clara do #393996).
+	-->
+	<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #A1A1D6;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            z-index: 1000;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #FFE680;
+            color: #393996;
+            text-align: center;
+            padding: 10px;
+        }
+
+        main {
+            margin-top: 120px;
+            margin-bottom: 60px;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th {
+            background-color: #FFE680;
+            color: #393996;
+            position: sticky;
+            top: 0;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        #searchBar {
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #A1A1D6;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #393996;
+        }
+
+    </style>    
+	<!--style>
         table {
             width: 100%;
             border-collapse: collapse;
@@ -22,8 +113,16 @@
             margin: 5px;
             padding: 5px 10px;
         }
-    </style>
+    </style-->
     <script>
+	    function updateDateTime() {
+            const now = new Date();
+            const dateTimeString = now.toLocaleString();
+            document.getElementById("dateTime").textContent = dateTimeString;
+        }
+
+        setInterval(updateDateTime, 1000);
+		
         const nichos    = [" ", "LOJA", "FARMÁCIA", "SUPERMERCADO"];
         const situacoes = [" ", "ATENDIMENTO", "PROSPECÇÃO"];
         const canais    = [" ", "CHAT", "VOZ"];
@@ -206,8 +305,19 @@
     </script>
 </head>
 <body>
-    <img src="img/logo.png" width="200" alt="Logo da Empresa">
-    <h2>Relatório Diário de Atendimento</h2>
+    <header>
+		<img src="img/logo.png" width="200" alt="Logo da Empresa">
+		<h2>Relatório Diário de Atendimento</h2>
+        <!--h1>Gerenciamento de Tabela</h1-->
+    </header>
+
+    <footer>
+        <span id="dateTime"></span>
+    </footer>
+	<main>
+	<BR/>
+    <input type="text" id="searchBar" placeholder="🔎 Pesquisar..." onkeyup="searchTable()">
+    <!--button onclick="addRow()">NOVO</button-->
     <button onclick="NOVO()">NOVO ➕</button>
     <button onclick="SALVAR()">SALVAR 💾</button>
     <table>
@@ -227,5 +337,6 @@
         <tbody>
         </tbody>
     </table>
+	</main>
 </body>
 </html>
