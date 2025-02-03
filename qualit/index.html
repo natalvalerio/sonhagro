@@ -202,10 +202,22 @@ function Pesquisar() {
             row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.nome || "";
             row.appendChild(document.createElement("td")).appendChild(createSelect(nichos, data.nicho));
             row.appendChild(document.createElement("td")).appendChild(createSelect(situacoes, data.situacao));
-            row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.data || "";
-            row.lastChild.firstChild.type = "date";
-            row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.hora || "";
-            row.lastChild.firstChild.type = "time";
+            //row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.data || "";
+            //row.lastChild.firstChild.type = "date";
+            //row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.hora || "";
+            //row.lastChild.firstChild.type = "time";
+			
+			let dateInput = document.createElement("input");
+            dateInput.type = "date";
+            dateInput.value = data.data || new Date().toISOString().split('T')[0];
+            row.appendChild(document.createElement("td")).appendChild(dateInput);
+
+            let timeInput = document.createElement("input");
+            timeInput.type = "time";
+            let now = new Date();
+            timeInput.value = data.hora || now.toTimeString().slice(0, 5);
+            row.appendChild(document.createElement("td")).appendChild(timeInput);
+			
             row.appendChild(document.createElement("td")).appendChild(createSelect(canais, data.canal));
             row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.observacoes || "";
             row.appendChild(document.createElement("td")).appendChild(createSelect(status, data.status));
