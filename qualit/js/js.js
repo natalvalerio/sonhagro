@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------
 function updateDateTime() {
     const now = new Date()
-    const dateTimeString = now.toLocaleString()
+    const dateTimeString = now.toLocaleString() + "  -  CLIENTE: " + cliente
     document.getElementById("dateTime").textContent = dateTimeString
 }
 
@@ -143,7 +143,9 @@ async function SALVAR() {
         if (index === 8) data.status = td.querySelector("select").value;
     });
 
-    let sqlQuery = `insert into qualit (nome, contato, nicho, situacao, data, hora, canal, observacoes, status) values ('${data.nome}', '${data.contato}', '${data.nicho}', '${data.situacao}', '${data.data}', '${data.hora}', '${data.canal}', '${data.observacoes}', '${data.status}')`;
+
+	//const cliente = localStorage.getItem('cliente');
+    let sqlQuery = `insert into qualit (nome, contato, nicho, situacao, data, hora, canal, observacoes, status, cliente) values ('${data.nome}', '${data.contato}', '${data.nicho}', '${data.situacao}', '${data.data}', '${data.hora}', '${data.canal}', '${data.observacoes}', '${data.status}', '${cliente}')`;
     let encodedQuery = encodeURIComponent(sqlQuery);
 
     try {
@@ -188,7 +190,8 @@ async function ATUALIZAR(row) {
         if (index === 8) data.status = td.querySelector("select").value;
     });
 
-    let sqlQuery = `update qualit set nome='${data.nome}', contato='${data.contato}', nicho='${data.nicho}', situacao='${data.situacao}', data='${data.data}', hora='${data.hora}', canal='${data.canal}', observacoes='${data.observacoes}', status='${data.status}' where id=${id}`;
+	//alert(cliente)
+    let sqlQuery = `update qualit set nome='${data.nome}', contato='${data.contato}', nicho='${data.nicho}', situacao='${data.situacao}', data='${data.data}', hora='${data.hora}', canal='${data.canal}', observacoes='${data.observacoes}', status='${data.status}', cliente='${cliente}' where id=${id}`;
     let encodedQuery = encodeURIComponent(sqlQuery);
 
     try {
@@ -245,35 +248,6 @@ async function EXCLUIR(row) {
 }
 
 
-//--------------------------------------------------------------------------
-// FUNÇÕES PARA LOGIN
-async function loginUser(event) {
-    event.preventDefault(); // Evita o envio do formulário
-
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-
-    try {
-        const response = await fetch("https://natalvalerio.pythonanywhere.com/api/sql?sql=select usuario, senha from usuarios");
-        const data = await response.json();
-
-        // Procurando usuário com as credenciais fornecidas
-        const user = data.find(user => user.usuario === username && user.senha === password);
-
-        if (user) {
-            // Se o usuário for encontrado, redireciona para a página principal
-            window.location.href = "app.html"; // Redireciona para a página principal (relatório)
-        } else {
-            // Caso contrário, exibe mensagem de erro
-            document.getElementById("error-message").textContent = "Usuário ou senha incorretos!";
-        }
-    } catch (error) {
-        console.error("Erro na autenticação:", error);
-        document.getElementById("error-message").textContent = "Erro ao verificar as credenciais. Tente novamente!";
-    }
-}
-
-
 
 //--------------------------------------------------------------------------
 const nichos    = [" ", "LOJA", "FARMÁCIA", "SUPERMERCADO"];
@@ -281,8 +255,8 @@ const situacoes = [" ", "ATENDIMENTO", "PROSPECÇÃO"];
 const canais    = [" ", "CHAT", "VOZ"];
 const status    = [" ", "CHAMADA NÃO ATENDIDA", "CAIXA POSTAL", "CONTATO INCORRETO", "ATENDIMENTO EFETUADO", "PEDIDO CONCLUÍDO", "CATÁLOGO ENVIADO", "OUTROS"];
 
-window.onload = fetchData;
 
+window.onload = fetchData;
 
 //--------------------------------------------------------------------------
 //require('dotenv').config()
