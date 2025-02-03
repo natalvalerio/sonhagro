@@ -141,39 +141,41 @@
 
         setInterval(updateDateTime, 1000);
 		
+
 function Pesquisar() {
-    const input = document.getElementById("Pesquisar").value.trim().toLowerCase();  // Obtém o valor digitado em minúsculas e remove espaços extras
-    const rows = document.querySelectorAll("tbody tr");  // Seleciona todas as linhas da tabela
+    const termo = document.getElementById("Pesquisar").value.toLowerCase();
+    const linhas = document.querySelectorAll("tbody tr");
 
-    rows.forEach(row => {
-        const cells = row.querySelectorAll("td");  // Seleciona todas as células de uma linha
-        let matchFound = false;  // Variável para controlar se há uma correspondência na linha
+    linhas.forEach(linha => {
+        const colunas = linha.querySelectorAll("td");
+        let encontrou = false;
 
-        // Limpa qualquer fundo amarelo anterior na linha
-        row.style.backgroundColor = "";  // Remove o fundo amarelo da linha
+        colunas.forEach((coluna, index) => {
+            if (index !== colunas.length - 1) { // Ignora a última coluna (AÇÕES)
+                let texto = "";
 
-        // Verifica se o valor do campo de pesquisa está presente em qualquer célula
-        cells.forEach(cell => {
-            const cellText = cell.textContent.trim().toLowerCase();  // Remove espaços extras e converte para minúsculas
-            if (cellText.includes(input) && input !== "") {
-                matchFound = true;  // Se encontrar uma correspondência, marca a linha
+                // Verifica se a coluna contém um input ou select
+                if (coluna.querySelector("input")) {
+                    texto = coluna.querySelector("input").value.toLowerCase();
+                } else if (coluna.querySelector("select")) {
+                    texto = coluna.querySelector("select").value.toLowerCase();
+                } else {
+                    texto = coluna.textContent.toLowerCase();
+                }
+
+                if (texto.includes(termo)) {
+                    encontrou = true;
+                }
             }
         });
 
-        // Aplica o fundo amarelo na linha inteira se houver correspondência
-        if (matchFound) {
-            row.style.backgroundColor = "#FFCC00";  // Aplica o fundo amarelo na linha inteira
-        }
-        
-        // Exibe ou esconde a linha com base na correspondência
-        if (input === "") {
-            row.style.display = "";  // Exibe todas as linhas quando o campo de pesquisa está vazio
+        if (encontrou) {
+            linha.style.display = "";
         } else {
-            row.style.display = matchFound ? "" : "none";  // Esconde a linha se não houver correspondência
+            linha.style.display = "none";
         }
     });
 }
-
 		
         const nichos    = [" ", "LOJA", "FARMÁCIA", "SUPERMERCADO"];
         const situacoes = [" ", "ATENDIMENTO", "PROSPECÇÃO"];
@@ -368,7 +370,7 @@ function Pesquisar() {
     </footer>
 	<main>
 	<BR/>
-    <input type="text" id="Pesquisar" placeholder="🔎 Pesquisar..." onblur ="Pesquisar()"> <!--onkeyup-->
+    <input type="text" id="Pesquisar" placeholder="🔎 Pesquisar..."  onkeyup="Pesquisar()"> <!--onblur onkeyup-->
     <!--button onclick="addRow()">NOVO</button-->
     <button onclick="NOVO()">NOVO ➕</button>
     <button onclick="SALVAR()">SALVAR 💾</button>
