@@ -24,6 +24,7 @@
                 if (user) {
                     // Login bem-sucedido: salvar cliente no localStorage e redirecionar
                     localStorage.setItem('cliente', clienteSelecionado);
+                    localStorage.setItem('usuario', username);
                     window.location.href = "app.html";
                 } else {
                     // Erro de autenticação
@@ -66,10 +67,11 @@
     <div class="login-container">
         <h2>Login</h2>
         <form id="loginForm">
-            <input class="input_login" type="text" id="username" placeholder="Usuário" required>
+            <div class="select_login" id="usuario">
+                <!--input class="input_login" type="text" id="username" placeholder="Usuário" required-->
+            </div>
             <input class="input_login" type="password" id="password" placeholder="Senha" required>
 
-            <!-- Select do cliente -->
             <div class="select_login" id="cliente"></div>
 
             <button class="button_login" type="submit">LOGAR</button>

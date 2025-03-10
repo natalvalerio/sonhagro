@@ -14,6 +14,7 @@
 		<h2>Relatório Diário de Atendimento</h2>
 		<script>
 		const cliente = localStorage.getItem('cliente');
+        const usuario = localStorage.getItem('usuario');        
 		//alert(cliente)
 		</script>
 	
@@ -27,8 +28,32 @@
     <input type="text" id="Pesquisar" placeholder="🔎 Pesquisar..."  onkeyup="Pesquisar()"> <!--onblur onkeyup-->
     <!--button onclick="addRow()">NOVO</button-->
     <button onclick="NOVO()">NOVO ➕</button>
-    <button onclick="SALVAR()">SALVAR 💾</button>
-    <table>
+    <button onclick="SALVAR()">SALVAR ✅</button>
+    <a href="index.html"><button>SAIR ↩️</button></a>
+
+    <script>
+        if (usuario === "PABLO") {
+            document.write('<button onclick="alert(\'Configurações acessadas!\')">CONFIG ⚙️</button>');
+        }
+    </script>
+
+    <script>
+        /*
+        if (usuario === "PABLO") {
+            // Cria o botão "CONFIG ⚙️"
+            const botaoConfig = document.createElement('button');
+            botaoConfig.textContent = 'CONFIG ⚙️';
+            botaoConfig.onclick = () => {
+                alert('Configurações acessadas!'); // Ação do botão
+            };
+            // Adiciona o botão ao corpo do documento (ou a um elemento específico)
+            
+            document.body.appendChild(botaoConfig);
+            
+        }
+        */
+    </script>
+        <table>
         <thead>
             <tr>
                 <th>NOME</th>

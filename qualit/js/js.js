@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------
 function updateDateTime() {
     const now = new Date()
-    const dateTimeString = now.toLocaleString() + "  -  CLIENTE: " + cliente
+    const dateTimeString = now.toLocaleString() + ` - [CLIENTE: ${cliente}] - [USUÁRIO: ${usuario}]` 
     document.getElementById("dateTime").textContent = dateTimeString
 }
 
@@ -90,14 +90,14 @@ function populateRow(row, data = {}) {
     row.appendChild(document.createElement("td")).appendChild(createSelect(status, data.status));
 
     // Botão Atualizar
-    let updateBtn = document.createElement("button");
-    updateBtn.textContent = "💾";
+    let updateBtn = document.createElement("span");
+    updateBtn.textContent = "✅";
     updateBtn.onclick = () => ATUALIZAR(row);
     row.appendChild(document.createElement("td")).appendChild(updateBtn);
 
     // Botão Excluir
-    let deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "🗑️";
+    let deleteBtn = document.createElement("span");
+    deleteBtn.textContent = "❌";
     deleteBtn.onclick = () => EXCLUIR(row);
     row.lastChild.appendChild(deleteBtn);
 }
@@ -114,7 +114,8 @@ function NOVO(data = {}) {
 //--------------------------------------------------------------------------
 async function fetchData() {
     try {
-        let response = await fetch("https://natalvalerio.pythonanywhere.com/api/select/qualit");
+        let query = `select * from qualit where cliente = "${cliente}"`
+        let response = await fetch(`https://natalvalerio.pythonanywhere.com/api/sql?sql=${query}`);
         let data = await response.json();
         let tbody = document.querySelector("tbody");
         tbody.innerHTML = ""; 
