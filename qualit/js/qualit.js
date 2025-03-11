@@ -1,49 +1,57 @@
 //--------------------------------------------------------------------------
-
-function populateRow(row, data = {}) {
+function populateRowQ(row, data = {}) {
     row.dataset.id = data.id || ""; // Armazena o ID da linha
 
-    row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.nicho' || "";
+    row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.nome || "";
+    row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.contato|| "";
+    row.appendChild(document.createElement("td")).appendChild(createSelect(nichos, data.nicho));
+    row.appendChild(document.createElement("td")).appendChild(createSelect(situacoes, data.situacao));
+
+    //row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.data || "";
+    //row.lastChild.firstChild.type = "date";
+    //row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.hora || "";
+    //row.lastChild.firstChild.type = "time
 	
+	let dateInput = document.createElement("input");
+    dateInput.type = "date";
+    dateInput.value = data.data || new Date().toISOString().split('T')[0];
+    row.appendChild(document.createElement("td")).appendChild(dateInput);
+
+    let timeInput = document.createElement("input");
+    timeInput.type = "time";
+    let now = new Date();
+    timeInput.value = data.hora || now.toTimeString().slice(0, 5);
+    row.appendChild(document.createElement("td")).appendChild(timeInput);
+	
+    row.appendChild(document.createElement("td")).appendChild(createSelect(canais, data.canal));
+    row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.observacoes || "";
+    row.appendChild(document.createElement("td")).appendChild(createSelect(status, data.status));
+
     // Botão Atualizar
     let updateBtn = document.createElement("span");
     updateBtn.textContent = "✅";
-    updateBtn.onclick = () => ATUALIZAR(row);
+    updateBtn.onclick = () => ATUALIZARQ(row);
     row.appendChild(document.createElement("td")).appendChild(updateBtn);
 
     // Botão Excluir
     let deleteBtn = document.createElement("span");
     deleteBtn.textContent = "❌";
-    deleteBtn.onclick = () => EXCLUIR(row);
+    deleteBtn.onclick = () => EXCLUIRQ(row);
     row.lastChild.appendChild(deleteBtn);
 }
 
 
 //--------------------------------------------------------------------------
-function NOVO(data = {}) {
+function NOVOQ(data = {}) {
     let tbody = document.querySelector("tbody");
     let row = document.createElement("tr");
-    populateRow(row, data);
+    populateRowQ(row, data);
     tbody.insertBefore(row, tbody.firstChild); // Insere a nova linha no topo
 }
 
-//--------------------------------------------------------------------------
-async function fetchData() {
-    try {
-        let query = `select * from nichos`
-        let response = await fetch(`https://natalvalerio.pythonanywhere.com/api/sql?sql=${query}`);
-        let data = await response.json();
-        let tbody = document.querySelector("tbody");
-        tbody.innerHTML = ""; 
-        data.forEach(item => NOVO(item));
-    } catch (error) {
-        console.error("Erro ao buscar dados: ", error);
-    }
-}
-
 
 //--------------------------------------------------------------------------
-async function SALVAR() {
+async function SALVARQ() {
     let tbody = document.querySelector("tbody");
     let firstRow = tbody.rows[0]; // Captura a primeira linha
     let data = {};
@@ -77,7 +85,7 @@ async function SALVAR() {
             console.error("Erro:", response.status, response.statusText);
         } else {
             alert("Dados salvos com sucesso!");
-            fetchData();
+            fetchDataQ();
         }
     } catch (error) {
         alert("Erro ao salvar dados.");
@@ -87,7 +95,7 @@ async function SALVAR() {
 
 
 //--------------------------------------------------------------------------
-async function ATUALIZAR(row) {
+async function ATUALIZARQ(row) {
     let id = row.dataset.id;
     if (!id) {
         alert("Não é possível atualizar uma linha sem ID.");
@@ -123,7 +131,7 @@ async function ATUALIZAR(row) {
             console.error("Erro:", response.status, response.statusText);
         } else {
             alert("Dados atualizados com sucesso!");
-            fetchData();
+            fetchDataQ();
         }
     } catch (error) {
         alert("Erro ao atualizar dados.");
@@ -132,7 +140,7 @@ async function ATUALIZAR(row) {
 }
 
 //--------------------------------------------------------------------------
-async function EXCLUIR(row) {
+async function EXCLUIRQ(row) {
     let id = row.dataset.id;
     if (!id) {
         alert("Não é possível excluir uma linha sem ID.");
@@ -155,7 +163,7 @@ async function EXCLUIR(row) {
                 console.error("Erro:", response.status, response.statusText);
             } else {
                 alert("Dados excluídos com sucesso!");
-                fetchData();
+                fetchDataQ();
             }
         } catch (error) {
             alert("Erro ao excluir dados.");
@@ -164,7 +172,19 @@ async function EXCLUIR(row) {
     }
 }
 
-
+//--------------------------------------------------------------------------
+async function fetchDataQ() {
+    try {
+        let query = `select * from qualit where cliente = "${cliente}"`
+        let response = await fetch(`https://natalvalerio.pythonanywhere.com/api/sql?sql=${query}`);
+        let data = await response.json();
+        let tbody = document.querySelector("tbody");
+        tbody.innerHTML = ""; 
+        data.forEach(item => NOVOQ(item));
+    } catch (error) {
+        console.error("Erro ao buscar dados: ", error);
+    }
+}
 
 //--------------------------------------------------------------------------
 const nichos    = [" ", "LOJA", "FARMÁCIA", "SUPERMERCADO"];
@@ -173,9 +193,4 @@ const canais    = [" ", "CHAT", "VOZ"];
 const status    = [" ", "CHAMADA NÃO ATENDIDA", "CAIXA POSTAL", "CONTATO INCORRETO", "ATENDIMENTO EFETUADO", "PEDIDO CONCLUÍDO", "CATÁLOGO ENVIADO", "OUTROS"];
 
 
-window.onload = fetchData;
-
-//--------------------------------------------------------------------------
-//require('dotenv').config()
-//const apiNome = process.env.API_NOME
-//alert(apiNome)
+window.onload = fetchDataQ;
