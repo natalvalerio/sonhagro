@@ -1,5 +1,9 @@
 const cliente = localStorage.getItem('cliente');
 const usuario = localStorage.getItem('usuario');
+if (!usuario) {
+      window.location.href = 'index.html'; // Redireciona para index.html
+}
+
 
 //--------------------------------------------------------------------------
 function updateDateTime() {
