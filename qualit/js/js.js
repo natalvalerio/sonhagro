@@ -46,22 +46,6 @@ function Pesquisar() {
 	})
 }
 
-
-//--------------------------------------------------------------------------
-function createSelect(options, selectedValue = "") {
-    let select = document.createElement("select");
-    options.forEach(option => {
-        let opt = document.createElement("option");
-        opt.value = option;
-        opt.textContent = option;
-        if (option === selectedValue) {
-            opt.selected = true;
-        }
-        select.appendChild(opt);
-    });
-    return select;
-}
-
 //--------------------------------------------------------------------------
 //require('dotenv').config()
 //const apiNome = process.env.API_NOME

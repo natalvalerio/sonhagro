@@ -1,5 +1,20 @@
 //--------------------------------------------------------------------------
-function populateRowQ(row, data = {}) {
+function createSelect(options, selectedValue = "") {
+    let select = document.createElement("select");
+    options.forEach(option => {
+        let opt = document.createElement("option");
+        opt.value = option;
+        opt.textContent = option;
+        if (option === selectedValue) {
+            opt.selected = true;
+        }
+        select.appendChild(opt);
+    });
+    return select;
+}
+
+//--------------------------------------------------------------------------
+function populateRowQ(row, data = {}, nichos, situacoes, canais, status) {
     row.dataset.id = data.id || ""; // Armazena o ID da linha
 
     row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.nome || "";
@@ -42,12 +57,13 @@ function populateRowQ(row, data = {}) {
 
 
 //--------------------------------------------------------------------------
-function NOVOQ(data = {}) {
+function NOVOQ(data = {}, nichos = [], situacoes = [], canais = [], status = []) {
     let tbody = document.querySelector("tbody");
     let row = document.createElement("tr");
-    populateRowQ(row, data);
+    populateRowQ(row, data, nichos, situacoes, canais, status);
     tbody.insertBefore(row, tbody.firstChild); // Insere a nova linha no topo
 }
+
 
 
 //--------------------------------------------------------------------------
@@ -174,33 +190,82 @@ async function EXCLUIRQ(row) {
 
 //--------------------------------------------------------------------------
 async function fetchDataQ() {
-	document.getElementById("loader").style.display = "flex"; 
+    document.getElementById("loader").style.display = "flex"; 
     try {
-        let query = `select * from qualit where cliente = "${cliente}"`
+        if (!cliente) {
+            throw new Error("Variável 'cliente' não está definida!");
+        }
+
+        let query = `select * from qualit where cliente = "${cliente}"`;
         let response = await fetch(`https://natalvalerio.pythonanywhere.com/api/sql?sql=${query}`);
         let data = await response.json();
+
+        // Buscar os arrays de categorias (nichos, situações, canais, status)
+        let camposData = await campos(cliente);
+        console.log("Dados do cliente:", camposData); // Debug
+
+        let { nichos, situacoes, canais, status } = camposData;
+
+        if (!Array.isArray(nichos) || !Array.isArray(situacoes) || !Array.isArray(canais) || !Array.isArray(status)) {
+            throw new Error("Erro ao carregar campos: nichos, situações, canais ou status não são arrays.");
+        }
+
         let tbody = document.querySelector("tbody");
         tbody.innerHTML = ""; 
-        data.forEach(item => NOVOQ(item));
+        data.forEach(item => NOVOQ(item, nichos, situacoes, canais, status));
     } catch (error) {
-        console.error("Erro ao buscar dados: ", error);
+        console.error("Erro ao buscar dados:", error);
     }
-	document.getElementById("loader").style.display = "none"; 
+    document.getElementById("loader").style.display = "none"; 
 }
 
 
-    // const nichos = localStorage.getItem('nichos');
-    // const situacoes = localStorage.getItem('situacoes');
-    // const canais = localStorage.getItem('canais');
-    // const status = localStorage.getItem('status');
-	// alert(nichos)
+//--------------------------------------------------------------------------
+async function campos(cliente) {
+    const url = `https://natalvalerio.pythonanywhere.com/api/sql?sql=select * from clientes where cliente="${cliente}"`;
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (!data.length) {
+            throw new Error("Cliente não encontrado ou sem dados disponíveis.");
+        }
+
+        const clienteData = data[0];
+
+        return {
+            nichos: clienteData.nichos ? ["", ...new Set(clienteData.nichos.split(",").map(n => n.trim()))] : [],
+            situacoes: clienteData.situacoes ? ["", ...new Set(clienteData.situacoes.split(",").map(s => s.trim()))] : [],
+            canais: clienteData.canais ? ["", ...new Set(clienteData.canais.split(",").map(c => c.trim()))] : [],
+            status: clienteData.status ? ["", ...new Set(clienteData.status.split(",").map(st => st.trim()))] : []
+        };
+    } catch (error) {
+        console.error("Erro ao buscar dados do cliente:", error);
+        return { nichos: [], situacoes: [], canais: [], status: [] };
+    }
+}
+
 
 
 //--------------------------------------------------------------------------
-const nichos    = [" ", "LOJA", "FARMÁCIA", "SUPERMERCADO"];
-const situacoes = [" ", "ATENDIMENTO", "PROSPECÇÃO"];
-const canais    = [" ", "CHAT", "VOZ"];
-const status    = [" ", "CHAMADA NÃO ATENDIDA", "CAIXA POSTAL", "CONTATO INCORRETO", "ATENDIMENTO EFETUADO", "PEDIDO CONCLUÍDO", "CATÁLOGO ENVIADO", "OUTROS"];
+// const nichos    = ["LOJA", "FARMÁCIA", "SUPERMERCADO"];
+// const situacoes = ["ATENDIMENTO", "PROSPECÇÃO"];
+// const canais    = ["CHAT", "VOZ"];
+// const status    = ["CHAMADA NÃO ATENDIDA", "CAIXA POSTAL", "CONTATO INCORRETO", "ATENDIMENTO EFETUADO", "PEDIDO CONCLUÍDO", "CATÁLOGO ENVIADO", "OUTROS"];
+
+
+	//`https://natalvalerio.pythonanywhere.com/api/sql?sql=select * from clientes where cliente="${cliente}"`
+
+    //var nichos = localStorage.getItem('nichos');
+    // var situacoes = localStorage.getItem('situacoes');
+    // var canais = localStorage.getItem('canais');
+    // var status = localStorage.getItem('status');
+
+	//var cliente1 = localStorage.getItem('cliente');
+
+
+// Exemplo de uso:
+//campos(cliente1).then(console.log);
 
 
 window.onload = fetchDataQ;

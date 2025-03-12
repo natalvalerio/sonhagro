@@ -26,7 +26,7 @@
             const clienteSelecionado = document.getElementById("cliente-select").value;
 
             try {
-                const response = await fetch("https://natalvalerio.pythonanywhere.com/api/sql?sql=select usuario, senha from usuarios");
+                const response = await fetch("https://natalvalerio.pythonanywhere.com/api/sql?sql=select usuario, senha from user");
                 const data = await response.json();
 
                 // Verificação das credenciais

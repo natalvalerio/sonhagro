@@ -37,7 +37,7 @@ async function SALVARU() {
         if (index === 1) data.senha = td.querySelector("input").value;
     });
 
-    let sqlQuery = `insert into usuarios (usuario, senha) values ('${data.usuario}', '${data.senha}')`;
+    let sqlQuery = `insert into user (usuario, senha) values ('${data.usuario}', '${data.senha}')`;
     let encodedQuery = encodeURIComponent(sqlQuery);
 
     try {
@@ -73,7 +73,7 @@ async function ATUALIZARU(row) {
         if (index === 1) data.senha = td.querySelector("input").value;
     });
 
-    let sqlQuery = `update usuarios set usuario='${data.usuario}', senha='${data.senha}' where id=${id}`;
+    let sqlQuery = `update user set user='${data.usuario}', senha='${data.senha}' where id=${id}`;
     let encodedQuery = encodeURIComponent(sqlQuery);
 
     try {
@@ -103,7 +103,7 @@ async function EXCLUIRU(row) {
         return;
     }
 
-    let sqlQuery = `delete from usuarios where id=${id}`;
+    let sqlQuery = `delete from user where id=${id}`;
     let encodedQuery = encodeURIComponent(sqlQuery);
 
     if (confirm("Tem certeza de que deseja excluir esta linha?")) {
@@ -132,7 +132,7 @@ async function fetchDataU() {
     document.getElementById("loader").style.display = "flex";
     
     try {
-        let query = `select * from usuarios`;
+        let query = `select * from user`;
         let response = await fetch(`https://natalvalerio.pythonanywhere.com/api/sql?sql=${query}`);
         let data = await response.json();
         let tbody = document.querySelector("tbody");
