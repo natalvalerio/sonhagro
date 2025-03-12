@@ -28,7 +28,8 @@
 
     <script>
         if (usuario === "PABLO") {
-            document.write('<button onclick="alert(\'Configurações acessadas!\')">CONFIG ⚙️</button>');
+            document.write('<a href="config.html"><button>CONFIG ⚙️</button></a>');
+            //document.write('<button onclick="alert(\'Configurações acessadas!\')">CONFIG ⚙️</button>');
         }
     </script>
 
@@ -45,6 +46,9 @@
                 <th>OBSERVAÇÕES</th>
                 <th>STATUS</th>
                 <th>AÇÕES</th>
+				<div id="loader">
+					<img src="img/loading.gif" alt="Carregando...">
+				</div>
             </tr>
         </thead>
         <tbody>

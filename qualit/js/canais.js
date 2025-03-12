@@ -1,41 +1,41 @@
 //--------------------------------------------------------------------------
-function populateRowN(row, data = {}) {
+function populateRowC(row, data = {}) {
     row.dataset.id = data.id || ""; // Armazena o ID da linha
 
-    row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.nichos || "";
+    row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.canais || "";
 
     // Botão Atualizar
     let updateBtn = document.createElement("span");
     updateBtn.textContent = "✅";
-    updateBtn.onclick = () => ATUALIZARN(row);
+    updateBtn.onclick = () => ATUALIZARC(row);
     row.appendChild(document.createElement("td")).appendChild(updateBtn);
 
     // Botão Excluir
     let deleteBtn = document.createElement("span");
     deleteBtn.textContent = "❌";
-    deleteBtn.onclick = () => EXCLUIRN(row);
+    deleteBtn.onclick = () => EXCLUIRC(row);
     row.lastChild.appendChild(deleteBtn);
 }
 
 //--------------------------------------------------------------------------
-function NOVON(data = {}) {
+function NOVOC(data = {}) {
     let tbody = document.querySelector("tbody");
     let row = document.createElement("tr");
-    populateRowN(row, data);
+    populateRowC(row, data);
     tbody.insertBefore(row, tbody.firstChild); // Insere a nova linha no topo
 }
 
 //--------------------------------------------------------------------------
-async function SALVARN() {
+async function SALVARC() {
     let tbody = document.querySelector("tbody");
     let firstRow = tbody.rows[0]; // Captura a primeira linha
     let data = {};
 
     firstRow.querySelectorAll("td").forEach((td, index) => {
-        if (index === 0) data.nichos = td.querySelector("input").value;
+        if (index === 0) data.canais = td.querySelector("input").value;
     });
 
-    let sqlQuery = `insert into nichos (nichos) values ('${data.nichos}')`;
+    let sqlQuery = `insert into canais (canais) values ('${data.canais}')`;
     let encodedQuery = encodeURIComponent(sqlQuery);
 
     try {
@@ -49,7 +49,7 @@ async function SALVARN() {
             alert("Erro ao salvar dados!");
         } else {
             alert("Dados salvos com sucesso!");
-            fetchDataN();
+            fetchDataC();
         }
     } catch (error) {
         alert("Erro ao salvar dados.");
@@ -58,7 +58,7 @@ async function SALVARN() {
 }
 
 //--------------------------------------------------------------------------
-async function ATUALIZARN(row) {
+async function ATUALIZARC(row) {
     let id = row.dataset.id;
     if (!id) {
         alert("Não é possível atualizar uma linha sem ID.");
@@ -67,10 +67,10 @@ async function ATUALIZARN(row) {
 
     let data = {};
     row.querySelectorAll("td").forEach((td, index) => {
-        if (index === 0) data.nichos = td.querySelector("input").value;
+        if (index === 0) data.canais = td.querySelector("input").value;
     });
 
-    let sqlQuery = `update nichos set nichos='${data.nichos}' where id=${id}`;
+    let sqlQuery = `update canais set canais='${data.canais}' where id=${id}`;
     let encodedQuery = encodeURIComponent(sqlQuery);
 
     try {
@@ -84,7 +84,7 @@ async function ATUALIZARN(row) {
             alert("Erro ao atualizar dados!");
         } else {
             alert("Dados atualizados com sucesso!");
-            fetchDataN();
+            fetchDataC();
         }
     } catch (error) {
         alert("Erro ao atualizar dados.");
@@ -93,14 +93,14 @@ async function ATUALIZARN(row) {
 }
 
 //--------------------------------------------------------------------------
-async function EXCLUIRN(row) {
+async function EXCLUIRC(row) {
     let id = row.dataset.id;
     if (!id) {
         alert("Não é possível excluir uma linha sem ID.");
         return;
     }
 
-    let sqlQuery = `delete from nichos where id=${id}`;
+    let sqlQuery = `delete from canais where id=${id}`;
     let encodedQuery = encodeURIComponent(sqlQuery);
 
     if (confirm("Tem certeza de que deseja excluir esta linha?")) {
@@ -115,7 +115,7 @@ async function EXCLUIRN(row) {
                 alert("Erro ao excluir dados!");
             } else {
                 alert("Dados excluídos com sucesso!");
-                fetchDataN();
+                fetchDataC();
             }
         } catch (error) {
             alert("Erro ao excluir dados.");
@@ -125,20 +125,20 @@ async function EXCLUIRN(row) {
 }
 
 //--------------------------------------------------------------------------
-async function fetchDataN() {
+async function fetchDataC() {
     document.getElementById("loader").style.display = "flex"; 
-	
-	try {
-        let query = `select * from nichos`;
+    
+    try {
+        let query = `select * from canais`;
         let response = await fetch(`https://natalvalerio.pythonanywhere.com/api/sql?sql=${query}`);
         let data = await response.json();
         let tbody = document.querySelector("tbody");
         tbody.innerHTML = "";
-        data.forEach(item => NOVON(item));
+        data.forEach(item => NOVOC(item));
     } catch (error) {
         console.error("Erro ao buscar dados: ", error);
     }
-	document.getElementById("loader").style.display = "none"; 
+    document.getElementById("loader").style.display = "none"; 
 }
 
-window.onload = fetchDataN;
+window.onload = fetchDataC;

@@ -174,6 +174,7 @@ async function EXCLUIRQ(row) {
 
 //--------------------------------------------------------------------------
 async function fetchDataQ() {
+	document.getElementById("loader").style.display = "flex"; 
     try {
         let query = `select * from qualit where cliente = "${cliente}"`
         let response = await fetch(`https://natalvalerio.pythonanywhere.com/api/sql?sql=${query}`);
@@ -184,6 +185,7 @@ async function fetchDataQ() {
     } catch (error) {
         console.error("Erro ao buscar dados: ", error);
     }
+	document.getElementById("loader").style.display = "none"; 
 }
 
 //--------------------------------------------------------------------------
