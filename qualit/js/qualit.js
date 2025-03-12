@@ -188,6 +188,14 @@ async function fetchDataQ() {
 	document.getElementById("loader").style.display = "none"; 
 }
 
+
+    // const nichos = localStorage.getItem('nichos');
+    // const situacoes = localStorage.getItem('situacoes');
+    // const canais = localStorage.getItem('canais');
+    // const status = localStorage.getItem('status');
+	// alert(nichos)
+
+
 //--------------------------------------------------------------------------
 const nichos    = [" ", "LOJA", "FARMÁCIA", "SUPERMERCADO"];
 const situacoes = [" ", "ATENDIMENTO", "PROSPECÇÃO"];
