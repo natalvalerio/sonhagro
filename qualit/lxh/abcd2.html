@@ -6,7 +6,6 @@
     <title>Relatório de Atendimentos</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
     <style>
         table {
             width: 50%;
@@ -107,18 +106,15 @@
             const doc = new jsPDF();
             let y = 10;
 
-            // Título
             doc.setFontSize(16);
             doc.text("Relatório de Atendimentos", 10, y);
             y += 10;
 
-            // Total de atendimentos
             doc.setFontSize(12);
             const total = document.getElementById("total").textContent;
             doc.text(`Total de Atendimentos: ${total}`, 10, y);
             y += 10;
 
-            // Seções para exportar
             const sections = [
                 { title: "Atendimentos por Canal", id: "resultadoCanais" },
                 { title: "Atendimentos por Nicho", id: "resultadoNichos" },
@@ -138,17 +134,12 @@
                     );
                     doc.autoTable({
                         startY: y,
-                        head: [rows[0]], // Cabeçalho
-                        body: rows.slice(1), // Dados
+                        head: [rows[0]],
+                        body: rows.slice(1),
                         theme: "grid",
-                        styles: { fontSize: 10 },
-                        headStyles: { fillColor: [200, 200, 200] },
-                        margin: { top: 10, left: 10 }
+                        styles: { fontSize: 10 }
                     });
-                    y = doc.lastAutoTable.finalY; // Atualiza a posição Y após cada tabela
-                } else {
-                    doc.text("Nenhum dado disponível", 10, y);
-                    y += 10;
+                    y = doc.lastAutoTable.finalY;
                 }
             });
 
