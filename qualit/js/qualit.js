@@ -57,8 +57,16 @@ function populateRowQ(row, data = {}, nichos, situacoes, canais, status) {
 
 
 //--------------------------------------------------------------------------
-function NOVOQ(data = {}, nichos = [], situacoes = [], canais = [], status = []) {
-    let tbody = document.querySelector("tbody");
+async function NOVOQ(data = {}, nichos = [], situacoes = [], canais = [], status = []) {
+    if (nichos.length === 0) {
+		let camposData = await campos(cliente);
+		var nichos    = camposData.nichos
+		var situacoes = camposData.situacoes
+		var canais    = camposData.canais
+		var status    = camposData.status
+	}
+	
+	let tbody = document.querySelector("tbody");
     let row = document.createElement("tr");
     populateRowQ(row, data, nichos, situacoes, canais, status);
     tbody.insertBefore(row, tbody.firstChild); // Insere a nova linha no topo
@@ -204,7 +212,7 @@ async function fetchDataQ() {
         let camposData = await campos(cliente);
         console.log("Dados do cliente:", camposData); // Debug
 
-        let { nichos, situacoes, canais, status } = camposData;
+        const { nichos, situacoes, canais, status } = camposData;
 
         if (!Array.isArray(nichos) || !Array.isArray(situacoes) || !Array.isArray(canais) || !Array.isArray(status)) {
             throw new Error("Erro ao carregar campos: nichos, situações, canais ou status não são arrays.");
