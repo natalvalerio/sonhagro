@@ -6,6 +6,7 @@
 	<link href="img/icon.png" rel="shortcut icon" type="image/x-icon" >
 	<link href="css/css.css" rel="stylesheet"    type="text/css">
 	<script src="js/js.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <title>CONFIGURAÇÕES</title>
 </head>
 <body>
@@ -22,32 +23,51 @@
     <a href="javascript:window.history.back()"><button>VOLTAR 🔙</button></a>
     <a href="index.html"><button>SAIR ↩️</button></a>
 
-    <script>
-        if (usuario === "PABLO") {
-            //document.write('<a href="index.html"><button>CONFIG ⚙️</button></a>');
+	<table>
+		<thead>
+			<tr>
+				<th>CONFIGURAÇÕES</th>
+			</tr>
+			<tr>
+				<td>
+					<a href="nichos.html">   <button>NICHOS   </button></a>
+					<a href="situacoes.html"><button>SITUAÇÕES</button></a>
+					<a href="canais.html">   <button>CANAIS   </button></a>
+					<a href="status.html">   <button>STATUS   </button></a>
+					<a href="usuarios.html"> <button>USUÁRIOS </button></a>
+					<a href="clientes.html"> <button>CLIENTES </button></a>
+					<button onclick="Excel2()">EXCEL </button>
+				</td>
+			</tr>
+		</thead>
+	</table>
+	
+	<script>
+        async function Excel2() {
+            try {
+                const response = await fetch("https://natalvalerio.pythonanywhere.com/api/sql?sql=select * from qualit");
+                const data = await response.json();
 
-			document.write(`
-				<table>
-					<thead>
-						<tr>
-							<th>CONFIGURAÇÕES</th>
-						</tr>
-						<tr>
-							<td>
-								<a href="nichos.html">   <button>NICHOS   </button></a>
-								<a href="situacoes.html"><button>SITUAÇÕES</button></a>
-								<a href="canais.html">   <button>CANAIS   </button></a>
-								<a href="status.html">   <button>STATUS   </button></a>
-								<a href="usuarios.html"> <button>USUÁRIOS </button></a>
-								<a href="clientes.html"> <button>CLIENTES </button></a>
-							</td>
-						</tr>
-					</thead>
-				</table>`);
-		}
+                if (!data || data.length === 0) {
+                    alert("Nenhum dado encontrado.");
+                    return;
+                }
+
+                // Criando um worksheet (aba do Excel)
+                const worksheet = XLSX.utils.json_to_sheet(data);
+                const workbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(workbook, worksheet, "Dados");
+
+                // Gerando o arquivo Excel
+                XLSX.writeFile(workbook, "dados.xlsx");
+            } catch (error) {
+                console.error("Erro ao exportar:", error);
+                alert("Erro ao buscar os dados.");
+            }
+        }
     </script>
-        <tbody>
-        </tbody>
+    <tbody>
+    </tbody>
     </table>
 	</main>
 </body>
