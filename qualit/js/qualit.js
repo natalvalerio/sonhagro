@@ -94,7 +94,7 @@ async function SALVARQ() {
 
 
 	//const cliente = localStorage.getItem('cliente');
-    let sqlQuery = `insert into qualit (nome, contato, nicho, situacao, data, hora, canal, observacoes, status, cliente) values ('${data.nome}', '${data.contato}', '${data.nicho}', '${data.situacao}', '${data.data}', '${data.hora}', '${data.canal}', '${data.observacoes}', '${data.status}', '${cliente}')`;
+    let sqlQuery = `insert into qualit (nome, contato, nicho, situacao, data, hora, canal, observacoes, status, cliente, usuario) values ('${data.nome}', '${data.contato}', '${data.nicho}', '${data.situacao}', '${data.data}', '${data.hora}', '${data.canal}', '${data.observacoes}', '${data.status}', '${cliente}', '${usuario}')`;
     let encodedQuery = encodeURIComponent(sqlQuery);
 
     try {
@@ -140,7 +140,7 @@ async function ATUALIZARQ(row) {
     });
 
 	//alert(cliente)
-    let sqlQuery = `update qualit set nome='${data.nome}', contato='${data.contato}', nicho='${data.nicho}', situacao='${data.situacao}', data='${data.data}', hora='${data.hora}', canal='${data.canal}', observacoes='${data.observacoes}', status='${data.status}', cliente='${cliente}' where id=${id}`;
+    let sqlQuery = `update qualit set nome='${data.nome}', contato='${data.contato}', nicho='${data.nicho}', situacao='${data.situacao}', data='${data.data}', hora='${data.hora}', canal='${data.canal}', observacoes='${data.observacoes}', status='${data.status}', cliente='${cliente}', usuario='${usuario}' where id=${id}`;
     let encodedQuery = encodeURIComponent(sqlQuery);
 
     try {
