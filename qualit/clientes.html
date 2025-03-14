@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="img/icon.png" rel="shortcut icon" type="image/x-icon" >
 	<link href="css/css.css" rel="stylesheet"     type="text/css">
-	<script src="js/usuarios.js"></script>
 	<script src="js/js.js"></script>
     <title>USUÁRIOS</title>
     <style>
@@ -29,6 +28,10 @@
     <input type="text" id="Pesquisar" placeholder="🔎 Pesquisar..."  onkeyup="Pesquisar()">
 	<a href="javascript:window.history.back()"><button>VOLTAR 🔙</button></a>
 	
+	
+	<div id="loader">
+		<img src="img/loading.gif" alt="Carregando...">
+	</div>
 	<BR><BR>
     Nome do Cliente:<input type="text" id="cliente" placeholder="Nome do Cliente" class="input_login">
     <div class="container">
@@ -96,6 +99,7 @@
         }
 
         async function carregarClientes() {
+			document.getElementById("loader").style.display = "flex"; 
             const response = await fetch("https://natalvalerio.pythonanywhere.com/api/sql?sql=select * from clientes");
             const clientes = await response.json();
             const tbody = document.getElementById("clientes");
@@ -115,6 +119,7 @@
                 `;
                 tbody.appendChild(tr);
             });
+			document.getElementById("loader").style.display = "none"; 
         }
 
 		async function excluirCliente(nome) {

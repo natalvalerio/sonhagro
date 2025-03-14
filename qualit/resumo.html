@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatório de Atendimentos</title>
+	<link href="img/icon.png" rel="shortcut icon" type="image/x-icon" >
+	<link href="css/css.css" rel="stylesheet"    type="text/css">
+	<script src="js/js.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
@@ -28,21 +31,40 @@
     </style>
 </head>
 <body>
-    <h2>Relatório de Atendimentos</h2>
-    <label>Data Inicial: <input type="date" id="dataInicio"></label>
-    <label>Data Final: <input type="date" id="dataFim"></label>
+    <header>
+		<img src="img/logo.png" width="200" alt="Logo da Empresa">
+		<h2>Relatório de Atendimentos</h2>
+	
+    </header>
+
+    <footer>
+        <span id="dateTime"></span>
+    </footer>
+	<main>
+	<BR/>
+    <input type="text" id="Pesquisar" placeholder="🔎 Pesquisar..."  onkeyup="Pesquisar()"> <!--onblur onkeyup-->
+	<a href="javascript:window.history.back()"><button>VOLTAR 🔙</button></a>
+	
+    <label>Data Inicial: <input type="date" id="dataInicio" class="quadrado"></label>
+    <label>Data Final: <input type="date" id="dataFim" class="quadrado"></label>
     <button onclick="gerarRelatorio()">Gerar Relatório</button>
     <button onclick="exportarPDF()">Exportar para PDF</button>
     
-    <h3>Total de Atendimentos: <span id="total">0</span></h3>
-    <h3>Atendimentos por Canal</h3>
-    <div id="resultadoCanais"></div>
-    <h3>Atendimentos por Nicho</h3>
-    <div id="resultadoNichos"></div>
-    <h3>Atendimentos por Usuário</h3>
-    <div id="resultadoUsuarios"></div>
-    <h3>Atendimentos por Status</h3>
-    <div id="resultadoStatus"></div>
+    <div id="loader">
+		<img src="img/loading.gif" alt="Carregando...">
+	</div>
+	
+	<div id="relatorio">
+		<h3>Total de Atendimentos: <span id="total">0</span></h3>
+		<h3>Atendimentos por Canal</h3>
+		<div id="resultadoCanais"></div>
+		<h3>Atendimentos por Nicho</h3>
+		<div id="resultadoNichos"></div>
+		<h3>Atendimentos por Usuário</h3>
+		<div id="resultadoUsuarios"></div>
+		<h3>Atendimentos por Status</h3>
+		<div id="resultadoStatus"></div>
+	</div>
 
     <script>
         async function gerarRelatorio() {
@@ -56,6 +78,7 @@
             let query = `SELECT * FROM qualit WHERE data BETWEEN '${dataInicio}' AND '${dataFim}'`;
             let url = `https://natalvalerio.pythonanywhere.com/api/sql?sql=${encodeURIComponent(query)}`;
             
+			document.getElementById("loader").style.display = "flex"; 
             try {
                 const response = await fetch(url);
                 const data = await response.json();
@@ -70,6 +93,8 @@
                 console.error("Erro ao buscar dados:", error);
                 alert("Erro ao buscar os dados.");
             }
+			document.getElementById("loader").style.display = "none"; 
+			document.getElementById("relatorio").style.display = "grid"; 
         }
 
         function processarDados(dados) {
@@ -107,10 +132,24 @@
             const doc = new jsPDF();
             let y = 10;
 
-            // Título
-            doc.setFontSize(16);
-            doc.text("Relatório de Atendimentos", 10, y);
-            y += 10;
+            // Adicionar logo
+			const img = new Image();
+			img.src = "img/logo.png";
+			doc.addImage(img, 'PNG', 10, y, 50, 20);
+			y += 25;
+			
+
+			// Título
+			const pageWidth = doc.internal.pageSize.width; // Largura da página
+			const title = "Relatório de Atendimentos";
+			const textWidth = doc.getTextWidth(title);
+			const x = (pageWidth - textWidth) / 2; // Calcula a posição central
+			doc.text(title, x, y);
+			y += 10;
+
+            //doc.setFontSize(16);
+            //doc.text("Relatório de Atendimentos", 10, y);
+            //y += 10;
 
             // Total de atendimentos
             doc.setFontSize(12);
@@ -151,6 +190,13 @@
                     y += 10;
                 }
             });
+
+	
+			// Adicionar data e hora atual
+			y += 10;
+			const dataHoraAtual = new Date().toLocaleString();
+			doc.setFontSize(10);
+			doc.text(`Gerado em: ${dataHoraAtual}`, 10, y);
 
             doc.save("relatorio_atendimentos.pdf");
         }

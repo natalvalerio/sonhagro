@@ -152,7 +152,7 @@ button:hover {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     background: rgba(255, 255, 255, 0.8);
@@ -165,8 +165,14 @@ button:hover {
     width: 400px; 
 }
 
+.quadrado {
+    padding: 8px;
+    font-size: 14px;
+}
 
-
+#relatorio {
+	display: none;
+}
 
 		
 		

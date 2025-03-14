@@ -31,6 +31,7 @@ function getSelectValues(select) {
 
 // Buscar clientes e exibir na tabela
 async function carregarClientes() {
+	document.getElementById("loader").style.display = "flex"; 
     try {
         const response = await fetch(apiBaseUrl + "SELECT * FROM clientes");
         const data = await response.json();
@@ -54,6 +55,7 @@ async function carregarClientes() {
     } catch (error) {
         console.error("Erro ao carregar clientes", error);
     }
+	document.getElementById("loader").style.display = "none"; 
 }
 
 // Adicionar ou editar cliente
