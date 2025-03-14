@@ -142,7 +142,6 @@
 			img.src = "img/logo.png";
 			doc.addImage(img, 'PNG', 10, y, 50, 20);
 			y += 25;
-			
 
 			// Título
 			const pageWidth = doc.internal.pageSize.width; // Largura da página
@@ -157,10 +156,17 @@
             //y += 10;
 
             // Total de atendimentos
-            doc.setFontSize(12);
-            const total = document.getElementById("total").textContent;
-            doc.text(`Total de Atendimentos: ${total}`, 10, y);
-            y += 10;
+			// Verificar o total de atendimentos antes de gerar o PDF
+			const total = document.getElementById("total").textContent;
+			if (total === "0") {
+				alert("Não há atendimentos para exportar.");
+				return;
+			} else {
+				doc.setFontSize(12);
+				doc.text(`Total de Atendimentos: ${total}`, 10, y);
+				y += 10;
+			}
+
 
             // Seções para exportar
             const sections = [
