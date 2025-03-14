@@ -74,7 +74,7 @@ async function ATUALIZARU(row) {
         if (index === 1) data.senha = td.querySelector("input").value;
     });
 
-    let sqlQuery = `update user set user='${data.usuario}', senha='${data.senha}' where id=${id}`;
+    let sqlQuery = `update user set usuario='${data.usuario}', senha='${data.senha}' where id=${id}`;
     let encodedQuery = encodeURIComponent(sqlQuery);
 
     try {

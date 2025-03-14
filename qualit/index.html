@@ -50,6 +50,12 @@
             let select = document.createElement("select");
             select.id = "cliente-select"; // Adiciona um ID para facilitar o acesso
 
+            // Adiciona uma opção vazia no início
+            let emptyOption = document.createElement("option");
+            emptyOption.value = ""; // Valor vazio
+            emptyOption.textContent = ""; // Texto vazio
+            select.appendChild(emptyOption);
+
             options.forEach(option => {
                 let opt = document.createElement("option");
                 opt.value = option;
