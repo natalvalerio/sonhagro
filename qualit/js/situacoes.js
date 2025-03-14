@@ -61,7 +61,8 @@ async function SALVARS() {
 async function ATUALIZARS(row) {
     let id = row.dataset.id;
     if (!id) {
-        alert("Não é possível atualizar uma linha sem ID.");
+		SALVARS()
+        //alert("Não é possível atualizar uma linha sem ID.");
         return;
     }
 

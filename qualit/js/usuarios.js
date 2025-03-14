@@ -63,7 +63,8 @@ async function SALVARU() {
 async function ATUALIZARU(row) {
     let id = row.dataset.id;
     if (!id) {
-        alert("Não é possível atualizar uma linha sem ID.");
+		SALVARU()
+        //alert("Não é possível atualizar uma linha sem ID.");
         return;
     }
 
