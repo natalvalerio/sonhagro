@@ -55,7 +55,8 @@
 	</div>
 	
 	<div id="relatorio">
-		<h3>Total de Atendimentos: <span id="total">0</span></h3>
+		<h3>Cliente: <span><script>document.write(cliente);</script></span></h3>
+		<h3>Total de Atendimentos: <span id="total">0</span> </h3>
 		<h3>Atendimentos por Canal</h3>
 		<div id="resultadoCanais"></div>
 		<h3>Atendimentos por Nicho</h3>
@@ -146,9 +147,17 @@
 			// Título
 			const pageWidth = doc.internal.pageSize.width; // Largura da página
 			const title = "Relatório de Atendimentos";
-			const textWidth = doc.getTextWidth(title);
-			const x = (pageWidth - textWidth) / 2; // Calcula a posição central
+			const title2 = cliente
+			const textWidth  = doc.getTextWidth(title);
+			const textWidth2 = doc.getTextWidth(title2);
+			
+			const x  = (pageWidth - textWidth)  / 2; // Calcula a posição central
 			doc.text(title, x, y);
+			y += 2;
+			
+			const x2 = (pageWidth - textWidth2) / 2; // Calcula a posição central
+			doc.text(title2, x2, y);
+			
 			y += 10;
 
             //doc.setFontSize(16);

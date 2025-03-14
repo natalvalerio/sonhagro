@@ -13,28 +13,20 @@
 
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
+            const clienteSelecionado = document.getElementById("cliente-select").value;
 
             try {
-                const response = await fetch("https://natalvalerio.pythonanywhere.com/api/sql?sql=select usuario, senha, clientes from user");
+                const response = await fetch("https://natalvalerio.pythonanywhere.com/api/sql?sql=select usuario, senha from user");
                 const data = await response.json();
 
                 // Verificação das credenciais
                 const user = data.find(user => user.usuario === username && user.senha === password);
 
                 if (user) {
-                    // Login bem-sucedido: obter os clientes do usuário logado
-                    let clientes = user.clientes.split(","); // Divide os clientes separados por vírgula
-
-                    // Criação do select com os clientes do usuário logado
-                    const clientSelect = createSelectC(clientes);
-
-                    // Adiciona o select de clientes no DOM
-                    document.getElementById("cliente").innerHTML = ""; // Limpa qualquer conteúdo anterior
-                    document.getElementById("cliente").appendChild(clientSelect);
-
-                    // Armazenar informações no localStorage
+                    // Login bem-sucedido: salvar cliente no localStorage e redirecionar
+                    localStorage.setItem('cliente', clienteSelecionado);
                     localStorage.setItem('usuario', username);
-
+                    window.location.href = "qualit.html";
                 } else {
                     // Erro de autenticação
                     document.getElementById("error-message").textContent = "Usuário ou senha incorretos!";
@@ -46,34 +38,39 @@
         }
 
         // Função para criar o select de clientes
-        function createSelectC(options) {
+        function createSelectC(options, selectedValue = "") {
             let select = document.createElement("select");
             select.id = "cliente-select"; // Adiciona um ID para facilitar o acesso
-
             options.forEach(option => {
                 let opt = document.createElement("option");
                 opt.value = option;
                 opt.textContent = option;
+                if (option === selectedValue) {
+                    opt.selected = true;
+                }
                 select.appendChild(opt);
             });
-
-            // Adiciona um evento para redirecionar após selecionar o cliente
-            select.addEventListener("change", () => {
-                const selectedCliente = select.value.trim();
-				localStorage.setItem('cliente', selectedCliente); // Armazenar cliente selecionado
-				//let cliente=localStorage.getItem('cliente')
-				//let usuario=localStorage.getItem('usuario')
-				//if (!cliente || !usuario) {
-				//	alert("Cliente ou usuário não definido!");
-				//}
-                window.location.href = "qualit.html"; // Redireciona para a página
-            });
-
             return select;
+        }
+
+        // Função para carregar os clientes da API
+        async function carregarClientes() {
+            try {
+                const response = await fetch("https://natalvalerio.pythonanywhere.com/api/sql?sql=select cliente from clientes");
+                const data = await response.json();
+                const clientes = data.map(cliente => cliente.cliente); // Cria o array com os nomes dos clientes
+                const clientSelect = createSelectC(clientes);
+                document.getElementById("cliente").appendChild(clientSelect);
+            } catch (error) {
+                console.error("Erro ao carregar clientes:", error);
+                document.getElementById("error-message").textContent = "Erro ao carregar os clientes. Tente novamente!";
+            }
         }
 
         // Carregamento da página
         window.onload = function() {
+            carregarClientes(); // Carrega os clientes assim que a página for carregada
+
             // Agora o evento de login será tratado apenas pela função loginUser
             document.getElementById("loginForm").addEventListener("submit", loginUser);
         };

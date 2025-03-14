@@ -1,3 +1,4 @@
+//let cliente = localStorage.getItem('cliente');
 //--------------------------------------------------------------------------
 function createSelect(options, selectedValue = "") {
     let select = document.createElement("select");
@@ -93,7 +94,7 @@ async function SALVARQ() {
     });
 
 
-	//const cliente = localStorage.getItem('cliente');
+
     let sqlQuery = `insert into qualit (nome, contato, nicho, situacao, data, hora, canal, observacoes, status, cliente, usuario) values ('${data.nome}', '${data.contato}', '${data.nicho}', '${data.situacao}', '${data.data}', '${data.hora}', '${data.canal}', '${data.observacoes}', '${data.status}', '${cliente}', '${usuario}')`;
     let encodedQuery = encodeURIComponent(sqlQuery);
 
@@ -122,7 +123,8 @@ async function SALVARQ() {
 async function ATUALIZARQ(row) {
     let id = row.dataset.id;
     if (!id) {
-        alert("Não é possível atualizar uma linha sem ID.");
+		SALVARQ()
+        //alert("Não é possível atualizar uma linha sem ID.");
         return;
     }
 
@@ -139,7 +141,7 @@ async function ATUALIZARQ(row) {
         if (index === 8) data.status = td.querySelector("select").value;
     });
 
-	//alert(cliente)
+
     let sqlQuery = `update qualit set nome='${data.nome}', contato='${data.contato}', nicho='${data.nicho}', situacao='${data.situacao}', data='${data.data}', hora='${data.hora}', canal='${data.canal}', observacoes='${data.observacoes}', status='${data.status}', cliente='${cliente}', usuario='${usuario}' where id=${id}`;
     let encodedQuery = encodeURIComponent(sqlQuery);
 
@@ -230,12 +232,15 @@ async function fetchDataQ() {
 
 //--------------------------------------------------------------------------
 async function campos(cliente) {
-    const url = `https://natalvalerio.pythonanywhere.com/api/sql?sql=select * from clientes where cliente="${cliente}"`;
-    try {
+	//cliente = cliente.trim();
+    const url = `https://natalvalerio.pythonanywhere.com/api/sql?sql=select * from clientes where cliente = "${cliente}"`;
+	//alert(cliente)
+	try {
         const response = await fetch(url);
         const data = await response.json();
-
+	
         if (!data.length) {
+			//ERRO
             throw new Error("Cliente não encontrado ou sem dados disponíveis.");
         }
 
@@ -248,32 +253,12 @@ async function campos(cliente) {
             status: clienteData.status ? ["", ...new Set(clienteData.status.split(",").map(st => st.trim()))] : []
         };
     } catch (error) {
-        console.error("Erro ao buscar dados do cliente:", error);
+        //ERRO
+		//console.error("Erro ao buscar dados do cliente:", error);
         return { nichos: [], situacoes: [], canais: [], status: [] };
     }
 }
 
 
-
 //--------------------------------------------------------------------------
-// const nichos    = ["LOJA", "FARMÁCIA", "SUPERMERCADO"];
-// const situacoes = ["ATENDIMENTO", "PROSPECÇÃO"];
-// const canais    = ["CHAT", "VOZ"];
-// const status    = ["CHAMADA NÃO ATENDIDA", "CAIXA POSTAL", "CONTATO INCORRETO", "ATENDIMENTO EFETUADO", "PEDIDO CONCLUÍDO", "CATÁLOGO ENVIADO", "OUTROS"];
-
-
-	//`https://natalvalerio.pythonanywhere.com/api/sql?sql=select * from clientes where cliente="${cliente}"`
-
-    //var nichos = localStorage.getItem('nichos');
-    // var situacoes = localStorage.getItem('situacoes');
-    // var canais = localStorage.getItem('canais');
-    // var status = localStorage.getItem('status');
-
-	//var cliente1 = localStorage.getItem('cliente');
-
-
-// Exemplo de uso:
-//campos(cliente1).then(console.log);
-
-
 window.onload = fetchDataQ;
