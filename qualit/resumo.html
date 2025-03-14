@@ -128,6 +128,11 @@
         }
 
         function exportarPDF() {
+		    // Verificar se a página está sendo carregada a partir de file:// (localmente)
+			if (window.location.protocol === 'file:') {
+				alert("O recurso de exportação para PDF não está disponível em ambientes locais (file://). Por favor, acesse o sistema através de um servidor.");
+				return;
+			}
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             let y = 10;
