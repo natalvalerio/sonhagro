@@ -76,7 +76,7 @@
                 return;
             }
             
-            let query = `SELECT * FROM qualit WHERE data BETWEEN '${dataInicio}' AND '${dataFim}'`;
+            let query = `SELECT * FROM qualit WHERE cliente='${cliente}' AND data BETWEEN '${dataInicio}' AND '${dataFim}'`;
             let url = `https://natalvalerio.pythonanywhere.com/api/sql?sql=${encodeURIComponent(query)}`;
             
 			document.getElementById("loader").style.display = "flex"; 
@@ -129,20 +129,20 @@
         }
 
         function exportarPDF() {
-		    // Verificar se a página está sendo carregada a partir de file:// (localmente)
-			if (window.location.protocol === 'file:') {
-				alert("O recurso de exportação para PDF não está disponível em ambientes locais (file://). Por favor, acesse o sistema através de um servidor.");
-				return;
-			}
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             let y = 10;
 
-            // Adicionar logo
-			const img = new Image();
-			img.src = "img/logo.png";
-			doc.addImage(img, 'PNG', 10, y, 50, 20);
-			y += 25;
+		    // Verificar se a página está sendo carregada a partir de file:// (localmente)
+			if (window.location.protocol !== 'file:') {
+				//alert("O recurso de exportação para PDF não está disponível em ambientes locais (file://). Por favor, acesse o sistema através de um servidor.");
+				// Adicionar logo
+				const img = new Image();
+				img.src = "img/logo.png";
+				doc.addImage(img, 'PNG', 10, y, 50, 20);
+				y += 25;
+				//return;
+			}
 
 			// Título
 			const pageWidth = doc.internal.pageSize.width; // Largura da página
