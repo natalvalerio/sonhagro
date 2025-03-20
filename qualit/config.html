@@ -13,6 +13,22 @@
     <header>
 		<img src="img/logo.png" width="200" alt="Logo da Empresa">
 		<h2>CONFIGURAÇÕES</h2>
+		
+	<script>
+	function backup() {
+		localStorage.setItem("gerarDump", "true");
+		window.location.href = "dump.html"; 
+ 
+		// Checa a cada 1 segundo se o dump foi concluído
+		const checkDump = setInterval(() => {
+        if (localStorage.getItem("dumpConcluido") === "true") {
+            clearInterval(checkDump); // Para a verificação
+            localStorage.removeItem("dumpConcluido"); // Limpa o status
+            window.location.href = "config.html"; // Redireciona
+        }
+    }, 1000); // Verifica a cada 1 segundo
+	}
+	</script>	
     </header>
 
     <footer>
@@ -38,6 +54,7 @@
 					<a href="clientes.html"> <button>CLIENTES </button></a>
 					<button onclick="Excel()">EXCEL </button>
 					<a href="resumo.html"> <button>RELATÓRIO </button></a>
+					<button onclick="backup()">BACKUP</button></a>
 				</td>
 			</tr>
 		</thead>
