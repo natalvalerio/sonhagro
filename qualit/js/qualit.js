@@ -19,6 +19,7 @@ function populateRowQ(row, data = {}, nichos, situacoes, canais, status) {
     row.dataset.id = data.id || ""; // Armazena o ID da linha
 
     row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.nome || "";
+    row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.cidade|| "";
     row.appendChild(document.createElement("td")).appendChild(document.createElement("input")).value = data.contato|| "";
     row.appendChild(document.createElement("td")).appendChild(createSelect(nichos, data.nicho));
     row.appendChild(document.createElement("td")).appendChild(createSelect(situacoes, data.situacao));
@@ -83,19 +84,20 @@ async function SALVARQ() {
 
     firstRow.querySelectorAll("td").forEach((td, index) => {
         if (index === 0) data.nome = td.querySelector("input").value;
-        if (index === 1) data.contato = td.querySelector("input").value;
-        if (index === 2) data.nicho = td.querySelector("select").value;
-        if (index === 3) data.situacao = td.querySelector("select").value;
-        if (index === 4) data.data = td.querySelector("input").value;
-        if (index === 5) data.hora = td.querySelector("input").value;
-        if (index === 6) data.canal = td.querySelector("select").value;
-        if (index === 7) data.observacoes = td.querySelector("input").value;
-        if (index === 8) data.status = td.querySelector("select").value;
+        if (index === 1) data.cidade = td.querySelector("input").value;
+        if (index === 2) data.contato = td.querySelector("input").value;
+        if (index === 3) data.nicho = td.querySelector("select").value;
+        if (index === 4) data.situacao = td.querySelector("select").value;
+        if (index === 5) data.data = td.querySelector("input").value;
+        if (index === 6) data.hora = td.querySelector("input").value;
+        if (index === 7) data.canal = td.querySelector("select").value;
+        if (index === 8) data.observacoes = td.querySelector("input").value;
+        if (index === 9) data.status = td.querySelector("select").value;
     });
 
 
 
-    let sqlQuery = `insert into qualit (nome, contato, nicho, situacao, data, hora, canal, observacoes, status, cliente, usuario) values ('${data.nome}', '${data.contato}', '${data.nicho}', '${data.situacao}', '${data.data}', '${data.hora}', '${data.canal}', '${data.observacoes}', '${data.status}', '${cliente}', '${usuario}')`;
+    let sqlQuery = `insert into qualit (nome, cidade, contato, nicho, situacao, data, hora, canal, observacoes, status, cliente, usuario) values ('${data.nome}', '${data.cidade}', '${data.contato}', '${data.nicho}', '${data.situacao}', '${data.data}', '${data.hora}', '${data.canal}', '${data.observacoes}', '${data.status}', '${cliente}', '${usuario}')`;
     let encodedQuery = encodeURIComponent(sqlQuery);
 
     try {
@@ -131,18 +133,19 @@ async function ATUALIZARQ(row) {
     let data = {};
     row.querySelectorAll("td").forEach((td, index) => {
         if (index === 0) data.nome = td.querySelector("input").value;
-        if (index === 1) data.contato = td.querySelector("input").value;
-        if (index === 2) data.nicho = td.querySelector("select").value;
-        if (index === 3) data.situacao = td.querySelector("select").value;
-        if (index === 4) data.data = td.querySelector("input").value;
-        if (index === 5) data.hora = td.querySelector("input").value;
-        if (index === 6) data.canal = td.querySelector("select").value;
-        if (index === 7) data.observacoes = td.querySelector("input").value;
-        if (index === 8) data.status = td.querySelector("select").value;
+        if (index === 1) data.cidade = td.querySelector("input").value;
+        if (index === 2) data.contato = td.querySelector("input").value;
+        if (index === 3) data.nicho = td.querySelector("select").value;
+        if (index === 4) data.situacao = td.querySelector("select").value;
+        if (index === 5) data.data = td.querySelector("input").value;
+        if (index === 6) data.hora = td.querySelector("input").value;
+        if (index === 7) data.canal = td.querySelector("select").value;
+        if (index === 8) data.observacoes = td.querySelector("input").value;
+        if (index === 9) data.status = td.querySelector("select").value;
     });
 
 
-    let sqlQuery = `update qualit set nome='${data.nome}', contato='${data.contato}', nicho='${data.nicho}', situacao='${data.situacao}', data='${data.data}', hora='${data.hora}', canal='${data.canal}', observacoes='${data.observacoes}', status='${data.status}', cliente='${cliente}', usuario='${usuario}' where id=${id}`;
+    let sqlQuery = `update qualit set nome='${data.nome}', cidade='${data.cidade}', contato='${data.contato}', nicho='${data.nicho}', situacao='${data.situacao}', data='${data.data}', hora='${data.hora}', canal='${data.canal}', observacoes='${data.observacoes}', status='${data.status}', cliente='${cliente}', usuario='${usuario}' where id=${id}`;
     let encodedQuery = encodeURIComponent(sqlQuery);
 
     try {
