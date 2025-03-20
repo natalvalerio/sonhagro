@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Coffee Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen bg-pink-100 text-brown-800">
+    <div id="app" class="text-center p-6">
+        <div class="flex items-center justify-center text-2xl font-bold text-orange-800 uppercase mb-6">
+            <img src="https://cdn-icons-png.flaticon.com/512/2935/2935411.png" alt="Grão de café" class="w-10 h-10 mr-2">
+            Brew Business
+        </div>
+        <h1 class="text-3xl font-semibold text-orange-700 mb-6">Bem-vindo à nossa cafeteria</h1>
+        
+        <h2 class="text-2xl text-orange-600 mb-4">Nossos Produtos</h2>
+        <div class="grid grid-cols-2 gap-4">
+            <button v-for="produto in produtos" :key="produto" 
+                class="px-6 py-3 bg-pink-300 text-brown-700 rounded-lg shadow-md hover:bg-pink-400 transition">
+                {{ produto }}
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    produtos: [
+                        "Café Expresso", 
+                        "Cappuccino", 
+                        "Latte", 
+                        "Pão de Queijo", 
+                        "Bolo de Chocolate"
+                    ]
+                };
+            }
+        });
+        app.mount("#app");
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo Vue.js</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>Lista de Tarefas</h2>
+        <input v-model="novaTarefa" placeholder="Adicionar nova tarefa">
+        <button @click="adicionarTarefa">Adicionar</button>
+
+        <ul>
+            <li v-for="(tarefa, index) in tarefas" :key="index">
+                {{ tarefa }} <button @click="removerTarefa(index)">Remover</button>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    novaTarefa: '',
+                    tarefas: ['Estudar Vue.js', 'Criar um projeto', 'Publicar no GitHub']
+                };
+            },
+            methods: {
+                adicionarTarefa() {
+                    if (this.novaTarefa.trim() !== '') {
+                        this.tarefas.push(this.novaTarefa);
+                        this.novaTarefa = '';
+                    }
+                },
+                removerTarefa(index) {
+                    this.tarefas.splice(index, 1);
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

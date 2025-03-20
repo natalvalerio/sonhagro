@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Introdução ao Vue.js</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ mensagem }}</h1>
+        <button @click="mudar">Clique aqui</button>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    mensagem: "Olá, Vue.js!"
+                };
+            },
+            methods: {
+                mudar() {
+                    this.mensagem = "Você clicou no botão!";
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
