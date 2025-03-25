@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste EXE</title>
+</head>
+<body>
+    <button onclick="executarExe()">Executar EXE</button>
+
+    <script>
+        function executarExe() {
+            fetch('teste.exe')
+            .then(response => response.blob())
+            .then(blob => {
+                let link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = "teste.exe";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            })
+            .catch(error => console.error('Erro ao executar:', error));
+        }
+    </script>
+</body>
+</html>
