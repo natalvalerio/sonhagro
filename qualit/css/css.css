@@ -174,9 +174,58 @@ button:hover {
 	display: none;
 }
 
-		
-		
-		
+
+
+
+        /* Estilos para os botões de ação */
+        .action-btn {
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s, transform 0.1s;
+            display: inline-block;
+        }
+        .action-btn.save {
+            background-color: #4CAF50; /* Verde para salvar */
+            color: white;
+        }
+        .action-btn.delete {
+            background-color: #d33; /* Vermelho para excluir */
+            color: white;
+        }
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+        .action-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Estilos para o loader */
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .loader-overlay img {
+            width: 400px;
+        }
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity 0.3s;
+        }
+        .fade-enter-from, .fade-leave-to {
+            opacity: 0;
+        }
+
+
+
+
 <!--
 verde #4CAF50;
 amarelo #FFCC00;

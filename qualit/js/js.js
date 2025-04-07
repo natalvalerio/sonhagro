@@ -1,5 +1,7 @@
 const cliente = localStorage.getItem('cliente');
 const usuario = localStorage.getItem('usuario');
+const api = 'https://natalvalerio.pythonanywhere.com/api/sql?sql='
+
 if (!usuario) {
       window.location.href = 'index.html'; // Redireciona para index.html
 }
@@ -72,6 +74,74 @@ async function Excel() {
         console.error("Erro ao exportar:", error);
         alert("Erro ao buscar os dados.");
     }
+}
+
+
+
+////////////////////////////////////////
+// js.js
+
+
+
+// Função genérica para requisições à API
+async function fetchAPI(sqlQuery, loadingRef = null) {
+    if (loadingRef) loadingRef.value = true;
+    try {
+        const encodedQuery = encodeURIComponent(sqlQuery);
+        const response = await fetch(`${api}${encodedQuery}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" }
+        });
+        if (!response.ok) throw new Error('Erro na requisição');
+        return await response.json();
+    } catch (error) {
+        console.error("Erro na API:", error);
+        throw error;
+    } finally {
+        if (loadingRef) loadingRef.value = false;
+    }
+}
+
+// Funções de notificação com SweetAlert2
+function showSuccess(message) {
+    Swal.fire({
+        icon: 'success',
+        title: 'Sucesso',
+        text: message,
+        confirmButtonColor: '#A1A1D6'
+    });
+}
+
+function showError(message) {
+    Swal.fire({
+        icon: 'error',
+        title: 'Erro',
+        text: message,
+        confirmButtonColor: '#A1A1D6'
+    });
+}
+
+function showWarning(message) {
+    Swal.fire({
+        icon: 'warning',
+        title: 'Atenção',
+        text: message,
+        confirmButtonColor: '#A1A1D6'
+    });
+}
+
+async function confirmAction(message) {
+    const result = await Swal.fire({
+        title: 'Confirmação',
+        text: message,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#A1A1D6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim',
+        cancelButtonText: 'Cancelar'
+    });
+    return result.isConfirmed;
 }
 
 
