@@ -9,7 +9,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/js.js"></script>
     <title>NICHOS</title>
-
 </head>
 <body>
     <div id="app">
@@ -73,67 +72,25 @@
                 const searchTerm = ref('');
                 const loading = ref(false);
 
-                // Função para buscar dados
+                // Função para buscar dados (refresh)
                 async function fetchDataN() {
-                    try {
-                        const data = await fetchAPI(`select * from nichos`, loading);
-                        nichos.value = data;
-                    } catch (error) {
-                        showError('Erro ao buscar dados.');
-                    }
+                    const data = await crudOperation('nichos', 'read', {}, loading);
+                    if (data) nichos.value = data;
                 }
 
                 // Função para adicionar novo nicho
                 function NOVON() {
-                    nichos.value.unshift({ id: '', nichos: '' });
+                    addNewItem(nichos, { id: '', nichos: '' });
                 }
 
-                // Função para salvar novo nicho
-                async function SALVARN(item) {
-                    try {
-                        const sqlQuery = `insert into nichos (nichos) values ('${item.nichos}')`;
-                        await fetchAPI(sqlQuery, loading);
-                        showSuccess('Dados salvos com sucesso!');
-                        await fetchDataN();
-                    } catch (error) {
-                        showError('Erro ao salvar dados.');
-                    }
-                }
-
-                // Função para atualizar nicho
+                // Função para atualizar ou salvar nicho
                 async function ATUALIZARN(item) {
-                    if (!item.id) {
-                        await SALVARN(item);
-                        return;
-                    }
-                    try {
-                        const sqlQuery = `update nichos set nichos='${item.nichos}' where id=${item.id}`;
-                        await fetchAPI(sqlQuery, loading);
-                        showSuccess('Dados atualizados com sucesso!');
-                        await fetchDataN();
-                    } catch (error) {
-                        showError('Erro ao atualizar dados.');
-                    }
+                    await crudOperation('nichos', 'update', item, loading, fetchDataN);
                 }
 
                 // Função para excluir nicho
                 async function EXCLUIRN(item) {
-                    if (!item.id) {
-                        showWarning('Não é possível excluir uma linha sem ID.');
-                        return;
-                    }
-
-                    const confirmed = await confirmAction('Tem certeza de que deseja excluir esta linha?');
-                    if (confirmed) {
-                        try {
-                            const sqlQuery = `delete from nichos where id=${item.id}`;
-                            await fetchAPI(sqlQuery, loading);
-                            showSuccess('Dados excluídos com sucesso!');
-                            await fetchDataN();
-                        } catch (error) {
-                            showError('Erro ao excluir dados.');
-                        }
-                    }
+                    await crudOperation('nichos', 'delete', item, loading, fetchDataN);
                 }
 
                 // Função de pesquisa
@@ -143,10 +100,7 @@
 
                 // Computed property para filtrar nichos
                 const filteredNichos = computed(() => {
-                    const term = searchTerm.value.toLowerCase();
-                    return nichos.value.filter(item => 
-                        item.nichos.toLowerCase().includes(term)
-                    );
+                    return filterList(nichos, searchTerm, 'nichos');
                 });
 
                 // Carregar dados ao montar o componente

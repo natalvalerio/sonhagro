@@ -1,93 +1,27 @@
+// js.js
 const cliente = localStorage.getItem('cliente');
 const usuario = localStorage.getItem('usuario');
-const api = 'https://natalvalerio.pythonanywhere.com/api/sql?sql='
+const api = 'https://natalvalerio.pythonanywhere.com/api/sql?sql=';
 
 if (!usuario) {
-      window.location.href = 'index.html'; // Redireciona para index.html
+    window.location.href = 'index.html'; // Redireciona para index.html
 }
 
-
-//--------------------------------------------------------------------------
+// Atualiza a data e hora no footer
 function updateDateTime() {
-    const now = new Date()
-    const dateTimeString = now.toLocaleString() + ` - [CLIENTE: ${cliente}] - [USUÁRIO: ${usuario}]` 
-    document.getElementById("dateTime").textContent = dateTimeString
+    const now = new Date();
+    const dateTimeString = now.toLocaleString() + ` - [CLIENTE: ${cliente}] - [USUÁRIO: ${usuario}]`;
+    document.getElementById("dateTime").textContent = dateTimeString;
 }
 
-setInterval(updateDateTime, 1000)
-
-//--------------------------------------------------------------------------
-function Pesquisar() {
-	const termo = document.getElementById("Pesquisar").value.toLowerCase();
-	const linhas = document.querySelectorAll("tbody tr");
-	
-	linhas.forEach(linha => {
-		const colunas = linha.querySelectorAll("td");
-		let encontrou = false;
-	
-		colunas.forEach((coluna, index) => {
-			if (index !== colunas.length - 1) { // Ignora a última coluna (AÇÕES)
-				let texto = "";
-	
-				// Verifica se a coluna contém um input ou select
-				if (coluna.querySelector("input")) {
-					texto = coluna.querySelector("input").value.toLowerCase();
-				} else if (coluna.querySelector("select")) {
-					texto = coluna.querySelector("select").value.toLowerCase();
-				} else {
-					texto = coluna.textContent.toLowerCase();
-				}
-	
-				if (texto.includes(termo)) {
-					encontrou = true;
-				}
-			}
-		});
-	
-		if (encontrou) {
-			linha.style.display = "";
-		} else {
-			linha.style.display = "none";
-		}
-	})
-}
-
-//--------------------------------------------------------------------------
-async function Excel() {
-    try {
-        const response = await fetch("https://natalvalerio.pythonanywhere.com/api/sql?sql=select * from qualit");
-        const data = await response.json();
-
-        if (!data || data.length === 0) {
-            alert("Nenhum dado encontrado.");
-            return;
-        }
-
-        // Criando um worksheet (aba do Excel)
-        const worksheet = XLSX.utils.json_to_sheet(data);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Dados");
-
-        // Gerando o arquivo Excel
-        XLSX.writeFile(workbook, "dados.xlsx");
-    } catch (error) {
-        console.error("Erro ao exportar:", error);
-        alert("Erro ao buscar os dados.");
-    }
-}
-
-
-
-////////////////////////////////////////
-// js.js
-
-
+setInterval(updateDateTime, 1000);
 
 // Função genérica para requisições à API
 async function fetchAPI(sqlQuery, loadingRef = null) {
     if (loadingRef) loadingRef.value = true;
     try {
         const encodedQuery = encodeURIComponent(sqlQuery);
+        console.log("Query enviada:", sqlQuery); // Log para depuração
         const response = await fetch(`${api}${encodedQuery}`, {
             method: "GET",
             headers: { "Content-Type": "application/json" }
@@ -144,8 +78,70 @@ async function confirmAction(message) {
     return result.isConfirmed;
 }
 
+// Função genérica para adicionar novo item a uma lista
+function addNewItem(listRef, defaultItem) {
+    listRef.value.unshift(defaultItem);
+}
 
-//--------------------------------------------------------------------------
-//require('dotenv').config()
-//const apiNome = process.env.API_NOME
-//alert(apiNome)
+// Função genérica para filtrar uma lista com base em um termo
+function filterList(listRef, searchTermRef, field) {
+    const term = searchTermRef.value.toLowerCase();
+    return listRef.value.filter(item => 
+        item[field].toLowerCase().includes(term)
+    );
+}
+
+// Função genérica para operações CRUD
+async function crudOperation(table, action, data, loadingRef, refreshCallback) {
+    let sqlQuery;
+    try {
+        switch (action) {
+            case 'create':
+                // Remove o 'id' se estiver presente e vazio ou undefined
+                const createData = { ...data };
+                delete createData.id;
+                const fields = Object.keys(createData).join(', ');
+                const values = Object.values(createData).map(val => `'${val}'`).join(', ');
+                sqlQuery = `insert into ${table} (${fields}) values (${values})`;
+                await fetchAPI(sqlQuery, loadingRef);
+                showSuccess('Dados salvos com sucesso!');
+                break;
+            case 'read':
+                sqlQuery = `select * from ${table}`;
+                return await fetchAPI(sqlQuery, loadingRef);
+            case 'update':
+                if (!data.id || data.id === '') {
+                    // Se não tem ID, trata como create
+                    await crudOperation(table, 'create', data, loadingRef, refreshCallback);
+                    return;
+                }
+                const updates = Object.entries(data)
+                    .filter(([key]) => key !== 'id')
+                    .map(([key, value]) => `${key}='${value}'`)
+                    .join(', ');
+                sqlQuery = `update ${table} set ${updates} where id=${data.id}`;
+                await fetchAPI(sqlQuery, loadingRef);
+                showSuccess('Dados atualizados com sucesso!');
+                break;
+            case 'delete':
+                if (!data.id) {
+                    showWarning('Não é possível excluir uma linha sem ID.');
+                    return;
+                }
+                const confirmed = await confirmAction('Tem certeza de que deseja excluir esta linha?');
+                if (confirmed) {
+                    sqlQuery = `delete from ${table} where id=${data.id}`;
+                    await fetchAPI(sqlQuery, loadingRef);
+                    showSuccess('Dados excluídos com sucesso!');
+                } else {
+                    return;
+                }
+                break;
+            default:
+                throw new Error('Ação CRUD inválida');
+        }
+        if (refreshCallback) await refreshCallback();
+    } catch (error) {
+        showError(`Erro ao ${action === 'read' ? 'buscar' : action === 'create' ? 'salvar' : action === 'update' ? 'atualizar' : 'excluir'} dados.`);
+    }
+}
