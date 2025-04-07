@@ -3,27 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../img/icon.png" rel="shortcut icon" type="image/x-icon">
-    <link href="../css/css.css" rel="stylesheet" type="text/css">
+	<link href="../img/icon.png" rel="shortcut icon" type="image/x-icon" >
+	<link href="../css/css.css" rel="stylesheet"    type="text/css">
     <title>Geração de BACKUPs</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
-    <script src="../js/js.js"></script>
 </head>
 <body>
 
 <div id="app">
     <img src="../img/logo.png" width="200" alt="Logo da Empresa">
-    <h2>Geração de BACKUP</h2>
-    
+	<h2>Geração de BACKUP</h2>
+	
     <button @click="generateDump" :disabled="loading">
         {{ loading ? 'Gerando...' : 'BACKUP' }}
     </button>
     <p v-if="message">{{ message }}</p>
-    
-    <br><br>
-    <a href="javascript:window.history.back()"><button>VOLTAR 🔙</button></a>
-        
-    <footer>
+	
+	<BR><BR><a href="javascript:window.history.back()"><button>VOLTAR 🔙</button></a>
+		
+	<footer>
         <span id="dateTime"></span>
     </footer>
 </div>
@@ -33,18 +31,21 @@ const { createApp, ref, onMounted } = Vue;
 
 createApp({
     setup() {
+        const apiBaseUrl = "https://natalvalerio.pythonanywhere.com/api/sql?sql=";
         const tables = ["nichos", "situacoes", "canais", "status", "clientes", "user", "qualit"];
         const loading = ref(false);
         const message = ref("");
 
         const fetchTableData = async (table) => {
             const query = `SELECT * FROM ${table};`;
-            return await fetchAPI(query);
+            const response = await fetch(apiBaseUrl + encodeURIComponent(query));
+            return response.json();
         };
 
         const fetchTableSchema = async () => {
             const query = `SELECT sql FROM sqlite_master WHERE type='table' AND name IN ('${tables.join("','")}');`;
-            return await fetchAPI(query);
+            const response = await fetch(apiBaseUrl + encodeURIComponent(query));
+            return response.json();
         };
 
         const generateDump = async () => {
@@ -102,6 +103,7 @@ createApp({
     }
 }).mount("#app");
 </script>
+
 
 </body>
 </html>
