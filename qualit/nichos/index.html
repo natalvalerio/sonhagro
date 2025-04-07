@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="img/icon.png" rel="shortcut icon" type="image/x-icon">
-    <link href="css/css.css" rel="stylesheet" type="text/css">
+    <link href="../img/icon.png" rel="shortcut icon" type="image/x-icon">
+    <link href="../css/css.css" rel="stylesheet" type="text/css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="js/js.js"></script>
+    <script src="../js/js.js"></script>
     <title>NICHOS</title>
 
 </head>
@@ -49,8 +49,8 @@
                             <input v-model="item.nichos">
                         </td>
                         <td>
-                            <span class="action-btn save" @click="ATUALIZARN(item)">✅</span>
-                            <span class="action-btn delete" @click="EXCLUIRN(item)">❌</span>
+                            <span class="action-btn save" @click="ATUALIZARN(item)">Gravar ✅</span>
+                            <span class="action-btn delete" @click="EXCLUIRN(item)">Excluir ❌</span>
                         </td>
                     </tr>
                 </tbody>
@@ -59,7 +59,7 @@
 
         <transition name="fade">
             <div v-if="loading" class="loader-overlay">
-                <img src="img/loading.gif" alt="Carregando...">
+                <img src="../img/loading.gif" alt="Carregando...">
             </div>
         </transition>
     </div>
