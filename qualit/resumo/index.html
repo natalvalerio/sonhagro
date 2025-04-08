@@ -67,6 +67,17 @@
         </div>
 
         <script>
+		    //function removerEmojis(texto) {
+			//	return texto.replace(/[\p{Emoji}\uFE0F\u200D]/gu, '');
+			//}
+			
+			function removerEmojis(texto) {
+				return texto.replace(
+				/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu,
+				''
+				);
+			}
+		
             async function gerarRelatorio() {
                 const dataInicio = document.getElementById("dataInicio").value;
                 const dataFim = document.getElementById("dataFim").value;
@@ -184,10 +195,16 @@
                         const rows = Array.from(table.rows).map(row => 
                             Array.from(row.cells).map(cell => cell.textContent)
                         );
+						// Aplica a função somente no corpo da tabela (linhas de dados)
+						const head = [rows[0]];
+						const body = rows.slice(1).map(row =>
+							row.map(cell => removerEmojis(cell))
+						);
+						
                         doc.autoTable({
                             startY: y,
-                            head: [rows[0]], // Cabeçalho
-                            body: rows.slice(1), // Dados
+							head: head, // Cabeçalho
+							body: body, // Dados SEM emojis
                             theme: "grid",
                             styles: { fontSize: 10 },
                             headStyles: { fillColor: [200, 200, 200] },
