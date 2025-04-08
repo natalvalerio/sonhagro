@@ -111,7 +111,7 @@
 
                 // Função para buscar campos do cliente
                 async function campos(cliente) {
-                    const url = `select * from clientes where cliente = "${cliente}"`;
+                    const url = `select * from clientes where cliente = "${cliente} order by id desc"`;
                     try {
                         const response = await fetchAPI(url);
                         if (!response.length) {
@@ -135,7 +135,7 @@
                         if (!cliente) {
                             throw new Error("Variável 'cliente' não está definida!");
                         }
-                        const query = `select * from qualit where cliente = "${cliente}"`;
+                        const query = `select * from qualit where cliente = "${cliente}" order by id desc`;
                         const fetchedData = await fetchAPI(query, loading);
                         const camposData = await campos(cliente);
                         nichos.value = camposData.nichos;

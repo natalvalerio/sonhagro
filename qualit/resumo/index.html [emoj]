@@ -41,7 +41,7 @@
     </footer>
     <main>
         <br/>
-        <input type="text" id="Pesquisar" placeholder="🔎 Pesquisar..." onkeyup="Pesquisar()">
+        <!--input type="text" id="Pesquisar" placeholder="🔎 Pesquisar..." onkeyup="Pesquisar()"-->
         <a href="javascript:window.history.back()"><button>VOLTAR 🔙</button></a>
         
         <label>Data Inicial: <input type="date" id="dataInicio" class="quadrado"></label>
@@ -125,34 +125,69 @@
                 document.getElementById(id).innerHTML = html;
             }
 
-            function exportarPDF() {
+            async function carregarFonte() {
+                try {
+                    const response = await fetch("../fonts/NotoColorEmoji-Regular.ttf");
+                    if (!response.ok) {
+                        throw new Error(`Falha ao carregar a fonte: ${response.statusText}`);
+                    }
+                    const fontBlob = await response.blob();
+                    return new Promise((resolve) => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => resolve(reader.result.split(",")[1]); // Extrai apenas o base64
+                        reader.readAsDataURL(fontBlob);
+                    });
+                } catch (error) {
+                    console.error("Erro ao carregar a fonte:", error);
+                    throw error; // Propaga o erro para ser tratado em exportarPDF
+                }
+            }
+
+            async function exportarPDF() {
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF();
+                let useCustomFont = true;
+
+                // Tentar carregar a fonte para emojis
+                try {
+                    const fontBase64 = await carregarFonte();
+                    doc.addFileToVFS("NotoColorEmoji-Regular.ttf", fontBase64);
+                    doc.addFont("NotoColorEmoji-Regular.ttf", "NotoColorEmoji", "normal");
+                    doc.setFont("NotoColorEmoji"); // Define a fonte como padrão
+                } catch (error) {
+                    console.warn("Não foi possível carregar a fonte NotoColorEmoji. Usando fonte padrão (sem emojis).");
+                    useCustomFont = false;
+                    doc.setFont("Helvetica"); // Fallback para fonte padrão
+                }
+
                 let y = 10;
 
                 // Verificar se a página está sendo carregada a partir de file:// (localmente)
                 if (window.location.protocol !== 'file:') {
-                    // Adicionar logo
-                    const img = new Image();
-                    img.src = "../img/logo.png";
-                    doc.addImage(img, 'PNG', 10, y, 50, 20);
-                    y += 25;
+                    try {
+                        const img = new Image();
+                        img.src = "../img/logo.png";
+                        doc.addImage(img, 'PNG', 10, y, 50, 20);
+                        y += 25;
+                    } catch (error) {
+                        console.warn("Não foi possível carregar a logo:", error);
+                    }
                 }
 
-                // Título
+                // Título com emoji (se a fonte personalizada foi carregada)
                 const pageWidth = doc.internal.pageSize.width;
-                const title = "Relatório de Atendimentos";
+                const title = useCustomFont ? "Relatório de Atendimentos 📊" : "Relatório de Atendimentos";
                 const title2 = cliente;
                 const textWidth = doc.getTextWidth(title);
                 const textWidth2 = doc.getTextWidth(title2);
-                
+
                 const x = (pageWidth - textWidth) / 2;
                 doc.text(title, x, y);
                 y += 10;
-                
+
                 const x2 = (pageWidth - textWidth2) / 2;
                 doc.text(title2, x2, y);
-                
+
                 y += 10;
 
                 // Total de atendimentos
@@ -162,16 +197,17 @@
                     return;
                 } else {
                     doc.setFontSize(12);
-                    doc.text(`Total de Atendimentos: ${total}`, 10, y);
+                    const totalText = useCustomFont ? `Total de Atendimentos: ${total} ✅` : `Total de Atendimentos: ${total}`;
+                    doc.text(totalText, 10, y);
                     y += 10;
                 }
 
                 // Seções para exportar
                 const sections = [
-                    { title: "Atendimentos por Canal", id: "resultadoCanais" },
-                    { title: "Atendimentos por Nicho", id: "resultadoNichos" },
-                    { title: "Atendimentos por Usuário", id: "resultadoUsuarios" },
-                    { title: "Atendimentos por Status", id: "resultadoStatus" }
+                    { title: useCustomFont ? "Atendimentos por Canal 📞" : "Atendimentos por Canal", id: "resultadoCanais" },
+                    { title: useCustomFont ? "Atendimentos por Nicho 🎯" : "Atendimentos por Nicho", id: "resultadoNichos" },
+                    { title: useCustomFont ? "Atendimentos por Usuário 👤" : "Atendimentos por Usuário", id: "resultadoUsuarios" },
+                    { title: useCustomFont ? "Atendimentos por Status ⚙️" : "Atendimentos por Status", id: "resultadoStatus" }
                 ];
 
                 sections.forEach(section => {
@@ -189,13 +225,14 @@
                             head: [rows[0]], // Cabeçalho
                             body: rows.slice(1), // Dados
                             theme: "grid",
-                            styles: { fontSize: 10 },
+                            styles: { font: useCustomFont ? "NotoColorEmoji" : "Helvetica", fontSize: 10 },
                             headStyles: { fillColor: [200, 200, 200] },
                             margin: { top: 10, left: 10 }
                         });
-                        y = doc.lastAutoTable.finalY; // Atualiza a posição Y após cada tabela
+                        y = doc.lastAutoTable.finalY;
                     } else {
-                        doc.text("Nenhum dado disponível", 10, y);
+                        const noDataText = useCustomFont ? "Nenhum dado disponível 🚫" : "Nenhum dado disponível";
+                        doc.text(noDataText, 10, y);
                         y += 10;
                     }
                 });
@@ -204,7 +241,8 @@
                 y += 10;
                 const dataHoraAtual = new Date().toLocaleString();
                 doc.setFontSize(10);
-                doc.text(`Gerado em: ${dataHoraAtual}`, 10, y);
+                const dateText = useCustomFont ? `Gerado em: ${dataHoraAtual} ⏰` : `Gerado em: ${dataHoraAtual}`;
+                doc.text(dateText, 10, y);
 
                 doc.save("relatorio_atendimentos.pdf");
             }
