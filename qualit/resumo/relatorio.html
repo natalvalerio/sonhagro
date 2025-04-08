@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Atendimentos</title>
+    <link href="../img/icon.png" rel="shortcut icon" type="image/x-icon">
+    <link href="../css/css.css" rel="stylesheet" type="text/css">
+    <script src="../js/js.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+        }
+        #loader {
+            display: none;
+            text-align: center;
+        }
+        #relatorio {
+            display: none;
+        }
+        .group-section {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="../img/logo.png" width="200" alt="Logo da Empresa">
+        <h2>Relatório de Atendimentos</h2>
+    </header>
+
+    <footer>
+        <span id="dateTime"></span>
+    </footer>
+    <main>
+        <br/>
+        <a href="javascript:window.history.back()"><button>VOLTAR 🔙</button></a>
+        
+        <label>Data Inicial: <input type="date" id="dataInicio" class="quadrado"></label>
+        <label>Data Final: <input type="date" id="dataFim" class="quadrado"></label>
+        <!--label>Cliente: <input type="text" id="clienteInput" class="quadrado" value="TESTE MALUCO"></label-->
+		
+        <label for="clienteSelect">Cliente:
+            <select id="clienteSelect" class="quadrado"></select>
+        </label>		
+		
+        <label>Agrupar por:
+            <select id="groupBy" class="quadrado">
+                <option value="nicho">Nicho</option>
+                <option value="usuario">Usuário</option>
+                <option value="cidade">Cidade</option>
+                <option value="situacao">Situação</option>
+                <option value="status">Status</option>
+            </select>
+        </label>
+        <button onclick="gerarRelatorio()">Gerar Relatório</button>
+        <button onclick="exportarPDF()">Exportar para PDF</button>
+        
+        <div id="loader">
+            <img src="../img/loading.gif" alt="Carregando...">
+        </div>
+        
+        <div id="relatorio">
+            <h3>Cliente: <span id="clienteSpan"></span></h3>
+            <h3>Total de Atendimentos: <span id="total">0</span></h3>
+            <div id="resultadoAgrupado"></div>
+        </div>
+
+        <script>
+            function removerEmojis(texto) {
+                return texto.replace(/[^a-zA-Z0-9\s]/gu, '');
+            }
+			
+			
+            async function preencherClientes() {
+				const loader = document.querySelector('#loader'); // Seleciona o elemento <loader>
+				loader.style.display = 'block'; // Exibe o cabeçalho
+
+				const query = "select cliente from clientes";
+                try {
+                    const clientes = await fetchAPI(query);
+                    const clienteSelect = document.getElementById("clienteSelect");
+                    clientes.forEach(cliente => {
+                        const option = document.createElement("option");
+                        option.value = cliente.cliente;
+                        option.text = cliente.cliente;
+                        clienteSelect.appendChild(option);
+                    });
+                } catch (error) {
+                    console.error("Erro ao buscar clientes:", error);
+                    alert("Erro ao buscar clientes.");
+                } 
+				loader.style.display = 'none'; // Oculta o cabeçalho após a conclusão
+            }
+
+            async function gerarRelatorio() {
+                const dataInicio = document.getElementById("dataInicio").value;
+                const dataFim = document.getElementById("dataFim").value;
+                const cliente = document.getElementById("clienteSelect").value;
+                const groupBy = document.getElementById("groupBy").value;
+
+                if (!dataInicio || !dataFim || !cliente) {
+                    //showWarning("Selecione um período válido e informe o cliente!");
+                    return;
+                }
+
+                let query = `SELECT id, nome, cidade, contato, nicho, situacao, data, hora, canal, observacoes, status, cliente, usuario 
+                            FROM qualit 
+                            WHERE cliente='${cliente}' 
+                            AND data BETWEEN '${dataInicio}' AND '${dataFim}' 
+                            ORDER BY id ASC`;
+
+                document.getElementById("loader").style.display = "block";
+                try {
+                    const data = await fetchAPI(query);
+
+                    if (!data || data.length === 0) {
+                        //showWarning("Nenhum dado encontrado.");
+                        return;
+                    }
+
+                    processarDados(data, groupBy, cliente);
+                } catch (error) {
+                    console.error("Erro ao buscar dados:", error);
+                    //showWarning("Erro ao buscar os dados.");
+                }
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("relatorio").style.display = "block";
+            }
+
+            function processarDados(dados, groupBy, cliente) {
+                document.getElementById("total").textContent = dados.length;
+                document.getElementById("clienteSpan").textContent = cliente;
+
+                // Agrupar os dados
+                const groupedData = {};
+                dados.forEach(item => {
+                    const key = item[groupBy];
+                    if (!groupedData[key]) {
+                        groupedData[key] = [];
+                    }
+                    groupedData[key].push(item);
+                });
+
+                // Exibir os dados agrupados
+                let html = '';
+                for (let groupKey in groupedData) {
+                    html += `<div class="group-section">`;
+                    html += `<h3>${groupBy.charAt(0).toUpperCase() + groupBy.slice(1)}: ${groupKey}</h3>`;
+                    html += `<table>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Cidade</th>
+                            <th>Contato</th>
+                            <th>Nicho</th>							
+                            <th>Situação</th>
+                            <th>Data</th>
+                            <th>Hora</th>
+                            <th>Canal</th>
+                            <th>Observações</th>
+                            <th>Status</th>
+                        </tr>`;
+
+                    groupedData[groupKey].forEach(item => {
+                        html += `<tr>
+                            <td>${item.nome || ''}</td>
+                            <td>${item.cidade || ''}</td>
+                            <td>${item.contato || ''}</td>
+                            <td>${item.nicho || ''}</td>
+                            <td>${item.situacao || ''}</td>
+                            <td>${item.data || ''}</td>
+                            <td>${item.hora || ''}</td>
+                            <td>${item.canal || ''}</td>
+                            <td>${item.observacoes || ''}</td>
+                            <td>${item.status || ''}</td>
+                        </tr>`;
+                    });
+
+                    html += `</table></div>`;
+                }
+
+                document.getElementById("resultadoAgrupado").innerHTML = html;
+            }
+
+            function exportarPDF() {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                let y = 10;
+
+                if (window.location.protocol !== 'file:') {
+                    const img = new Image();
+                    img.src = "../img/logo.png";
+                    doc.addImage(img, 'PNG', 10, y, 50, 20);
+                    y += 25;
+                }
+
+                const pageWidth = doc.internal.pageSize.width;
+                const title = "Relatório de Atendimentos";
+                const cliente = document.getElementById("clienteSpan").textContent;
+                const textWidth = doc.getTextWidth(title);
+                const textWidth2 = doc.getTextWidth(cliente);
+
+                const x = (pageWidth - textWidth) / 2;
+                doc.text(title, x, y);
+                y += 10;
+
+                const x2 = (pageWidth - textWidth2) / 2;
+                doc.text(cliente, x2, y);
+                y += 10;
+
+                const total = document.getElementById("total").textContent;
+                if (total === "0") {
+                    //showWarning("Não há atendimentos para exportar.");
+                    return;
+                }
+                doc.setFontSize(12);
+                doc.text(`Total de Atendimentos: ${total}`, 10, y);
+                y += 10;
+
+                const groupSections = document.getElementById("resultadoAgrupado").getElementsByClassName("group-section");
+                for (let section of groupSections) {
+                    y += 10;
+                    const title = section.querySelector("h3").textContent;
+                    doc.text(removerEmojis(title), 10, y);
+                    y += 10;
+
+                    const table = section.querySelector("table");
+                    if (table) {
+                        const rows = Array.from(table.rows).map(row => 
+                            Array.from(row.cells).map(cell => cell.textContent)
+                        );
+                        const head = [rows[0]];
+                        const body = rows.slice(1).map(row => row.map(cell => removerEmojis(cell)));
+
+                        doc.autoTable({
+                            startY: y,
+                            head: head,
+                            body: body,
+                            theme: "grid",
+                            styles: { fontSize: 8 },
+                            headStyles: { fillColor: [200, 200, 200] },
+                            margin: { top: 10, left: 10 }
+                        });
+                        y = doc.lastAutoTable.finalY;
+                    }
+                }
+
+                y += 10;
+                const dataHoraAtual = new Date().toLocaleString();
+                doc.setFontSize(10);
+                doc.text(`Gerado em: ${dataHoraAtual}`, 10, y);
+
+                doc.save("relatorio_atendimentos.pdf");
+            }
+			
+			// Chama a função preencherClientes() quando a página é carregada
+			document.addEventListener("DOMContentLoaded", preencherClientes);			
+
+            // Update dateTime in footer
+            document.getElementById("dateTime").textContent = new Date().toLocaleString();
+        </script>
+    </main>
+</body>
+</html>
