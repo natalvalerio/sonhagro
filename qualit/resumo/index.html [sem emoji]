@@ -125,6 +125,12 @@
                 document.getElementById(id).innerHTML = html;
             }
 
+            // Função para remover emojis do texto
+            function removeEmojis(text) {
+                // Regex para identificar emojis (Unicode)
+                return text.replace(/[\p{Emoji_Presentation}|\p{Emoji}\u200D]+/gu, '').trim();
+            }
+
             function exportarPDF() {
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF();
@@ -132,17 +138,20 @@
 
                 // Verificar se a página está sendo carregada a partir de file:// (localmente)
                 if (window.location.protocol !== 'file:') {
-                    // Adicionar logo
-                    const img = new Image();
-                    img.src = "../img/logo.png";
-                    doc.addImage(img, 'PNG', 10, y, 50, 20);
-                    y += 25;
+                    try {
+                        const img = new Image();
+                        img.src = "../img/logo.png";
+                        doc.addImage(img, 'PNG', 10, y, 50, 20);
+                        y += 25;
+                    } catch (error) {
+                        console.warn("Não foi possível carregar a logo:", error);
+                    }
                 }
 
                 // Título
                 const pageWidth = doc.internal.pageSize.width;
-                const title = "Relatório de Atendimentos";
-                const title2 = cliente;
+                const title = removeEmojis("Relatório de Atendimentos 📊");
+                const title2 = removeEmojis(cliente);
                 const textWidth = doc.getTextWidth(title);
                 const textWidth2 = doc.getTextWidth(title2);
                 
@@ -162,16 +171,17 @@
                     return;
                 } else {
                     doc.setFontSize(12);
-                    doc.text(`Total de Atendimentos: ${total}`, 10, y);
+                    const totalText = removeEmojis(`Total de Atendimentos: ${total}`);
+                    doc.text(totalText, 10, y);
                     y += 10;
                 }
 
                 // Seções para exportar
                 const sections = [
-                    { title: "Atendimentos por Canal", id: "resultadoCanais" },
-                    { title: "Atendimentos por Nicho", id: "resultadoNichos" },
-                    { title: "Atendimentos por Usuário", id: "resultadoUsuarios" },
-                    { title: "Atendimentos por Status", id: "resultadoStatus" }
+                    { title: removeEmojis("Atendimentos por Canal"), id: "resultadoCanais" },
+                    { title: removeEmojis("Atendimentos por Nicho"), id: "resultadoNichos" },
+                    { title: removeEmojis("Atendimentos por Usuário"), id: "resultadoUsuarios" },
+                    { title: removeEmojis("Atendimentos por Status️"), id: "resultadoStatus" }
                 ];
 
                 sections.forEach(section => {
@@ -182,7 +192,7 @@
                     const table = document.getElementById(section.id).querySelector("table");
                     if (table) {
                         const rows = Array.from(table.rows).map(row => 
-                            Array.from(row.cells).map(cell => cell.textContent)
+                            Array.from(row.cells).map(cell => removeEmojis(cell.textContent))
                         );
                         doc.autoTable({
                             startY: y,
@@ -195,7 +205,8 @@
                         });
                         y = doc.lastAutoTable.finalY; // Atualiza a posição Y após cada tabela
                     } else {
-                        doc.text("Nenhum dado disponível", 10, y);
+                        const noDataText = removeEmojis("Nenhum dado disponível");
+                        doc.text(noDataText, 10, y);
                         y += 10;
                     }
                 });
@@ -204,7 +215,8 @@
                 y += 10;
                 const dataHoraAtual = new Date().toLocaleString();
                 doc.setFontSize(10);
-                doc.text(`Gerado em: ${dataHoraAtual}`, 10, y);
+                const dateText = removeEmojis(`Gerado em: ${dataHoraAtual}`);
+                doc.text(dateText, 10, y);
 
                 doc.save("relatorio_atendimentos.pdf");
             }
